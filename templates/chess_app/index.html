@@ -9,7 +9,7 @@
     </li>
   {% else %}
      <li class="nav-item">
-      <a name="create_profile_nav" class="nav-link" href="{% url 'chess_app:create_profile' %}">Create Picture</a>
+      <a name="create_profile_nav" class="nav-link" href="{% url 'chess_app:create_profile' %}">Create Profile</a>
       </li>
   {% endif %}
 {% endblock %}
@@ -28,7 +28,8 @@
     <br>
     <h1 name="index_text" class="my-4">Enjoy playing chess with this can of bolts.</h1>
     <br>
-    {% if chess_detail %}
+    {% if profile_detail %}
+      {% if chess_detail %}
       <div>
         <a 
           name="cont_game_btn" 
@@ -38,12 +39,13 @@
           Continue Game
         </a>
       </div>
-    {% else %}  
+      {% else %}  
       <form method="POST">
         {% csrf_token %}
         {{ chess_form.as_p }}
         <input name="new_chessboard_btn" type="Submit" class="btn btn-primary btn-btn" value="New Game" />
       </form>
-    {%  endif %}
+      {%  endif %}
+    {% endif %}
     <br>
 {% endblock %}
