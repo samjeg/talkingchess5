@@ -6,6 +6,13 @@
 	margin-left: 2vw;
 }
 
+.nav_brand{
+    margin-left: -6vw;
+}
+
+.image_container{
+    margin-right: -6vw;
+}
 
 .comment-image {
 	height: 3vw;

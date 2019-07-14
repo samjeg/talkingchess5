@@ -8,9 +8,9 @@
       <a name="profile_nav" class="nav-link" href="{% url 'chess_app:profile_detail' pk=profile_detail.pk %}">Profile</a>
     </li>
   {% else %}
-     <li class="nav-item">
+    <li class="nav-item">
       <a name="create_profile_nav" class="nav-link" href="{% url 'chess_app:create_profile' %}">Create Profile</a>
-      </li>
+    </li>
   {% endif %}
 {% endblock %}
 {% block imagenav %}
@@ -21,7 +21,9 @@
   {% endif %}
 {% endblock %}
 
+
 {% block content %}
+   {% if profile_detail %}
    <img class="center" src="{% static 'images/robot_pic.jpg' %}"/>
     
     <div>Logo made with <a href="/en/" title="Free Online Logo Maker">DesignEvo</a></div>
@@ -48,4 +50,9 @@
       {%  endif %}
     {% endif %}
     <br>
+    {% else %}
+     <div class="jumbotron">
+       <h1>You must have a profile to use the chess website services :]</h1>
+     </div>
+    {% endif %}
 {% endblock %}

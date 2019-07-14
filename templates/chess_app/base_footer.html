@@ -17,9 +17,9 @@
 
 <body>
   <!-- Navigation -->
-  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark black fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="{% url 'login' %}">Talking Chess</a>
+      <a class="navbar-brand nav_brand" href="{% url 'login' %}">Talking Chess</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon">
         </span>
@@ -45,7 +45,7 @@
           {% endif %}
         </ul>
       </div>
-      <div class="navbar-brand">
+      <div class="navbar-brand image_container">
         {% block imagenav %}{% endblock %}
       </div>
     </div>
@@ -57,12 +57,12 @@
   </div>
   <!-- /.container -->
     <!-- Footer -->
-  <footer class="py-5 bg-dark">
+  <footer class="py-5 black">
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; Talking Chess By Samuel Jegede 2019</p>
-    </div>
-    <!-- /.container -->
+      </div>
   </footer>
+    <!-- /.container -->
 
   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>

@@ -6,6 +6,14 @@
 	margin-left: 2vw;
 }
 
+.nav_brand{
+    margin-left: -6vw;
+}
+
+.image_container{
+    margin-right: -6vw;
+}
+
 .center {
 	margin-top: 15vh;
 	margin-left: 27.5vw;
@@ -18,12 +26,25 @@
 	width: 30vw;
 }
 
+.black {
+	background-color: #000;
+}
+
 @media only screen and (max-width: 600px) {
 	.imageframe {
 		height: 8vw;
 		width: 8vw;
 		border-radius: 50%;
+		margin-left: -8vw;
 	}	
+
+	.nav_brand{
+    	margin-left: 0px;
+	}
+
+	.image_container{
+    	margin-right: 0px;
+	}
 
 	.center {
 		margin-top: 5vh;

@@ -12,7 +12,6 @@
   <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
   <!-- Custom styles for this template -->
   <link href="{% static 'css/modern-business.css' %}" rel="stylesheet" />
-  <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet" />
   {% block templatecss %}{% endblock %}              
 </head>
 
@@ -20,7 +19,7 @@
   <!-- Navigation -->
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="{% url 'index' %}">Talking Chess</a>
+      <a class="navbar-brand nav_brand" href="{% url 'index' %}">Talking Chess</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon">
         </span>
@@ -46,7 +45,7 @@
           {% endif %}
         </ul>
       </div>
-      <div class="navbar-brand">
+      <div class="navbar-brand image_container">
         {% block imagenav %}{% endblock %}
       </div>
     </div>
