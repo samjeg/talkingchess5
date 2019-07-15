@@ -59,5 +59,118 @@ class ChessPieceTestCase(TestCase):
 		self.assertEqual(self.chess_piece.id_gen(input_val[0], input_val[1]), expectedResult)
 	
 	
+	def testMatrixSame(self):
+		first_chessboard_matrix = [
+			["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+			[ "comp_pawn1", "", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "comp_pawn2", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "player_horse1", "", "", "", "", "", "", ""],
+			[ "player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+			["player_rook1", "", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+		]
+
+		second_chessboard_matrix = [
+			["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+			[ "comp_pawn1", "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "player_horse1", "", "", "", "", "", "", ""],
+			[ "player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+			["player_rook1", "", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+		]
+
+		third_chessboard_matrix = [
+			["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+			[ "comp_pawn1", "", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "comp_pawn2", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "player_horse1", "", "", "", "", "", "", ""],
+			[ "player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+			["player_rook1", "", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+		]
+
+		self.assertTrue(not (self.chess_piece.matrixSame(first_chessboard_matrix, second_chessboard_matrix)))
+		self.assertTrue(self.chess_piece.matrixSame(first_chessboard_matrix, third_chessboard_matrix))		
 	
+
+	def testFindDiffentPiece(self):
+		first_chessboard_matrix = [
+			["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+			[ "comp_pawn1", "", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "comp_pawn2", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "player_horse1", "", "", "", "", "", "", ""],
+			[ "player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+			["player_rook1", "", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+		]
+
+		second_chessboard_matrix = [
+			["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+			[ "comp_pawn1", "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "player_horse1", "", "", "", "", "", "", ""],
+			[ "player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+			["player_rook1", "", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+		]
+
+		expectedResult = "comp_pawn2";
+
+		self.assertEqual(self.chess_piece.findDiffentPiece(second_chessboard_matrix, first_chessboard_matrix), expectedResult)
+	
+	def testFindMultipleDifferentPieces(self):
+		first_chessboard_matrix = [
+			["comp_rook1", "comp_horse1", "", "comp_queen", "comp_king", "comp_bishop2", "", "comp_rook2"],
+			[ "comp_pawn1", "", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+			[ "comp_bishop1", "", "", "", "", "", "", ""],
+			[ "", "comp_pawn2", "", "comp_horse2", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "player_horse1", "", "", "", "", "", "", ""],
+			[ "player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+			["player_rook1", "", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+		]
+
+		second_chessboard_matrix = [
+			["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+			[ "comp_pawn1", "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "player_horse1", "", "", "", "", "", "", ""],
+			[ "player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+			["player_rook1", "", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+		]
+ 
+		expectedResult = ["comp_bishop1", "comp_horse2", "comp_pawn2"]
+		differentPieces = self.chess_piece.shrinkContinuosArray(
+			self.chess_piece.findMultipleDifferentPieces(second_chessboard_matrix, first_chessboard_matrix)
+		)
+
+		for i in range(len(differentPieces)):
+			if differentPieces[i] != expectedResult[i]:
+				self.assertEqual(differentPieces[i], expectedResult[i])
+
+
+	def testFindBoardCoordinates(self):
+		first_chessboard_matrix = [
+			["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+			[ "comp_pawn1", "", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "comp_pawn2", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+			["player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+		]
+
+		input2 = "comp_pawn2"
+		expectedResult = [3, 1]
+
+		self.assertTrue(self.chess_piece.findBoardCoordinates(first_chessboard_matrix, input2))
 	

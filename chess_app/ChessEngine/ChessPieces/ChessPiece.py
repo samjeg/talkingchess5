@@ -62,7 +62,46 @@ class ChessPiece(object):
 		
 		return chess_id
 
+	def matrixSame(self, matrix1, matrix2):
+		for i in range(len(matrix1)):
+			for j in range(len(matrix1[i])):
+				if matrix1[i][j] != matrix2[i][j]:
+					return False;
+			
+		return True
 
+	def findDiffentPiece(self, live_matrix, new_matrix):
+		for i in range(len(live_matrix)):
+			for j in range(len(live_matrix[i])):
+				if live_matrix[i][j] != new_matrix[i][j]:
+					if live_matrix[i][j] != None:
+						return live_matrix[i][j]
+					elif new_matrix[i][j] != None:
+						return new_matrix[i][j]
+	
+		return ""
+
+	def findMultipleDifferentPieces(self, live_matrix, new_matrix):
+		new_array = []
+
+		for i in range(len(live_matrix)):
+			for j in range(len(live_matrix[i])):
+				if live_matrix[i][j] != new_matrix[i][j]:
+					if live_matrix[i][j] != None:
+						new_array.append(live_matrix[i][j])
+					elif new_matrix[i][j] != None:
+						new_array.append(new_matrix[i][j])
+					
+		return new_array;
+
+	def findBoardCoordinates(self, new_matrix, value):
+		for i in range(len(new_matrix)):
+			for j in range(len(new_matrix[i])):
+				if new_matrix[i][j] == value and value != "":
+					return [i, j]
+		
+		return []
+	
 	
 	
 	
