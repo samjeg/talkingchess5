@@ -42,7 +42,7 @@ class TestChessPiece{
 
 	testFindPlaceCoordinates(){
 		var placeId = "2C";
-		var expectedCoordinates = [6, 2]
+		var expectedCoordinates = [6, 2];
 		var coordinates = this.chessPiece.findPlaceCoordinates(placeId);
 		console.assert(expectedCoordinates[0]==coordinates[0], "find coordinates wrong y coordinate: "+expectedCoordinates[0]+" "+coordinates[0]);
 		console.assert(expectedCoordinates[1]==coordinates[1], "find coordinates wrong x coordinate: "+expectedCoordinates[1]+" "+coordinates[1]);
