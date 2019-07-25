@@ -102,6 +102,38 @@ class ChessPiece(object):
 		
 		return []
 	
+	def findPieceCoordinates(self, select):
+		if select != None:
+			parent_id = select.parent_id
+			fstAttr = self.first_coordinate_gen(int(parent_id[0]))
+			secAttr =  self.second_coordinate_gen(parent_id[1])
+			coordinates = [fstAttr, secAttr]
+			return coordinates
+
+	def live_chessboard_matrix_gen(self, place_ids, piece_ids):
+		place_coordinates = []
+		live_matrix = [
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""]
+		]
+		
+		for i in range(len(place_ids)):
+			fstAttr = self.first_coordinate_gen(int(place_ids[i][0]))
+			secAttr = self.second_coordinate_gen(place_ids[i][1])
+			place_coordinates.append([fstAttr, secAttr])
+			current_piece = piece_ids[i]
+			current_place = place_coordinates[i]
+			live_matrix[current_place[0]][current_place[1]] = current_piece
+		
+		return live_matrix
+	
+	
 	
 	
 	
