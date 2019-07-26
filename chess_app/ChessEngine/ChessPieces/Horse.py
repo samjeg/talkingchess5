@@ -60,9 +60,11 @@ class Horse(ChessPiece):
 		matrix = self.live_chessboard_matrix
 		horseMovablePlaces = self.movablePlaces(x, y)
 		attackingHorsePlaces = []
+		
 		for i in range(len(horseMovablePlaces)):
 			attackingSelect = Select()
 			next_val = attackingSelect.selectFromParentId(matrix, horseMovablePlaces[i])
+			
 			if next_val!=None:
 				if next_val.piece_id != 0 or next_val.piece_id != None:
 					if self.isType(next_val.piece_id, "comp_horse"):
