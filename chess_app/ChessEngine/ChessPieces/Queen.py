@@ -1,13 +1,21 @@
 from ChessPiece import ChessPiece
 from chess_app.ChessEngine.Selecter import Select 
 
-class Bishop(ChessPiece):
+class Queen(ChessPiece):
 	
 	def __init__(self):
-		super(Bishop, self).__init__()
+		super(Queen, self).__init__()
 
 	def movablePlaces(self, x, y):
-		return self.shrinkContinuosArray(self.getBishopMovablePlaces(x, y))
+		return self.shrinkContinuosArray(self.getQueenMovablePlaces(x, y))
+
+	def getQueenMovablePlaces(self, x, y):
+		rookPlaces = self.getRookMovablePlaces(x, y)
+		bishopPlaces = self.getBishopMovablePlaces(x, y)
+		place_ids = rookPlaces + bishopPlaces
+		
+		return place_ids
+	
 
 	def getBishopMovablePlaces(self, x, y):
 		matrix = self.live_chessboard_matrix
@@ -85,41 +93,75 @@ class Bishop(ChessPiece):
 		placeIds = leftToRight + rightToLeft
 		
 		return placeIds
-	
 
-	def attackingPlaces(self, isBishop, x, y):
-		attackingBishopPlaces = self.getBishopMovablePlaces(x, y)
-		RightDownAttacking = attackingBishopPlaces[23]
-		LeftUpAttacking = attackingBishopPlaces[31]
-		LeftDownAttacking = attackingBishopPlaces[7]
-		RightUpAttacking = attackingBishopPlaces[15]
-		newAttackingBishopPlaces = []
-		if isBishop == True:
-			self.getAttackingPiecesPlaces(RightDownAttacking, newAttackingBishopPlaces, "comp_bishop", "")
-			self.getAttackingPiecesPlaces(LeftUpAttacking, newAttackingBishopPlaces, "comp_bishop", "")
-			self.getAttackingPiecesPlaces(LeftDownAttacking, newAttackingBishopPlaces, "comp_bishop", "")
-			self.getAttackingPiecesPlaces(RightUpAttacking, newAttackingBishopPlaces, "comp_bishop", "")
-		else: 
-			self.getAttackingPiecesPlaces(RightDownAttacking, newAttackingBishopPlaces, "", "comp_queen")
-			self.getAttackingPiecesPlaces(LeftUpAttacking, newAttackingBishopPlaces, "", "comp_queen")
-			self.getAttackingPiecesPlaces(LeftDownAttacking, newAttackingBishopPlaces, "", "comp_queen")
-			self.getAttackingPiecesPlaces(RightUpAttacking, newAttackingBishopPlaces, "", "comp_queen")
-		
-		return newAttackingBishopPlaces
-	
-
-	def getAttackingPiecesPlaces(self, placeId, array, type1, type2):
+	def getRookMovablePlaces(self, x, y):
 		matrix = self.live_chessboard_matrix
-		piece_type = type1
-		if type1 == "":
-			piece_type = type2
-		
-		if placeId != "":
-			typeSelect = Select()
-			nextPlace = typeSelect.selectFromParentId(matrix, placeId)
-			
-			if nextPlace.piece_id != None and nextPlace.piece_id != "":
-				nextPiece = nextPlace.piece_id
-				if self.isType(nextPiece, piece_type):
-					array.append(placeId)
+		placeIds = []
+		left = ["" for a in range(8)]
+		right = ["" for b in range(8)]
+		up = ["" for c in range(8)]
+		down = ["" for d in range(8)]
+		leftCounter = 0
+		upCounter = 0
+
+		if x >= 0 and x <= 7 and y >= 0 and y <= 7:
+
+			#Going Left
+			for i in range(7, -1, -1):
+				if i < x:
+					leftSelect = Select()
+					nextElement = leftSelect.selectFromParentId(matrix, self.id_gen(y, i))
+					if nextElement.parent_id != None:
+						left[leftCounter] = nextElement.parent_id
+						if nextElement.piece_id != "" and nextElement.piece_id != None:
+							break
+						leftCounter = leftCounter + 1
+					
+	
+
+			#Going Right
+			for j in range(8):
+				if j > x:
+					rightSelect = Select()
+					nextElement = rightSelect.selectFromParentId(matrix, self.id_gen(y, j))
+					if nextElement.parent_id != None:
+						right[j] = nextElement.parent_id
+						if nextElement.piece_id != "" and nextElement.piece_id != None:
+							break
+					
+
+			#Going Down
+			for k in range(8):
+				if k > y:
+					downSelect = Select()
+					nextElement = downSelect.selectFromParentId(matrix, self.id_gen(k, x))
+					if nextElement.parent_id != None:
+						down[k] = nextElement.parent_id
+						if nextElement.piece_id != "" and nextElement.piece_id != None:
+							break
+					
+					
 				
+			#Going Up
+			for n in range(7, -1, -1):
+				if n < y:
+					upSelect = Select()
+					nextElement = upSelect.selectFromParentId(matrix, self.id_gen(n, x))
+					if nextElement.parent_id != None:
+						up[upCounter] = nextElement.parent_id
+						if nextElement.piece_id != "" and nextElement.piece_id != None:
+							break
+						upCounter = upCounter + 1
+				
+					
+				
+		left = self.moveArrayToBack(left)
+		right = self.moveArrayToBack(right)
+		up = self.moveArrayToBack(up)
+		down = self.moveArrayToBack(down)
+
+		horizontal = left + right
+		vertical = up + down
+		placeIds = horizontal + vertical
+	
+		return placeIds

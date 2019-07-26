@@ -7,8 +7,39 @@ from .ChessEngine.ChessPieces.ChessPiece import ChessPiece
 from .ChessEngine.ChessPieces.Horse import Horse
 from .ChessEngine.ChessPieces.Rook import Rook
 from .ChessEngine.ChessPieces.Bishop import Bishop
+from .ChessEngine.ChessPieces.Queen import Queen
 from .ChessEngine.Selecter import Select
 
+
+class QueenTestCase(TestCase):
+
+	def setUp(self):
+		self.queen = Queen()
+
+	def testMovablePlaces(self):
+		new_chessboard_matrix = [
+			["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+			[ "comp_pawn1", "", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "comp_pawn2", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "", "", "", "", "", "", "", ""],
+			[ "player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+			["player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+		]
+		
+		self.queen.live_chessboard_matrix = new_chessboard_matrix
+		expectedResult = [
+			"3B", "3A" ,"3D" ,"3E" , "3F" , "3G", "3H", "4C", "5C", "6C", "7C", "2C",
+			"2B", "4D", "5E", "6F", "7G", "2D", "4B", "5A"
+		]
+		movable = self.queen.movablePlaces(2, 5)
+
+		for i in range(len(movable)):
+			print("Mooo queen cow %s %s"%(movable[i], expectedResult[i]))
+			if movable[i] != expectedResult[i]:
+				self.assertEqual(movable[i], expectedResult[i])
+	
 
 class BishopTestCase(TestCase):
 
