@@ -13,10 +13,10 @@ class Rook(ChessPiece):
 	def getRookMovablePlaces(self, x, y):
 		matrix = self.live_chessboard_matrix
 		placeIds = []
-		left = []
-		right = []
-		up = []
-		down = []
+		left = ["" for a in range(8)]
+		right = ["" for b in range(8)]
+		up = ["" for c in range(8)]
+		down = ["" for d in range(8)]
 		leftCounter = 0
 		upCounter = 0
 
@@ -28,9 +28,11 @@ class Rook(ChessPiece):
 					leftSelect = Select()
 					nextElement = leftSelect.selectFromParentId(matrix, self.id_gen(y, i))
 					if nextElement.parent_id != None:
-						left.append(nextElement.parent_id)
+						left[leftCounter] = nextElement.parent_id
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
+						leftCounter = leftCounter + 1
+					
 	
 
 			#Going Right
@@ -39,7 +41,7 @@ class Rook(ChessPiece):
 					rightSelect = Select()
 					nextElement = rightSelect.selectFromParentId(matrix, self.id_gen(y, j))
 					if nextElement.parent_id != None:
-						right.append(nextElement.parent_id)
+						right[j] = nextElement.parent_id
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
 					
@@ -50,27 +52,25 @@ class Rook(ChessPiece):
 					downSelect = Select()
 					nextElement = downSelect.selectFromParentId(matrix, self.id_gen(k, x))
 					if nextElement.parent_id != None:
-						down.append(nextElement.parent_id)
+						down[k] = nextElement.parent_id
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
 					
+					
 				
-			
-
 			#Going Up
 			for n in range(7, -1, -1):
 				if n < y:
 					upSelect = Select()
 					nextElement = upSelect.selectFromParentId(matrix, self.id_gen(n, x))
 					if nextElement.parent_id != None:
-						up.append(nextElement.parent_id)
+						up[upCounter] = nextElement.parent_id
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
+						upCounter = upCounter + 1
+				
 					
 				
-			
-		
-		
 		left = self.moveArrayToBack(left)
 		right = self.moveArrayToBack(right)
 		up = self.moveArrayToBack(up)
@@ -79,7 +79,6 @@ class Rook(ChessPiece):
 		horizontal = left + right
 		vertical = up + down
 		placeIds = horizontal + vertical
-		# // console.log("Rook Place Ids: "+placeIds)
 	
 		return placeIds
 	
