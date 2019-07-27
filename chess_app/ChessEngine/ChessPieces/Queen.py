@@ -15,7 +15,6 @@ class Queen(ChessPiece):
 		place_ids = rookPlaces + bishopPlaces
 		
 		return place_ids
-	
 
 	def getBishopMovablePlaces(self, x, y):
 		matrix = self.live_chessboard_matrix
@@ -33,13 +32,14 @@ class Queen(ChessPiece):
 				
 				if b_x <= 7 and b_x >= 0 and b_y <= 7 and b_y >= 0:
 					if b_x < x and b_y < y:
-						leftUpSelect = Select()
-						nextElement = leftUpSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
+						rightDownSelect = Select()
+						nextElement = rightDownSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
 						if nextElement.parent_id != None:
-							leftUp[i] = nextElement.parent_id
+							rightDown[i] = nextElement.parent_id
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
-								break	
+								break
+									
 					
 			for j in range(8):
 				b_x = x + j
@@ -47,11 +47,11 @@ class Queen(ChessPiece):
 				
 				if b_x <= 7 and b_x >= 0 and b_y <= 7 and b_y >= 0:
 					if b_x > x and b_y < y:
-						rightUpSelect = Select()
-						nextElement = rightUpSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
+						leftDownSelect = Select()
+						nextElement = leftDownSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
 						if nextElement.parent_id != None:
-							rightUp[j] = nextElement.parent_id
+							leftDown[j] = nextElement.parent_id
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break
 							
@@ -61,11 +61,11 @@ class Queen(ChessPiece):
 				
 				if b_x <= 7 and b_x >= 0 and b_y <= 7 and b_y >= 0:
 					if b_x < x and b_y > y:
-						leftDownSelect = Select()
-						nextElement = leftDownSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
+						rightUpSelect = Select()
+						nextElement = rightUpSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
 						if nextElement.parent_id!= None:
-							leftDown[k] = nextElement.parent_id
+							rightUp[k] = nextElement.parent_id
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break						
 					
@@ -75,11 +75,11 @@ class Queen(ChessPiece):
 				
 				if b_x <= 7 and b_x >= 0 and b_y <= 7 and b_y >= 0:
 					if b_x > x and b_y > y:
-						rightDownSelect = Select()
-						nextElement = rightDownSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
+						leftUpSelect = Select()
+						nextElement = leftUpSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
 						if nextElement.parent_id!= None:
-							rightDown[n] = nextElement.parent_id
+							leftUp[n] = nextElement.parent_id
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break
 					
@@ -93,7 +93,7 @@ class Queen(ChessPiece):
 		placeIds = leftToRight + rightToLeft
 		
 		return placeIds
-
+	
 	def getRookMovablePlaces(self, x, y):
 		matrix = self.live_chessboard_matrix
 		placeIds = []
@@ -101,31 +101,31 @@ class Queen(ChessPiece):
 		right = ["" for b in range(8)]
 		up = ["" for c in range(8)]
 		down = ["" for d in range(8)]
-		leftCounter = 0
-		upCounter = 0
+		rightCounter = 0
+		downCounter = 0
 
 		if x >= 0 and x <= 7 and y >= 0 and y <= 7:
 
 			#Going Left
 			for i in range(7, -1, -1):
 				if i < x:
-					leftSelect = Select()
-					nextElement = leftSelect.selectFromParentId(matrix, self.id_gen(y, i))
+					rightSelect = Select()
+					nextElement = rightSelect.selectFromParentId(matrix, self.id_gen(y, i))
 					if nextElement.parent_id != None:
-						left[leftCounter] = nextElement.parent_id
+						right[rightCounter] = nextElement.parent_id
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
-						leftCounter = leftCounter + 1
+						rightCounter = rightCounter + 1
 					
 	
 
 			#Going Right
 			for j in range(8):
 				if j > x:
-					rightSelect = Select()
-					nextElement = rightSelect.selectFromParentId(matrix, self.id_gen(y, j))
+					leftSelect = Select()
+					nextElement = leftSelect.selectFromParentId(matrix, self.id_gen(y, j))
 					if nextElement.parent_id != None:
-						right[j] = nextElement.parent_id
+						left[j] = nextElement.parent_id
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
 					
@@ -133,10 +133,10 @@ class Queen(ChessPiece):
 			#Going Down
 			for k in range(8):
 				if k > y:
-					downSelect = Select()
-					nextElement = downSelect.selectFromParentId(matrix, self.id_gen(k, x))
+					upSelect = Select()
+					nextElement = upSelect.selectFromParentId(matrix, self.id_gen(k, x))
 					if nextElement.parent_id != None:
-						down[k] = nextElement.parent_id
+						up[k] = nextElement.parent_id
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
 					
@@ -145,13 +145,13 @@ class Queen(ChessPiece):
 			#Going Up
 			for n in range(7, -1, -1):
 				if n < y:
-					upSelect = Select()
-					nextElement = upSelect.selectFromParentId(matrix, self.id_gen(n, x))
+					downSelect = Select()
+					nextElement = downSelect.selectFromParentId(matrix, self.id_gen(n, x))
 					if nextElement.parent_id != None:
-						up[upCounter] = nextElement.parent_id
+						down[downCounter] = nextElement.parent_id
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
-						upCounter = upCounter + 1
+						downCounter = downCounter + 1
 				
 					
 				
@@ -165,3 +165,9 @@ class Queen(ChessPiece):
 		placeIds = horizontal + vertical
 	
 		return placeIds
+
+
+
+
+
+	

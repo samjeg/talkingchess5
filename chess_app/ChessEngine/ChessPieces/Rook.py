@@ -17,31 +17,31 @@ class Rook(ChessPiece):
 		right = ["" for b in range(8)]
 		up = ["" for c in range(8)]
 		down = ["" for d in range(8)]
-		leftCounter = 0
-		upCounter = 0
+		rightCounter = 0
+		downCounter = 0
 
 		if x >= 0 and x <= 7 and y >= 0 and y <= 7:
 
 			#Going Left
 			for i in range(7, -1, -1):
 				if i < x:
-					leftSelect = Select()
-					nextElement = leftSelect.selectFromParentId(matrix, self.id_gen(y, i))
+					rightSelect = Select()
+					nextElement = rightSelect.selectFromParentId(matrix, self.id_gen(y, i))
 					if nextElement.parent_id != None:
-						left[leftCounter] = nextElement.parent_id
+						right[rightCounter] = nextElement.parent_id
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
-						leftCounter = leftCounter + 1
+						rightCounter = rightCounter + 1
 					
 	
 
 			#Going Right
 			for j in range(8):
 				if j > x:
-					rightSelect = Select()
-					nextElement = rightSelect.selectFromParentId(matrix, self.id_gen(y, j))
+					leftSelect = Select()
+					nextElement = leftSelect.selectFromParentId(matrix, self.id_gen(y, j))
 					if nextElement.parent_id != None:
-						right[j] = nextElement.parent_id
+						left[j] = nextElement.parent_id
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
 					
@@ -49,10 +49,10 @@ class Rook(ChessPiece):
 			#Going Down
 			for k in range(8):
 				if k > y:
-					downSelect = Select()
-					nextElement = downSelect.selectFromParentId(matrix, self.id_gen(k, x))
+					upSelect = Select()
+					nextElement = upSelect.selectFromParentId(matrix, self.id_gen(k, x))
 					if nextElement.parent_id != None:
-						down[k] = nextElement.parent_id
+						up[k] = nextElement.parent_id
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
 					
@@ -61,13 +61,13 @@ class Rook(ChessPiece):
 			#Going Up
 			for n in range(7, -1, -1):
 				if n < y:
-					upSelect = Select()
-					nextElement = upSelect.selectFromParentId(matrix, self.id_gen(n, x))
+					downSelect = Select()
+					nextElement = downSelect.selectFromParentId(matrix, self.id_gen(n, x))
 					if nextElement.parent_id != None:
-						up[upCounter] = nextElement.parent_id
+						down[downCounter] = nextElement.parent_id
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
-						upCounter = upCounter + 1
+						downCounter = downCounter + 1
 				
 					
 				
@@ -109,18 +109,18 @@ class Rook(ChessPiece):
 		return False
 	
 
-	def toRightRookHasPieces(self):
+	def toLeftRookHasPieces(self):
 		matrix = self.live_chessboard_matrix
-		toRightRookPlaces = ["1F", "1G"]
+		toLeftRookPlaces = ["8F", "8G"]
 		
-		rightRookSelect1 = Select()
-		first = rightRookSelect1.selectFromParentId(matrix, toRightRookPlaces[0])
+		leftRookSelect1 = Select()
+		first = leftRookSelect1.selectFromParentId(matrix, toLeftRookPlaces[0])
 		if first.parent_id != None:
 			if first.piece_id != None and first.piece_id != "":
 				return True
 		
-		rightRookSelect2 = Select()
-		second = rightRookSelect2.selectFromParentId(matrix, toRightRookPlaces[1])
+		leftRookSelect2 = Select()
+		second = leftRookSelect2.selectFromParentId(matrix, toLeftRookPlaces[1])
 		if second.parent_id != None:
 			if second.piece_id != None and second.piece_id != "":
 				return True
@@ -128,24 +128,24 @@ class Rook(ChessPiece):
 		return False
 	
 
-	def toLeftRookHasPieces(self):
+	def toRightRookHasPieces(self):
 		matrix = self.live_chessboard_matrix
-		toLeftRookPlaces = ["1D", "1C", "1B"]
+		toRightRookPlaces = ["8B", "8C", "8D"]
 		
-		leftRookSelect1 = Select()		
-		first = leftRookSelect1.selectFromParentId(matrix, toLeftRookPlaces[0])
+		rightRookSelect1 = Select()		
+		first = rightRookSelect1.selectFromParentId(matrix, toRightRookPlaces[0])
 		if first.parent_id != None:
 			if first.piece_id != None and first.piece_id != "":
 				return True
 
-		leftRookSelect2 = Select()
-		second = leftRookSelect2.selectFromParentId(matrix, toLeftRookPlaces[1])
+		rightRookSelect2 = Select()
+		second = rightRookSelect2.selectFromParentId(matrix, toRightRookPlaces[1])
 		if second.parent_id != None:
 			if second.piece_id != None and second.piece_id != "":
 				return True
 
-		leftRookSelect3 = Select()
-		third = leftRookSelect3.selectFromParentId(matrix, toLeftRookPlaces[2])
+		rightRookSelect3 = Select()
+		third = rightRookSelect3.selectFromParentId(matrix, toRightRookPlaces[2])
 		if third.parent_id != None:
 			if third.piece_id != None and third.piece_id != "":
 				return True
@@ -161,15 +161,15 @@ class Rook(ChessPiece):
 		rookLeftAttacking = attackingRookPlaces[15]
 		newAttackingRookPlaces = []
 		if isRook == True:
-			self.getAttackingPiecesPlaces(rookFwdAttacking, newAttackingRookPlaces, "comp_rook", "")
-			self.getAttackingPiecesPlaces(rookBkwdAttacking, newAttackingRookPlaces, "comp_rook", "")
-			self.getAttackingPiecesPlaces(rookRightAttacking, newAttackingRookPlaces, "comp_rook", "")
-			self.getAttackingPiecesPlaces(rookLeftAttacking, newAttackingRookPlaces, "comp_rook", "")
+			self.getAttackingPiecesPlaces(rookFwdAttacking, newAttackingRookPlaces, "player_rook", "")
+			self.getAttackingPiecesPlaces(rookBkwdAttacking, newAttackingRookPlaces, "player_rook", "")
+			self.getAttackingPiecesPlaces(rookRightAttacking, newAttackingRookPlaces, "player_rook", "")
+			self.getAttackingPiecesPlaces(rookLeftAttacking, newAttackingRookPlaces, "player_rook", "")
 		else:
-			self.getAttackingPiecesPlaces(rookFwdAttacking, newAttackingRookPlaces, "", "comp_queen")
-			self.getAttackingPiecesPlaces(rookBkwdAttacking, newAttackingRookPlaces, "", "comp_queen")
-			self.getAttackingPiecesPlaces(rookRightAttacking, newAttackingRookPlaces, "", "comp_queen")
-			self.getAttackingPiecesPlaces(rookLeftAttacking, newAttackingRookPlaces, "", "comp_queen")
+			self.getAttackingPiecesPlaces(rookFwdAttacking, newAttackingRookPlaces, "", "player_queen")
+			self.getAttackingPiecesPlaces(rookBkwdAttacking, newAttackingRookPlaces, "", "player_queen")
+			self.getAttackingPiecesPlaces(rookRightAttacking, newAttackingRookPlaces, "", "player_queen")
+			self.getAttackingPiecesPlaces(rookLeftAttacking, newAttackingRookPlaces, "", "player_queen")
 		
 		return newAttackingRookPlaces
 	

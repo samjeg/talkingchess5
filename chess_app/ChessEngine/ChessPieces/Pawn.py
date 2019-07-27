@@ -46,29 +46,30 @@ class Pawn(ChessPiece):
         matrix = self.live_chessboard_matrix
         placeIds = ["" for a in range(4)]
         if x >= 0 and x <= 7 and y >= 0 and y <= 7:
-            leftFwd1Select = Select()
-            leftFwd1Element = leftFwd1Select.selectFromParentId(
-                matrix, self.id_gen(y-1, x-1))
             rightFwd1Select = Select()
             rightFwd1Element = rightFwd1Select.selectFromParentId(
-                matrix, self.id_gen(y-1, x+1))
+                matrix, self.id_gen(y+1, x-1))
+            leftFwd1Select = Select()
+            leftFwd1Element = leftFwd1Select.selectFromParentId(
+                matrix, self.id_gen(y+1, x+1))
             fwd1Select = Select()
             fwd1Element = fwd1Select.selectFromParentId(
-                matrix, self.id_gen(y-1, x))
+                matrix, self.id_gen(y+1, x))
             fwd2Select = Select()
             fwd2Element = fwd2Select.selectFromParentId(
-                matrix, self.id_gen(y-2, x))
-
+                matrix, self.id_gen(y+2, x))
+            # print("Pawn pos: %s"%self.id_gen(y, x))
             if leftFwd1Element != None:
                 if leftFwd1Element.piece_id != None and leftFwd1Element != "":
                     leftFwd1Id = leftFwd1Element.piece_id
-                    if self.isType(leftFwd1Id, "comp_"):
+                    # print("Pawn take: %s"%leftFwd1Id)
+                    if self.isType(leftFwd1Id, "player_"):
                         placeIds[0] = leftFwd1Element.parent_id
 
             if rightFwd1Element != None:
                 if rightFwd1Element.piece_id != None and rightFwd1Element != "":
                     rightFwd1Id = rightFwd1Element.piece_id
-                    if self.isType(rightFwd1Id, "comp_"):
+                    if self.isType(rightFwd1Id, "player_"):
                         placeIds[1] = rightFwd1Element.parent_id
 
             if fwd1Element != None:
@@ -92,7 +93,7 @@ class Pawn(ChessPiece):
         if first != None:
             if first.piece_id != None and first.piece_id != "":
                 next_val = first.piece_id
-                if self.isType(next_val, "comp_pawn"):
+                if self.isType(next_val, "player_pawn"):
                     new_array.append(attackingPawnPlaces[0])
 
         secondSelect = Select()
@@ -101,7 +102,7 @@ class Pawn(ChessPiece):
         if second != None:
             if second.piece_id != None and second.piece_id != "":
                 next_val2 = second.piece_id
-                if self.isType(next_val2, "comp_pawn"):
+                if self.isType(next_val2, "player_pawn"):
                     new_array.append(attackingPawnPlaces[1])
 
         return new_array
@@ -135,7 +136,7 @@ class Pawn(ChessPiece):
                 if leftElement != None:
                     if leftElement.piece_id != None and leftElement.piece_id != "":
                         piece = leftElement.piece_id
-                        if self.isType(piece, "comp_pawn"):
+                        if self.isType(piece, "player_pawn"):
                             new_array.append(array[0])
 
             if array[1] != "":
@@ -144,7 +145,7 @@ class Pawn(ChessPiece):
                 if rightElement != None:
                     if rightElement.piece_id != None and rightElement.piece_id != "":
                         piece = rightElement.piece_id
-                        if self.isType(piece, "comp_pawn"):
+                        if self.isType(piece, "player_pawn"):
                             new_array.append(array[1])
 
         return new_array
@@ -202,7 +203,7 @@ class Pawn(ChessPiece):
     def pawnReadyEnPassant(self, compPawnStartingPositions, currentEnPassantPlaceId, pieceId, placeId):
         newPlaceId = ""
 
-        if self.isType(pieceId, "comp_pawn"):
+        if self.isType(pieceId, "player_pawn"):
             for i in range(len(compPawnStartingPositions)):
                 if self.isType(pieceId, str(i+1)):
                     posBefore = self.findPlaceCoordinates(

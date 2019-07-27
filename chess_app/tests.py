@@ -14,11 +14,11 @@ from .ChessEngine.Selecter import Select
 
 class KingTestCase(TestCase):
 
-	def setUp(self):
-		self.king = King()
+    def setUp(self):
+        self.king = King()
 
-	def testMovablePlaces(self):
-		new_chessboard_matrix = [
+    def testMovablePlaces(self):
+        new_chessboard_matrix = [
             ["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen",
                 "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
             ["comp_pawn1", "", "comp_pawn3", "comp_pawn4",
@@ -33,54 +33,57 @@ class KingTestCase(TestCase):
                 "player_king", "player_bishop2", "player_horse2", "player_rook2"]
         ]
 
-		self.king.live_chessboard_matrix = new_chessboard_matrix
-		expectedResult = ["4C","2C","3D","3B","4D","4B","2D","2B"]
-		movable = self.king.getKingMovablePlaces(2, 5)
+        self.king.live_chessboard_matrix = new_chessboard_matrix
+        expectedResult = ['2C', '4C', '3B', '3D', '4D', '2D', '4B', '2B']
+        movable = self.king.getKingMovablePlaces(2, 5)
+        # print("King movable: %s"%movable)
 
-		for i in range(len(movable)):
-			print("hmmmppph king bull %s %s"%(movable[i], expectedResult[i]))
+        for i in range(len(movable)):
+		    #print("hmmmppph king bull %s %s"%(movable[i], expectedResult[i]))
 			if movable[i] != expectedResult[i]:
 				self.assertEqual(movable[i], expectedResult[i])
 
 	
 
 class PawnTestCase(TestCase):
-
+    
     def setUp(self):
         self.pawn = Pawn()
         self.chess_piece = ChessPiece()
 
     def testGetMovablePlaces(self):
-		new_chessboard_matrix = [
+        new_chessboard_matrix = [
             ["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen",
                 "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
-            ["comp_pawn1", "", "comp_pawn3", "comp_pawn4",
+            ["comp_pawn1", "comp_pawn2", "comp_pawn3", "comp_pawn4",
                 "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8"],
             ["", "", "", "", "", "", "", ""],
-            ["", "comp_pawn2", "", "", "", "", "", ""],
             ["", "", "", "", "", "", "", ""],
+            ["", "player_pawn2", "", "", "", "", "", ""],
             ["", "", "", "", "", "", "", ""],
-            ["player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4",
+            ["player_pawn1", "", "player_pawn3", "player_pawn4",
                 "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8"],
             ["player_rook1", "player_horse1", "player_bishop1", "player_queen",
                 "player_king", "player_bishop2", "player_horse2", "player_rook2"]
         ]
 
-		self.pawn.live_chessboard_matrix = new_chessboard_matrix
-		movable = self.pawn.getPawnMovablePlaces(5, 6)
-		movableWithPawn = self.pawn.getPawnMovablePlaces(2, 4)
-		expectedMovable = ["", "", "3F", "4F"]
-		expectedMovableWithPawn = ["5B", "", "5C", "6C"]
+        self.pawn.live_chessboard_matrix = new_chessboard_matrix
+        movable = self.pawn.getPawnMovablePlaces(5, 1)
+        movable2 = self.pawn.getPawnMovablePlaces(2, 5)
+        expectedMovable = ['', '', '6F', '5F']
+        expectedMovable2 = ["2D", "", "", ""]
 
-		for i in range(len(movable)):
-			# print("Mooo pawn cow %s %s" % (movable[i], expectedMovable[i]))
-			if movable[i] != expectedMovable[i]:
-				self.assertEqual(movable[i], expectedMovable[i])
+        # print("Pawn movable: %s %s"%(movable, movable2))
 
-		for j in range(len(movableWithPawn)):
+        for i in range(len(movable)):
+            # print("Mooo pawn cow %s %s" % (movable[i], expectedMovable[i]))
+            if movable[i] != expectedMovable[i]:
+                self.assertEqual(movable[i], expectedMovable[i])
+
+		for j in range(len(movable2)):
 			# print("Mooo pawn moving cow %s %s" % (movableWithPawn[j], expectedMovableWithPawn[j]))
-			if movableWithPawn[j] != expectedMovableWithPawn[j]:
-				self.assertEqual(movableWithPawn[j], expectedMovableWithPawn[j])
+			if movableWithPawn[j] != expectedMovable2[j]:
+				self.assertEqual(movable2[j], expectedMovable2[j])
 
 
 class QueenTestCase(TestCase):
@@ -106,11 +109,12 @@ class QueenTestCase(TestCase):
 
         self.queen.live_chessboard_matrix = new_chessboard_matrix
         expectedResult = [
-            "3B", "3A", "3D", "3E", "3F", "3G", "3H", "4C", "5C", "6C", "7C", "2C",
-            "2B", "4D", "5E", "6F", "7G", "2D", "4B", "5A"
+            '3D', '3E', '3F', '3G', '3H', '3B', '3A', '2C', '4C', '5C', 
+            '6C', '7C', '4D', '5E', '6F', '7G', '2B', '4B', '5A', '2D'
         ]
         movable = self.queen.movablePlaces(2, 5)
-
+        # print("Queen movable: %s"%movable)
+        
         for i in range(len(movable)):
             # print("Mooo queen cow %s %s"%(movable[i], expectedResult[i]))
             if movable[i] != expectedResult[i]:
@@ -138,11 +142,12 @@ class BishopTestCase(TestCase):
                 "player_king", "player_bishop2", "player_horse2", "player_rook2"]
         ]
         self.bishop.live_chessboard_matrix = new_chessboard_matrix
-        expectedResult = ["2B", "4D", "5E", "6F", "7G", "2D", "4B", "5A"]
+        expectedResult = ['4D', '5E', '6F', '7G', '2B', '4B', '5A', '2D']
         movable = self.bishop.movablePlaces(2, 5)
+        # print("Bishop: %s"%movable)
 
         for i in range(len(movable)):
-            # print("Mooo %s %s"%(movable[i], expectedResult[i]))
+            print("Mooo %s %s"%(movable[i], expectedResult[i]))
             if movable[i] != expectedResult[i]:
                 self.assertEqual(movable[i], expectedResult[i])
 
@@ -168,10 +173,9 @@ class RookTestcase(TestCase):
                 "player_king", "player_bishop2", "player_horse2", "player_rook2"]
         ]
         self.rook.live_chessboard_matrix = new_chessboard_matrix
-        expectedResult = ["3B", "3A", "3D", "3E", "3F",
-                          "3G", "3H", "4C", "5C", "6C", "7C", "2C"]
+        expectedResult = ['3D', '3E', '3F', '3G', '3H', '3B', '3A', '2C', '4C', '5C', '6C', '7C']
         movable = self.rook.movablePlaces(2, 5)
-        print("Movable: %s" % movable)
+        # print("Rook Movable: %s" % movable)
 
         for i in range(len(movable)):
             if movable[i] != expectedResult[i]:
@@ -199,11 +203,12 @@ class HorseTestCase(TestCase):
                 "player_king", "player_bishop2", "player_horse2", "player_rook2"]
         ]
         self.horse.live_chessboard_matrix = new_chessboard_matrix
-        expectedResult = ["7G", "3G", "6F", "4F"]
+        expectedResult = ['3G', '7G', '4F', '6F']
         movable = self.horse.movablePlaces(7, 3)
-        # print("movable %s"%movable)
+        # print("horse movable %s"%movable)
+        
         for i in range(len(movable)):
-            # print("Movable %s %s"%(movable[i], expectedResult[i]))
+            # print("Horse Movable %s %s"%(movable[i], expectedResult[i]))
             if movable[i] != expectedResult[i]:
                 self.assertEqual(movable[i], expectedResult[i])
 

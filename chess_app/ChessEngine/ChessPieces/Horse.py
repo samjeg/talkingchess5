@@ -12,21 +12,21 @@ class Horse(ChessPiece):
 		if x >= 0 and x <= 7 and y >= 0 and y <= 7:
 			# print("ID Horse %s %s %s %s %s"%(x, y, self.id_gen(y, x), self.id_gen(y-2, x-1), self.id_gen(y-2, x+1)))
 			select1 = Select()
-			topThenRightElement = select1.selectFromParentId(matrix ,self.id_gen(y-2, x-1))
+			topThenRightElement = select1.selectFromParentId(matrix ,self.id_gen(y+2, x-1))
 			select2 = Select()
-			topThenLeftElement = select2.selectFromParentId(matrix ,self.id_gen(y-2, x+1))
+			topThenLeftElement = select2.selectFromParentId(matrix ,self.id_gen(y+2, x+1))
 			select3 = Select()
-			bottomThenRightElement = select3.selectFromParentId(matrix ,self.id_gen(y+2, x+1))
+			bottomThenRightElement = select3.selectFromParentId(matrix ,self.id_gen(y-2, x+1))
 			select4 = Select()
-			bottomThenLeftElement = select4.selectFromParentId(matrix ,self.id_gen(y+2, x-1))
+			bottomThenLeftElement = select4.selectFromParentId(matrix ,self.id_gen(y-2, x-1))
 			select5 = Select()
-			rightThenTopElement = select5.selectFromParentId(matrix ,self.id_gen(y-1, x+2))
+			rightThenTopElement = select5.selectFromParentId(matrix ,self.id_gen(y+1, x-2))
 			select6 = Select()
-			rightThenBottomElement = select6.selectFromParentId(matrix ,self.id_gen(y+1, x+2))
+			rightThenBottomElement = select6.selectFromParentId(matrix ,self.id_gen(y-1, x-2))
 			select7 = Select()
-			leftThenTopElement = select7.selectFromParentId(matrix ,self.id_gen(y-1, x-2))
+			leftThenTopElement = select7.selectFromParentId(matrix ,self.id_gen(y+1, x+2))
 			select8 = Select()
-			leftThenBottomElement = select8.selectFromParentId(matrix ,self.id_gen(y+1, x-2))
+			leftThenBottomElement = select8.selectFromParentId(matrix ,self.id_gen(y-1, x+2))
 			
 			if topThenRightElement.parent_id != None and topThenRightElement.parent_id != "":
 				placeIds.append(topThenRightElement.parent_id)	
@@ -67,7 +67,7 @@ class Horse(ChessPiece):
 			
 			if next_val!=None:
 				if next_val.piece_id != 0 or next_val.piece_id != None:
-					if self.isType(next_val.piece_id, "comp_horse"):
+					if self.isType(next_val.piece_id, "player_horse"):
 							attackingHorsePlaces.append(next_val.parent_id)
 						
 					

@@ -25,13 +25,14 @@ class Bishop(ChessPiece):
 				
 				if b_x <= 7 and b_x >= 0 and b_y <= 7 and b_y >= 0:
 					if b_x < x and b_y < y:
-						leftUpSelect = Select()
-						nextElement = leftUpSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
+						rightDownSelect = Select()
+						nextElement = rightDownSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
 						if nextElement.parent_id != None:
-							leftUp[i] = nextElement.parent_id
+							rightDown[i] = nextElement.parent_id
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
-								break	
+								break
+									
 					
 			for j in range(8):
 				b_x = x + j
@@ -39,11 +40,11 @@ class Bishop(ChessPiece):
 				
 				if b_x <= 7 and b_x >= 0 and b_y <= 7 and b_y >= 0:
 					if b_x > x and b_y < y:
-						rightUpSelect = Select()
-						nextElement = rightUpSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
+						leftDownSelect = Select()
+						nextElement = leftDownSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
 						if nextElement.parent_id != None:
-							rightUp[j] = nextElement.parent_id
+							leftDown[j] = nextElement.parent_id
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break
 							
@@ -53,11 +54,11 @@ class Bishop(ChessPiece):
 				
 				if b_x <= 7 and b_x >= 0 and b_y <= 7 and b_y >= 0:
 					if b_x < x and b_y > y:
-						leftDownSelect = Select()
-						nextElement = leftDownSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
+						rightUpSelect = Select()
+						nextElement = rightUpSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
 						if nextElement.parent_id!= None:
-							leftDown[k] = nextElement.parent_id
+							rightUp[k] = nextElement.parent_id
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break						
 					
@@ -67,11 +68,11 @@ class Bishop(ChessPiece):
 				
 				if b_x <= 7 and b_x >= 0 and b_y <= 7 and b_y >= 0:
 					if b_x > x and b_y > y:
-						rightDownSelect = Select()
-						nextElement = rightDownSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
+						leftUpSelect = Select()
+						nextElement = leftUpSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
 						if nextElement.parent_id!= None:
-							rightDown[n] = nextElement.parent_id
+							leftUp[n] = nextElement.parent_id
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break
 					
@@ -95,15 +96,15 @@ class Bishop(ChessPiece):
 		RightUpAttacking = attackingBishopPlaces[15]
 		newAttackingBishopPlaces = []
 		if isBishop == True:
-			self.getAttackingPiecesPlaces(RightDownAttacking, newAttackingBishopPlaces, "comp_bishop", "")
-			self.getAttackingPiecesPlaces(LeftUpAttacking, newAttackingBishopPlaces, "comp_bishop", "")
-			self.getAttackingPiecesPlaces(LeftDownAttacking, newAttackingBishopPlaces, "comp_bishop", "")
-			self.getAttackingPiecesPlaces(RightUpAttacking, newAttackingBishopPlaces, "comp_bishop", "")
+			self.getAttackingPiecesPlaces(RightDownAttacking, newAttackingBishopPlaces, "player_bishop", "")
+			self.getAttackingPiecesPlaces(LeftUpAttacking, newAttackingBishopPlaces, "player_bishop", "")
+			self.getAttackingPiecesPlaces(LeftDownAttacking, newAttackingBishopPlaces, "player_bishop", "")
+			self.getAttackingPiecesPlaces(RightUpAttacking, newAttackingBishopPlaces, "player_bishop", "")
 		else: 
-			self.getAttackingPiecesPlaces(RightDownAttacking, newAttackingBishopPlaces, "", "comp_queen")
-			self.getAttackingPiecesPlaces(LeftUpAttacking, newAttackingBishopPlaces, "", "comp_queen")
-			self.getAttackingPiecesPlaces(LeftDownAttacking, newAttackingBishopPlaces, "", "comp_queen")
-			self.getAttackingPiecesPlaces(RightUpAttacking, newAttackingBishopPlaces, "", "comp_queen")
+			self.getAttackingPiecesPlaces(RightDownAttacking, newAttackingBishopPlaces, "", "player_queen")
+			self.getAttackingPiecesPlaces(LeftUpAttacking, newAttackingBishopPlaces, "", "player_queen")
+			self.getAttackingPiecesPlaces(LeftDownAttacking, newAttackingBishopPlaces, "", "player_queen")
+			self.getAttackingPiecesPlaces(RightUpAttacking, newAttackingBishopPlaces, "", "player_queen")
 		
 		return newAttackingBishopPlaces
 	
