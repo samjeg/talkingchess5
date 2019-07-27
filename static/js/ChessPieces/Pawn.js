@@ -112,9 +112,9 @@ class Pawn extends ChessPiece{
 		var second = document.getElementById(attackingPawnPlaces[1]);
 		if(second!=null){
 			if(second.firstElementChild!=null){
-				var next = first.firstElementChild; 
+				var next = second.firstElementChild; 
 				if(this.isType(next.id, "comp_pawn")){
-					new_array.push(attackingPawnPlaces[0]);
+					new_array.push(attackingPawnPlaces[1]);
 				}		
 			}
 		}
