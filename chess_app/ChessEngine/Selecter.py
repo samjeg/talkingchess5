@@ -17,10 +17,11 @@ class Select(object):
 		return self
 
 	def selectFromPieceId(self, matrix, p_id):
-
+		print("Hello piece id")
 		for i in range(len(matrix)):
 			for j in range(len(matrix[i])):
 				if matrix[i][j] == p_id:
+					print("Hello piece id in loop")
 					self.piece_id = p_id
 					firstCoor = i
 					secCoor = j
@@ -28,3 +29,14 @@ class Select(object):
 					self.parent_id = self.chess_piece.id_gen(i, j)
 
 		return self
+
+	def removePiece(self, matrix, par_id):
+		coordinates = self.chess_piece.findPlaceCoordinates(par_id)
+		if coordinates[0] >= 0 and coordinates[0] <= 7 and coordinates[1] >= 0 and coordinates[1] <= 7:
+			matrix[coordinates[0]][coordinates[1]] = ""
+
+
+	def appendPiece(self, matrix, p_id, par_id):
+		coordinates = self.chess_piece.findPlaceCoordinates(par_id)
+		if coordinates[0] >= 0 and coordinates[0] <= 7 and coordinates[1] >= 0 and coordinates[1] <= 7:
+			matrix[coordinates[0]][coordinates[1]] = p_id

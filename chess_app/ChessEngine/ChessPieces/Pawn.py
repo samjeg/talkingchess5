@@ -58,12 +58,13 @@ class Pawn(ChessPiece):
             fwd2Select = Select()
             fwd2Element = fwd2Select.selectFromParentId(
                 matrix, self.id_gen(y+2, x))
-            # print("Pawn pos: %s"%self.id_gen(y, x))
+            print("Pawn pos: %s - %s - %s"%(self.id_gen(y, x), self.id_gen(y+1, x-1), self.id_gen(y+1, x+1)))
             if leftFwd1Element != None:
                 if leftFwd1Element.piece_id != None and leftFwd1Element != "":
                     leftFwd1Id = leftFwd1Element.piece_id
-                    # print("Pawn take: %s"%leftFwd1Id)
+                    print("Pawn take: %s"%leftFwd1Id)
                     if self.isType(leftFwd1Id, "player_"):
+                        print("Super")
                         placeIds[0] = leftFwd1Element.parent_id
 
             if rightFwd1Element != None:
@@ -82,30 +83,15 @@ class Pawn(ChessPiece):
 
         return placeIds
 
+
     def attackingPlaces(self, x, y):
         matrix = self.live_chessboard_matrix
         attackingPawnPlaces = self.shrinkPawnArray(
             self.getPawnMovablePlaces(x, y), "checking")
+        print("Pawn attacking %s - %s"%(attackingPawnPlaces, self.getPawnMovablePlaces(x, y)))
         new_array = []
 
-        firstSelect = Select()
-        first = firstSelect.selectFromParentId(matrix, attackingPawnPlaces[0])
-        if first != None:
-            if first.piece_id != None and first.piece_id != "":
-                next_val = first.piece_id
-                if self.isType(next_val, "player_pawn"):
-                    new_array.append(attackingPawnPlaces[0])
-
-        secondSelect = Select()
-        second = secondSelect.selectFromParentId(
-            matrix, attackingPawnPlaces[1])
-        if second != None:
-            if second.piece_id != None and second.piece_id != "":
-                next_val2 = second.piece_id
-                if self.isType(next_val2, "player_pawn"):
-                    new_array.append(attackingPawnPlaces[1])
-
-        return new_array
+        return attackingPawnPlaces
 
     def shrinkPawnArray(self, array, mechanic_needed):
         matrix = self.live_chessboard_matrix
@@ -130,23 +116,13 @@ class Pawn(ChessPiece):
                     new_array.append(array[3])
 
         else:
-            if array[0] != "":
-                leftSelect = Select()
-                leftElement = leftSelect.selectFromParentId(matrix, array[0])
-                if leftElement != None:
-                    if leftElement.piece_id != None and leftElement.piece_id != "":
-                        piece = leftElement.piece_id
-                        if self.isType(piece, "player_pawn"):
-                            new_array.append(array[0])
+            if array[0] != None:
+                if array[0] != "":
+                    new_array.append(array[0])
 
-            if array[1] != "":
-                rightSelect = Select()
-                rightElement = rightSelect.selectFromParentId(matrix, array[1])
-                if rightElement != None:
-                    if rightElement.piece_id != None and rightElement.piece_id != "":
-                        piece = rightElement.piece_id
-                        if self.isType(piece, "player_pawn"):
-                            new_array.append(array[1])
+            if array[1] != None:
+                if array[1] != "":
+                    new_array.append(array[1])
 
         return new_array
 

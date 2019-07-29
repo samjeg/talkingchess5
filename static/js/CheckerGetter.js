@@ -14,7 +14,7 @@ class CheckerGetter{
 		var king_piece = document.getElementById("player_king");
 		var king_coordinates = this.chessPiece.findPieceCoordinates(king_piece);
 		var x = king_coordinates[1];
-		var y = king_coordinates[0]
+		var y = king_coordinates[0];
 		var attackingPawnPlaces = this.pawn.attackingPlaces(x, y);
 		var attackingHorsePlaces = this.horse.attackingPlaces(x, y);
 		var attackingRookPlaces = this.rook.attackingPlaces(true, x, y);
@@ -48,16 +48,16 @@ class CheckerGetter{
 		return attackingPlaces;
 	}
 
-	kingHasCheck(){
-		var attackingPlaces = this.fromPiece();
+	placeHasCheck(placeId){
+		var attackingPlaces = this.fromPlace(placeId);
 		if(attackingPlaces.length>0){
 			return true;
 		}
 		return false;
 	}
-
-	placeHasCheck(placeId){
-		var attackingPlaces = this.fromPlace(placeId);
+	
+	kingHasCheck(){
+		var attackingPlaces = this.fromPiece();
 		if(attackingPlaces.length>0){
 			return true;
 		}
@@ -93,14 +93,14 @@ class CheckerGetter{
 	}
 
 	leftRookHasCheck(){
-		if(this.checkerGetter.placeHasCheck("1A")){
+		if(this.placeHasCheck("1A")){
 			return true;
 		}
 		return false;
 	}
 
 	rightRookHasCheck(){
-		if(this.checkerGetter.placeHasCheck("1H")){
+		if(this.placeHasCheck("1H")){
 			return true;
 		}
 		return false;

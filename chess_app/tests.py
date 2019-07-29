@@ -11,6 +11,30 @@ from .ChessEngine.ChessPieces.Queen import Queen
 from .ChessEngine.ChessPieces.Pawn import Pawn
 from .ChessEngine.ChessPieces.King import King
 from .ChessEngine.Selecter import Select
+from .ChessEngine.CheckerGetter import CheckerGetter
+
+
+class CheckerGetterTestCase(TestCase):
+
+    def setUp(self):
+        self.checker_getter = CheckerGetter()
+
+    def testKingCanCheck(self):
+        first_chessboard_matrix = [
+            ["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+            [ "comp_pawn1", "comp_pawn2", "comp_pawn3", "", "comp_pawn5", "player_rook2", "comp_pawn6", "comp_pawn8" ],
+            [ "", "", "", "", "", "", "", ""],
+            [ "", "player_bishop1", "", "comp_pawn4", "", "comp_pawn7", "", ""],
+            [ "", "", "", "", "", "", "", ""],
+            [ "", "", "", "", "", "", "", ""],
+            [ "player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+            ["player_rook1", "player_horse1", "", "player_queen", "player_king", "player_bishop2", "player_horse2", ""]
+        ]
+
+        self.checker_getter.live_chessboard_matrix = first_chessboard_matrix 
+    
+        self.assertTrue(self.checker_getter.kingHasCheck())
+    
 
 class KingTestCase(TestCase):
 

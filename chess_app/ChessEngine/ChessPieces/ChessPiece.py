@@ -105,6 +105,7 @@ class ChessPiece(object):
 	def findPieceCoordinates(self, select):
 		if select != None:
 			parent_id = select.parent_id
+			print("Parent id %s"%parent_id)
 			fstAttr = self.first_coordinate_gen(int(parent_id[0]))
 			secAttr =  self.second_coordinate_gen(parent_id[1])
 			coordinates = [fstAttr, secAttr]
