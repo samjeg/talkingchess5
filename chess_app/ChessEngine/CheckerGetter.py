@@ -19,6 +19,7 @@ class CheckerGetter(object):
 		self.pawn = Pawn()
 		self.king = King()
 
+	# gets the postions of all the pieces that are attacking the king
 	def fromPiece(self):
 		matrix = self.live_chessboard_matrix
 		self.horse.live_chessboard_matrix = matrix
@@ -44,6 +45,7 @@ class CheckerGetter(object):
 		
 		return attackingPlaces
 	
+	# gets the position of all the pieces that are attacking a place for checking castling 
 	def fromPlace(self, placeId):
 		attackingPlaces = []
 		placeCoordinates = self.chess_piece.findPlaceCoordinates(placeId)
@@ -75,6 +77,7 @@ class CheckerGetter(object):
 		
 		return False
 	
+	# checks if the path to the left of the king to the rook is bieng checked for castling
 	def toLeftRookHasCheck(self):
 		toLeftRookPlaces = ["8F", "8G"]
 		if self.placeHasCheck(toLeftRookPlaces[0]):
@@ -85,7 +88,7 @@ class CheckerGetter(object):
 		
 		return False
 	
-
+		# checks if the path to the right of the king to the rook is bieng checked for castling
 	def toRightRookHasCheck(self):
 		toRightRookPlaces = ["8D", "8C", "8B"];
 		if self.placeHasCheck(toRightRookPlaces[0]):
@@ -99,19 +102,21 @@ class CheckerGetter(object):
 		
 		return False
 
+	# checks if the right rook is bieng checked for castling
 	def rightRookHasCheck(self):
-		if self.placeHasCheck("8A"):
-			return True
-		
-		return False
-	
-
-	def leftRookHasCheck(self):
 		if self.placeHasCheck("8H"):
 			return True
 		
 		return False
+	
+	# checks if the left rook is bieng checked for castling
+	def leftRookHasCheck(self):
+		if self.placeHasCheck("8A"):
+			return True
+		
+		return False
 
+	# returns only positions that are not under check that the king can immediately move to
 	def carefullKing(self, kingArray):
 		newArray = [] 
 		for i in range(len(kingArray)):

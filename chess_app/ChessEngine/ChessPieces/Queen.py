@@ -9,6 +9,7 @@ class Queen(ChessPiece):
 	def movablePlaces(self, x, y):
 		return self.shrinkContinuosArray(self.getQueenMovablePlaces(x, y))
 
+	# uses bishop and rook moves to get queen moves
 	def getQueenMovablePlaces(self, x, y):
 		rookPlaces = self.getRookMovablePlaces(x, y)
 		bishopPlaces = self.getBishopMovablePlaces(x, y)

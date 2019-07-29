@@ -9,6 +9,7 @@ class Bishop(ChessPiece):
 	def movablePlaces(self, x, y):
 		return self.shrinkContinuosArray(self.getBishopMovablePlaces(x, y))
 
+	# gets all the positions a bishop can move gien on coordinates the board 
 	def getBishopMovablePlaces(self, x, y):
 		matrix = self.live_chessboard_matrix
 		placeIds = []
@@ -88,6 +89,7 @@ class Bishop(ChessPiece):
 		return placeIds
 	
 
+	# sees if a bishop or queen is attcking the position of the coordinates given	
 	def attackingPlaces(self, isBishop, x, y):
 		attackingBishopPlaces = self.getBishopMovablePlaces(x, y)
 		RightDownAttacking = attackingBishopPlaces[23]
@@ -109,6 +111,7 @@ class Bishop(ChessPiece):
 		return newAttackingBishopPlaces
 	
 
+	# attcking pieces helper
 	def getAttackingPiecesPlaces(self, placeId, array, type1, type2):
 		matrix = self.live_chessboard_matrix
 		piece_type = type1

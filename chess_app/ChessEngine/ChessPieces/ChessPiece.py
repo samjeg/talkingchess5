@@ -3,6 +3,8 @@ class ChessPiece(object):
 	def __init__(self):
 		self.live_chessboard_matrix = None
 
+	# Move the items in the array to the end  of array of 
+	# size 8 so continious movements like rook can be searched in 8's
 	def moveArrayToBack(self, array):
 		rem_length = 8 - len(array)
 		rem_counter = 0
@@ -17,6 +19,7 @@ class ChessPiece(object):
 		
 		return new_array
 
+	# shrinks movements so there are no gaps and it is selectable
 	def shrinkContinuosArray(self, array):
 		new_array = []
 		for i in range(len(array)):
@@ -36,6 +39,7 @@ class ChessPiece(object):
 		col_num = ord(secAttr) - 65
 		return col_num
 
+	# uses the place position id and gives the coordinates of that place
 	def findPlaceCoordinates(self, parent_id):
 		fstAttr = self.first_coordinate_gen(int(parent_id[0]))
 		secAttr = self.second_coordinate_gen(parent_id[1])
@@ -43,6 +47,7 @@ class ChessPiece(object):
 		
 		return coordinates
 	
+	# checks if one string is the similar to another for piece types and comp vs player types
 	def isType(self, pieceId, target_piece):
 		new_target_piece = target_piece
 
@@ -55,6 +60,7 @@ class ChessPiece(object):
 	
 		return False
 
+
 	def id_gen(self, row_num, col_num):
 		secAttr = chr(65 + col_num)
 		fstAttr = 8 - (row_num)
@@ -62,6 +68,7 @@ class ChessPiece(object):
 		
 		return chess_id
 
+	# compares 2 matrices to see if there the same if not can do an action
 	def matrixSame(self, matrix1, matrix2):
 		for i in range(len(matrix1)):
 			for j in range(len(matrix1[i])):
@@ -70,6 +77,7 @@ class ChessPiece(object):
 			
 		return True
 
+	# finds a single different piece if 2 matrices are not the same to make a movement
 	def findDiffentPiece(self, live_matrix, new_matrix):
 		for i in range(len(live_matrix)):
 			for j in range(len(live_matrix[i])):
@@ -81,6 +89,7 @@ class ChessPiece(object):
 	
 		return ""
 
+	# finds all the different pieces for testing positioning movement
 	def findMultipleDifferentPieces(self, live_matrix, new_matrix):
 		new_array = []
 
@@ -94,6 +103,7 @@ class ChessPiece(object):
 					
 		return new_array;
 
+	# finds the coordinates of a piece in a matrix
 	def findBoardCoordinates(self, new_matrix, value):
 		for i in range(len(new_matrix)):
 			for j in range(len(new_matrix[i])):
@@ -102,6 +112,7 @@ class ChessPiece(object):
 		
 		return []
 	
+	# finds coordintaes of a selcted piece if it exists
 	def findPieceCoordinates(self, select):
 		if select != None:
 			parent_id = select.parent_id
@@ -111,6 +122,7 @@ class ChessPiece(object):
 			coordinates = [fstAttr, secAttr]
 			return coordinates
 
+	# returns a matrix based on place ands and piece ids given in order so that the live chessboard can be setup
 	def live_chessboard_matrix_gen(self, place_ids, piece_ids):
 		place_coordinates = []
 		live_matrix = [

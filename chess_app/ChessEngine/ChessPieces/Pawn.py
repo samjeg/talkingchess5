@@ -13,7 +13,6 @@ class Pawn(ChessPiece):
 
     def movablePlaces(self, compPawnStartingPositions, currentEnPassantPlaceId, enPassantOpponentLeft, enPassantOpponentRight, isEnPassant, currentEnPassantOpponentPlaceId, x, y):
 
-        # print("shrunken pawn: "+self.shrinkPawnArray(self.getPawnMovablePlaces(x, y), "playing"));
         newArray = self.enPassantMovement(
             compPawnStartingPositions,
             currentEnPassantPlaceId,
@@ -28,6 +27,7 @@ class Pawn(ChessPiece):
 
         return newArray
 
+    # gets the postion of the pawns en passant position if it has been set
     def getEnPassantPlace(self):
         if self.placeIsSetEnPassant:
             self.placeIsSetEnPassant = True
@@ -35,6 +35,7 @@ class Pawn(ChessPiece):
 
         return None
 
+    # get the position of the opponent enpassant is bieng performed on so opponent can be removed
     def getEnPassantOpponentPlace(self):
         if self.opponentPlaceIsSetEnPassant:
             self.opponentPlaceIsSetEnPassant = False
@@ -42,6 +43,7 @@ class Pawn(ChessPiece):
 
         return None
 
+    # gets all the places that a pawn can move
     def getPawnMovablePlaces(self, x, y):
         matrix = self.live_chessboard_matrix
         placeIds = ["" for a in range(4)]
@@ -83,7 +85,7 @@ class Pawn(ChessPiece):
 
         return placeIds
 
-
+    #checks if a piece is bieng attacked by the pawn
     def attackingPlaces(self, x, y):
         matrix = self.live_chessboard_matrix
         attackingPawnPlaces = self.shrinkPawnArray(
@@ -93,6 +95,7 @@ class Pawn(ChessPiece):
 
         return attackingPawnPlaces
 
+    # no gaps in array so can be used for selection
     def shrinkPawnArray(self, array, mechanic_needed):
         matrix = self.live_chessboard_matrix
         new_array = []
@@ -126,6 +129,7 @@ class Pawn(ChessPiece):
 
         return new_array
 
+    # adds the empassant postion if available to the pawns possible moves    
     def enPassantMovement(self, compPawnStartingPositions, currentEnPassantPlaceId, enPassantOpponentLeft, enPassantOpponentRight, isEnPassant, currentEnPassantOpponentPlaceId, pawnArray, x, y):
         matrix = self.live_chessboard_matrix
         newArray = []
@@ -176,6 +180,7 @@ class Pawn(ChessPiece):
 
             return pawnArray
 
+    # checks if the pawn is ready for enpassant
     def pawnReadyEnPassant(self, compPawnStartingPositions, currentEnPassantPlaceId, pieceId, placeId):
         newPlaceId = ""
 

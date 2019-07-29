@@ -41,6 +41,7 @@ class ChessMechanic(object):
 		self.pawn = Pawn()
 		self.horse = Horse()
 
+	# allows the comp to select a piece to play
 	def select(self, pieceId):
 		matrix = self.chessPiece.live_chessboard_matrix
 		self.prevSelectedHighlightIds = self.current_selected_movable_ids
@@ -56,7 +57,8 @@ class ChessMechanic(object):
 		)
 
 		current_king_place_id = document.getElementById("player_king").parentElement.id
-	
+
+
 	def canCastleRight(self):
 		if  all( [
 			not self.king.kingHasMoved(self.movedPieces),
@@ -82,6 +84,7 @@ class ChessMechanic(object):
 		
 		return False
 
+	# gives castling moves if kingCanCastle functions are true
 	def kingExtraMoves(self, kingArray):
 		if self.canCastleRight():
 			kingArray.append("1G")
@@ -91,7 +94,7 @@ class ChessMechanic(object):
 		
 		return kingArray
 	
-
+	# gives castling moves if the king has initiated a castling move
 	def rookExtraMoves(self, rookArray):
 		if self.kingMovedRight:
 			rookArray.append("1F")
@@ -101,6 +104,7 @@ class ChessMechanic(object):
 		
 		return rookArray
 
+	# gets all posible moves depending on the piece and the circumstance that a chesspiece can make
 	def getMovable(self, pieceId, x, y):
 		movablePlaces = []
 		if self.chessPiece.isType(pieceId, "pawn"):
@@ -134,6 +138,7 @@ class ChessMechanic(object):
 		
 		return movablePlaces
 
+	# place a piece in a position that is given in params
 	def moveTo(self, placeId):
 		matrix = self.live_chessboard_matrix
 		var selectedId = ""
@@ -191,13 +196,14 @@ class ChessMechanic(object):
 					if parent_id == self.currentEnPassantOpponentPlaceId:
 						current_element.removePiece(matrix, parent_id)
 
+	# sets pawn has moved for the enPassant move
 	def setCompPawnsHasMoved(self, pieceId):
 		if self.chessPiece.isType(pieceId, "comp_pawn"):
 			for i in range(len(self.compPawnsHasMoved)):
 				if self.chessPiece.isType(pieceId, str(i+1)):
 					self.compPawnsHasMoved[i] = True
 				
-	
+	# removes the piece the position given replaceses it with the selected piece for taking pieces
 	def remove(self, pieceId):
 		matrix = self.live_chessboard_matrix
 		current_select = Select()

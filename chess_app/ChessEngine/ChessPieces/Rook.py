@@ -9,7 +9,7 @@ class Rook(ChessPiece):
 	def movablePlaces(self, x, y):
 		return self.shrinkContinuosArray(self.getRookMovablePlaces(x, y))
 	
-
+	# gets all the positions a rook can move gien on coordinates the board 
 	def getRookMovablePlaces(self, x, y):
 		matrix = self.live_chessboard_matrix
 		placeIds = []
@@ -108,7 +108,7 @@ class Rook(ChessPiece):
 		
 		return False
 	
-
+	# checks if there are pieces to the left of the king
 	def toLeftRookHasPieces(self):
 		matrix = self.live_chessboard_matrix
 		toLeftRookPlaces = ["8F", "8G"]
@@ -127,7 +127,7 @@ class Rook(ChessPiece):
 			
 		return False
 	
-
+	# checks if there are pieces to the right of the king
 	def toRightRookHasPieces(self):
 		matrix = self.live_chessboard_matrix
 		toRightRookPlaces = ["8B", "8C", "8D"]
@@ -152,7 +152,7 @@ class Rook(ChessPiece):
 
 		return False
 		
-
+	# sees if a rook or queen is attcking the position of the coordinates given
 	def attackingPlaces(self, isRook, x, y):
 		attackingRookPlaces = self.getRookMovablePlaces(x, y)
 		rookFwdAttacking = attackingRookPlaces[23]
@@ -173,7 +173,7 @@ class Rook(ChessPiece):
 		
 		return newAttackingRookPlaces
 	
-
+	# attcking pieces helper
 	def getAttackingPiecesPlaces(self, placeId, array, type1, type2):
 		matrix = self.live_chessboard_matrix
 		piece_type = type1

@@ -7,6 +7,7 @@ class King(ChessPiece):
 	def __init__(self):
 		super(King, self).__init__()
 
+	# gets all the possible positions that can moved by the king without special moves and seeing if the position is bieng checked
 	def getKingMovablePlaces(self, x, y):
 		matrix = self.live_chessboard_matrix;
 		placeIds = []

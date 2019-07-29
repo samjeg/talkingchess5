@@ -6,6 +6,7 @@ class Horse(ChessPiece):
 	def __init__(self):
 		super(Horse, self).__init__()
 
+	# gets all the possible positions that can moved by the horse
 	def movablePlaces(self, x, y):
 		matrix = self.live_chessboard_matrix
 		placeIds = []
@@ -55,7 +56,7 @@ class Horse(ChessPiece):
 		
 		return placeIds
 	
-
+	# checkes if a position is being attcked by the horse
 	def attackingPlaces(self, x, y):
 		matrix = self.live_chessboard_matrix
 		horseMovablePlaces = self.movablePlaces(x, y)

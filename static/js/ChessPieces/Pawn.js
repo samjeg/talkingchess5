@@ -97,9 +97,8 @@ class Pawn extends ChessPiece{
 		return placeIds;
 	}
 
-	attackingPlaces(self, x, y){
-		print("Pawn attackng %s - %s"%(this.shrinkPawnArray(this.getPawnMovablePlaces(x, y), "checking"), this.getPawnMovablePlaces(x, y), "checking"))
-		var attackingPawnPlaces = this.shrinkPawnArray(this.getPawnMovablePlaces(x, y), "checking")
+	attackingPlaces(x, y){
+		var attackingPawnPlaces = this.shrinkPawnArray(this.getPawnMovablePlaces(x, y), "checking");
 		var new_array = [];
 		var first = document.getElementById(attackingPawnPlaces[0]);
 		if(first!=null){
