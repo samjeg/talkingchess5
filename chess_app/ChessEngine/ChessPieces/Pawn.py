@@ -58,6 +58,7 @@ class Pawn(ChessPiece):
             fwd1Element = fwd1Select.selectFromParentId(
                 matrix, self.id_gen(y+1, x))
             fwd2Select = Select()
+            # print("get pawn movable places %s"%self.id_gen(y+2, x))
             fwd2Element = fwd2Select.selectFromParentId(
                 matrix, self.id_gen(y+2, x))
         
@@ -81,7 +82,7 @@ class Pawn(ChessPiece):
             if fwd2Element != None:
                 if fwd2Element.piece_id != None and fwd2Element.piece_id == "":
                     placeIds[3] = fwd2Element.parent_id
-
+        # print("Pawn %s"%placeIds)
         return placeIds
 
     #checks if a piece is bieng attacked by the pawn
@@ -90,7 +91,7 @@ class Pawn(ChessPiece):
         attackingPawnPlaces = self.shrinkPawnArray(
             self.getPawnMovablePlaces(x, y), "checking")
         new_array = []
-
+        # print("Pawn %s"%attackingPawnPlaces)
         return attackingPawnPlaces
 
     # no gaps in array so can be used for selection

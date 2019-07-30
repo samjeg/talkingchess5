@@ -47,16 +47,23 @@ class ChessMechanics(object):
 		self.prevSelectedHighlightIds = self.current_selected_movable_ids
 		currentSelect = Select()
 		self.current_selected_piece = currentSelect.selectFromPieceId(matrix, pieceId)
+		self.rook.live_chessboard_matrix = self.chessPiece.live_chessboard_matrix
+		self.bishop.live_chessboard_matrix = self.chessPiece.live_chessboard_matrix
+		self.queen.live_chessboard_matrix = self.chessPiece.live_chessboard_matrix
+		self.king.live_chessboard_matrix = self.chessPiece.live_chessboard_matrix
+		self.pawn.live_chessboard_matrix = self.chessPiece.live_chessboard_matrix
+		self.horse.live_chessboard_matrix = self.chessPiece.live_chessboard_matrix
 		self.current_selected_coordinates = self.chessPiece.findPieceCoordinates(self.current_selected_piece)
 		self.currentEnPassantOpponentPlaceId = ""
 		
 		self.current_selected_movable_ids = self.getMovable(
-			self.current_selected_piece.id,
+			self.current_selected_piece.piece_id,
 			self.current_selected_coordinates[1],
 			self.current_selected_coordinates[0]
 		)
 
-		current_king_place_id = document.getElementById("player_king").parentElement.id
+		current_king_place_id_select = Select()
+		current_king_place_id = current_king_place_id_select.selectFromPieceId(matrix, "player_king").parent_id
 
 
 	def canCastleRight(self):
@@ -120,6 +127,7 @@ class ChessMechanics(object):
 			)
 			self.currentEnPassantPlaceId = self.pawn.getEnPassantPlace()
 			self.currentEnPassantOpponentPlaceId = self.pawn.getEnPassantOpponentPlace()
+			print("Movable: %s"%movablePlaces)
 		
 		elif self.chessPiece.isType(pieceId, "rook"):
 			movablePlaces = self.rookExtraMoves(self.rook.movablePlaces(x, y))
@@ -140,7 +148,7 @@ class ChessMechanics(object):
 
 	# place a piece in a position that is given in params
 	def moveTo(self, placeId):
-		matrix = self.live_chessboard_matrix
+		matrix = self.chessPiece.live_chessboard_matrix
 		selectedId = ""
 		if self.current_selected_piece != None:
 

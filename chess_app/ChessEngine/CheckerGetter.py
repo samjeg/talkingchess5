@@ -51,6 +51,7 @@ class CheckerGetter(object):
 		x = placeCoordinates[1]
 		y = placeCoordinates[0]
 		attackingPawnPlaces = self.pawn.attackingPlaces(x, y)
+		# print("Checker getter from place %s"%attackingPawnPlaces)
 		attackingHorsePlaces = self.horse.attackingPlaces(x, y)
 		attackingRookPlaces = self.rook.attackingPlaces(True, x, y)
 		attackingBishopPlaces = self.bishop.attackingPlaces(True, x, y)
@@ -58,11 +59,12 @@ class CheckerGetter(object):
 		queen2 = self.bishop.attackingPlaces(False, x, y)
 		attackingQueenPlaces = queen1 + queen2
 		attackingPlaces = attackingPawnPlaces + attackingHorsePlaces + attackingRookPlaces + attackingBishopPlaces + attackingQueenPlaces
-		
+		# print("Checker getter from place full array %s"%attackingPlaces)
 		return attackingPlaces
 
 	def placeHasCheck(self, placeId):
 		attackingPlaces = self.fromPlace(placeId)
+		# print("Checker getter placeHasCheck %s"%attackingPlaces)
 		if len(attackingPlaces) > 0:
 			return True
 		

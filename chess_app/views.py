@@ -29,6 +29,7 @@ class Register(CreateView):
     template_name = "chess_app/register.html"
     success_url = reverse_lazy("index")
 
+# home page view 
 class IndexView(FormMixin, TemplateView):
 	template_name = 'chess_app/index.html'
 	model = models.Chessboard
@@ -39,6 +40,7 @@ class IndexView(FormMixin, TemplateView):
 		# global chess_detail_id
 
 		return reverse_lazy('chess_app:chess_detail', kwargs={'pk':chess_detail_id})
+
 
 	def get_context_data(self, **kwargs):
 		context = super(IndexView, self).get_context_data(**kwargs)
@@ -82,6 +84,7 @@ class IndexView(FormMixin, TemplateView):
 		chess_detail_id = chessboard.id
 		
 		return super(IndexView, self).form_valid(form)
+
 
 
 class UserProfileDetailView(FormMixin, DetailView):
@@ -188,6 +191,7 @@ class UserProfileUpdateView(UpdateView):
 
         return context
 
+# view for the chessboard 
 class ChessboardDetailView(FormMixin, DetailView):
 	model = models.Chessboard
 	template_name = 'chess_app/chessboard.html'
@@ -197,6 +201,8 @@ class ChessboardDetailView(FormMixin, DetailView):
 	def get_success_url(self):
 		return reverse_lazy('chess_app:chess_detail', kwargs={'pk':self.object.pk})
 
+	# user passes state which is changed by the ai the 
+	# return state is passed to the front-end as context
 	def get_context_data(self, **kwargs):
 		context = super(ChessboardDetailView, self).get_context_data(**kwargs)
 		user = self.request.user
