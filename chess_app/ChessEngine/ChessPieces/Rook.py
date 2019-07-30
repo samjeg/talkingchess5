@@ -13,10 +13,10 @@ class Rook(ChessPiece):
 	def getRookMovablePlaces(self, x, y):
 		matrix = self.live_chessboard_matrix
 		placeIds = []
-		left = ["" for a in range(8)]
-		right = ["" for b in range(8)]
-		up = ["" for c in range(8)]
-		down = ["" for d in range(8)]
+		left = []
+		right = []
+		up = []
+		down = []
 		rightCounter = 0
 		downCounter = 0
 
@@ -28,7 +28,7 @@ class Rook(ChessPiece):
 					rightSelect = Select()
 					nextElement = rightSelect.selectFromParentId(matrix, self.id_gen(y, i))
 					if nextElement.parent_id != None:
-						right[rightCounter] = nextElement.parent_id
+						right.append(nextElement.parent_id)
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
 						rightCounter = rightCounter + 1
@@ -41,7 +41,7 @@ class Rook(ChessPiece):
 					leftSelect = Select()
 					nextElement = leftSelect.selectFromParentId(matrix, self.id_gen(y, j))
 					if nextElement.parent_id != None:
-						left[j] = nextElement.parent_id
+						left.append(nextElement.parent_id)
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
 					
@@ -52,7 +52,7 @@ class Rook(ChessPiece):
 					upSelect = Select()
 					nextElement = upSelect.selectFromParentId(matrix, self.id_gen(k, x))
 					if nextElement.parent_id != None:
-						up[k] = nextElement.parent_id
+						up.append(nextElement.parent_id)
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
 					
@@ -64,7 +64,7 @@ class Rook(ChessPiece):
 					downSelect = Select()
 					nextElement = downSelect.selectFromParentId(matrix, self.id_gen(n, x))
 					if nextElement.parent_id != None:
-						down[downCounter] = nextElement.parent_id
+						down.append(nextElement.parent_id)
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
 						downCounter = downCounter + 1
@@ -100,7 +100,7 @@ class Rook(ChessPiece):
 		return False
 	
 
-	def leftRookHasMoved(movedPieces):
+	def leftRookHasMoved(self, movedPieces):
 		for i in range(len(movedPieces)):
 			next_val = movedPieces[i]
 			if self.isType(next_val, "player_rook1"):
@@ -155,6 +155,7 @@ class Rook(ChessPiece):
 	# sees if a rook or queen is attcking the position of the coordinates given
 	def attackingPlaces(self, isRook, x, y):
 		attackingRookPlaces = self.getRookMovablePlaces(x, y)
+		
 		rookFwdAttacking = attackingRookPlaces[23]
 		rookBkwdAttacking = attackingRookPlaces[31]
 		rookRightAttacking = attackingRookPlaces[7]

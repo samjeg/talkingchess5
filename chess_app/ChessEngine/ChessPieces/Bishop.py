@@ -13,10 +13,10 @@ class Bishop(ChessPiece):
 	def getBishopMovablePlaces(self, x, y):
 		matrix = self.live_chessboard_matrix
 		placeIds = []
-		leftUp = ["" for a in range(8)]
-		rightUp = ["" for b in range(8)]
-		leftDown = ["" for c in range(8)]
-		rightDown = ["" for d in range(8)]
+		leftUp = []
+		rightUp = []
+		leftDown = []
+		rightDown = []
 		
 		if x >= 0 and x <= 7 and y >= 0 and y <= 7:
 			
@@ -30,7 +30,7 @@ class Bishop(ChessPiece):
 						nextElement = rightDownSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
 						if nextElement.parent_id != None:
-							rightDown[i] = nextElement.parent_id
+							rightDown.append(nextElement.parent_id)
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break
 									
@@ -45,7 +45,7 @@ class Bishop(ChessPiece):
 						nextElement = leftDownSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
 						if nextElement.parent_id != None:
-							leftDown[j] = nextElement.parent_id
+							leftDown.append(nextElement.parent_id)
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break
 							
@@ -59,7 +59,7 @@ class Bishop(ChessPiece):
 						nextElement = rightUpSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
 						if nextElement.parent_id!= None:
-							rightUp[k] = nextElement.parent_id
+							rightUp.append(nextElement.parent_id)
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break						
 					
@@ -73,7 +73,7 @@ class Bishop(ChessPiece):
 						nextElement = leftUpSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
 						if nextElement.parent_id!= None:
-							leftUp[n] = nextElement.parent_id
+							leftUp.append(nextElement.parent_id)
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break
 					
@@ -81,7 +81,7 @@ class Bishop(ChessPiece):
 		rightUp = self.moveArrayToBack(rightUp)
 		leftDown = self.moveArrayToBack(leftDown)
 		rightDown = self.moveArrayToBack(rightDown)
-		
+		# print("leftUp %s rightUp %s leftDown %s rightDown %s"%(leftUp, rightUp, leftDown, rightDown)) 
 		leftToRight = leftDown + rightUp
 		rightToLeft = rightDown + leftUp
 		placeIds = leftToRight + rightToLeft
@@ -89,9 +89,10 @@ class Bishop(ChessPiece):
 		return placeIds
 	
 
-	# sees if a bishop or queen is attcking the position of the coordinates given	
+	# sees if a bishop or queen is attacking the position of the coordinates given	
 	def attackingPlaces(self, isBishop, x, y):
 		attackingBishopPlaces = self.getBishopMovablePlaces(x, y)
+		# print("bishop places: %s"%attackingBishopPlaces)
 		RightDownAttacking = attackingBishopPlaces[23]
 		LeftUpAttacking = attackingBishopPlaces[31]
 		LeftDownAttacking = attackingBishopPlaces[7]

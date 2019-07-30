@@ -8,7 +8,7 @@ from ChessPieces.Rook import Rook
 from ChessPieces.Bishop import Bishop
 from ChessPieces.Horse import Horse
 
-class ChessMechanic(object):
+class ChessMechanics(object):
 	
 	def __init__(self):
 		self.current_selected_piece = None
@@ -141,10 +141,10 @@ class ChessMechanic(object):
 	# place a piece in a position that is given in params
 	def moveTo(self, placeId):
 		matrix = self.live_chessboard_matrix
-		var selectedId = ""
+		selectedId = ""
 		if self.current_selected_piece != None:
 
-			if len(self.current_selected_movable_ids) != 0;
+			if len(self.current_selected_movable_ids) != 0:
 				for i in range(len(self.current_selected_movable_ids)):
 					if placeId == self.current_selected_movable_ids[i]:
 						current_select = Select()

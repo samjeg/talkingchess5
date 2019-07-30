@@ -9,14 +9,12 @@ class ChessPiece(object):
 		rem_length = 8 - len(array)
 		rem_counter = 0
 		new_array = ["" for x in range(8)]
-		print("array length: %s"%len(new_array))
 		for i in range(8): 
 			if (rem_counter<rem_length):
 				new_array[i] = ""
 				rem_counter = rem_counter + 1
 			else:
 				new_array[i] = array[i-rem_length];
-		
 		return new_array
 
 	# shrinks movements so there are no gaps and it is selectable
@@ -116,7 +114,6 @@ class ChessPiece(object):
 	def findPieceCoordinates(self, select):
 		if select != None:
 			parent_id = select.parent_id
-			print("Parent id %s"%parent_id)
 			fstAttr = self.first_coordinate_gen(int(parent_id[0]))
 			secAttr =  self.second_coordinate_gen(parent_id[1])
 			coordinates = [fstAttr, secAttr]

@@ -30,7 +30,6 @@ class CheckerGetter(object):
 		self.king.live_chessboard_matrix = matrix
 		selectKing = Select()
 		king_piece = selectKing.selectFromPieceId(matrix, "comp_king")
-		print("King from piece %s %s"%(king_piece.piece_id, king_piece.parent_id))
 		king_coordinates = self.chess_piece.findPieceCoordinates(king_piece)
 		x = king_coordinates[1]
 		y = king_coordinates[0]
@@ -88,7 +87,7 @@ class CheckerGetter(object):
 		
 		return False
 	
-		# checks if the path to the right of the king to the rook is bieng checked for castling
+	# checks if the path to the right of the king to the rook is bieng checked for castling
 	def toRightRookHasCheck(self):
 		toRightRookPlaces = ["8D", "8C", "8B"];
 		if self.placeHasCheck(toRightRookPlaces[0]):

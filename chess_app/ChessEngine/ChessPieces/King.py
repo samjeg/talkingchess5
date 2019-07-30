@@ -17,7 +17,6 @@ class King(ChessPiece):
 			leftBkwdSelect = Select()
 			leftBkwdElement = leftBkwdSelect.selectFromParentId(matrix, self.id_gen(y-1, x+1))
 			rightFwdSelect = Select()
-			# print("Right fwd: %s"%self.id_gen(y+1, x-1))
 			rightFwdElement = rightFwdSelect.selectFromParentId(matrix, self.id_gen(y+1, x-1))
 			leftFwdSelect = Select()
 			leftFwdElement = leftFwdSelect.selectFromParentId(matrix, self.id_gen(y+1, x+1))

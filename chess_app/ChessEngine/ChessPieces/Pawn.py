@@ -60,13 +60,12 @@ class Pawn(ChessPiece):
             fwd2Select = Select()
             fwd2Element = fwd2Select.selectFromParentId(
                 matrix, self.id_gen(y+2, x))
-            print("Pawn pos: %s - %s - %s"%(self.id_gen(y, x), self.id_gen(y+1, x-1), self.id_gen(y+1, x+1)))
+        
             if leftFwd1Element != None:
                 if leftFwd1Element.piece_id != None and leftFwd1Element != "":
                     leftFwd1Id = leftFwd1Element.piece_id
-                    print("Pawn take: %s"%leftFwd1Id)
+
                     if self.isType(leftFwd1Id, "player_"):
-                        print("Super")
                         placeIds[0] = leftFwd1Element.parent_id
 
             if rightFwd1Element != None:
@@ -90,7 +89,6 @@ class Pawn(ChessPiece):
         matrix = self.live_chessboard_matrix
         attackingPawnPlaces = self.shrinkPawnArray(
             self.getPawnMovablePlaces(x, y), "checking")
-        print("Pawn attacking %s - %s"%(attackingPawnPlaces, self.getPawnMovablePlaces(x, y)))
         new_array = []
 
         return attackingPawnPlaces

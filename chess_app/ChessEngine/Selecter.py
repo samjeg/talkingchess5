@@ -19,11 +19,9 @@ class Select(object):
 
 	# create select from the piece id object with piece and parent id replaces getElementById in javascript frontend
 	def selectFromPieceId(self, matrix, p_id):
-		print("Hello piece id")
 		for i in range(len(matrix)):
 			for j in range(len(matrix[i])):
 				if matrix[i][j] == p_id:
-					print("Hello piece id in loop")
 					self.piece_id = p_id
 					firstCoor = i
 					secCoor = j
