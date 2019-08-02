@@ -6,6 +6,8 @@ class Pawn extends ChessPiece{
 		this.opponentPlaceEnPassant = null;
 		this.placeIsSetEnPassant = false;
 		this.placeEnPassant = null;
+		this.currentPiece = null;
+		this.playerPawnsHasMoved = [false, false, false, false, false, false, false, false, false, false];
 	}
 
 	movablePlaces(
@@ -19,8 +21,10 @@ class Pawn extends ChessPiece{
 		playerPawnsHasMoved,
 		x, 
 		y
-	){
-		
+	){	
+
+		this.currentPiece = currentPiece;
+		this.playerPawnsHasMoved = playerPawnsHasMoved
 		// console.log("pawn: "+this.getPawnMovablePlaces(x, y)+" "+x+" "+y);
 		// console.log("shrunken pawn: "+this.shrinkPawnArray(this.getPawnMovablePlaces(x, y), "playing"));
 		return this.enPassantMovement(
@@ -30,7 +34,7 @@ class Pawn extends ChessPiece{
 			enPassantOpponentRight, 
 			isEnPassant, 
 			currentEnPassantOpponentPlaceId,
-			this.shrinkPawnArray(this.getPawnMovablePlaces(currentPiece, playerPawnsHasMoved, x, y), "playing"),
+			this.shrinkPawnArray(this.getPawnMovablePlaces(x, y), "playing"),
 			x,
 			y
 		);
@@ -52,7 +56,7 @@ class Pawn extends ChessPiece{
     	return undefined;
     }
 
-	getPawnMovablePlaces(selected, playerPawnsHasMoved, x, y){
+	getPawnMovablePlaces(x, y){
 		var matrix = this.live_chessboard_matrix;
 		var placeIds = [];
 		if(x>=0&&x<=7&&y>=0&&y<=7){
@@ -84,11 +88,13 @@ class Pawn extends ChessPiece{
 			}
 			if(fwd2Element!=null){
 				if(fwd2Element.childElementCount==0){
+					var selected = this.currentPiece;
 					var pieceId = selected.id;
 					if(this.isType(pieceId, String(x+1))){
-						console.log("get movable places "+x+" "+pieceId+" "+placeIds[3]+" "+this.isType(pieceId, String(x+1)));
-						if(playerPawnsHasMoved[x] == false){
-							placeIds[3] = fwd2Element.id;
+						if(this.playerPawnsHasMoved.length != 0){
+							if(this.playerPawnsHasMoved[x] == false){
+								placeIds[3] = fwd2Element.id;
+							}
 						}
 					} 
 				}

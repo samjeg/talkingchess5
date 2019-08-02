@@ -233,6 +233,7 @@ class PawnTestCase(TestCase):
     def setUp(self):
         self.pawn = Pawn()
         self.chess_piece = ChessPiece()
+        self.chess_mech = ChessMechanics()
 
     def testGetMovablePlaces(self):
         new_chessboard_matrix = [
@@ -250,6 +251,10 @@ class PawnTestCase(TestCase):
                 "player_king", "player_bishop2", "player_horse2", "player_rook2"]
         ]
 
+        select = Select()
+        select.piece_id = "comp_pawn6"
+        select.parent_id = "7F"
+        self.pawn.currentPiece = select
         self.pawn.live_chessboard_matrix = new_chessboard_matrix
         movable = self.pawn.getPawnMovablePlaces(5, 1)
         movable2 = self.pawn.getPawnMovablePlaces(2, 5)
@@ -264,6 +269,21 @@ class PawnTestCase(TestCase):
 		for j in range(len(movable2)):
 			if movableWithPawn[j] != expectedMovable2[j]:
 				self.assertEqual(movable2[j], expectedMovable2[j])
+
+
+        self.chess_mech.chessPiece.live_chessboard_matrix = new_chessboard_matrix
+        self.chess_mech.select("comp_pawn8")
+        pawnMovableBefore = self.chess_mech.current_selected_movable_ids
+        
+
+        self.chess_mech.moveTo("6H")
+        self.chess_mech.select("comp_pawn8")
+        pawnMovableAfter = self.chess_mech.current_selected_movable_ids
+        
+        self.assertNotEqual(pawnMovableBefore, pawnMovableAfter)
+
+
+
 
 
 class QueenTestCase(TestCase):

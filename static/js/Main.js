@@ -110,20 +110,13 @@ class ChessMechanics{
 		this.current_selected_piece = document.getElementById(pieceId);
 		this.current_selected_coordinates = this.chessPiece.findPieceCoordinates(this.current_selected_piece);
 		this.currentEnPassantOpponentPlaceId = "";
-		// console.log("Movable Params: "+
-		// 	this.current_selected_piece.id+
-		// 	" "+
-		// 	this.current_selected_coordinates[1]+
-		// 	" "+
-		// 	this.current_selected_coordinates[0]
-		// );
+		
 		this.current_selected_movable_ids = this.getMovable(
 			this.current_selected_piece.id,
 			this.current_selected_coordinates[1],
 			this.current_selected_coordinates[0]
 		);
 
-		// console.log("Movable "+this.current_selected_movable_ids);
 		var current_king_place_id = document.getElementById("player_king").parentElement.id;
 		this.selectedHightlightMovableIds = this.current_selected_movable_ids;
 		this.highlightMovable(this.selectedHightlightMovableIds);

@@ -122,6 +122,7 @@ class ChessMechanics(object):
 				self.enPassantOpponentRight, 
 				self.isEnPassant, 
 				self.currentEnPassantOpponentPlaceId,
+				self.current_selected_piece,
 				self.compPawnsHasMoved,
 				x, 
 				y

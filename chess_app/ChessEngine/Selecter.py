@@ -43,3 +43,5 @@ class Select(object):
 		coordinates = self.chess_piece.findPlaceCoordinates(par_id)
 		if coordinates[0] >= 0 and coordinates[0] <= 7 and coordinates[1] >= 0 and coordinates[1] <= 7:
 			matrix[coordinates[0]][coordinates[1]] = p_id
+
+	

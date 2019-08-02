@@ -10,9 +10,13 @@ class Pawn(ChessPiece):
         self.opponentPlaceEnPassant = None
         self.placeIsSetEnPassant = False
         self.placeEnPassant = None
+        self.currentPiece = None
+        self.compPawnsHasMoved = [False for x in range(8)]
 
-    def movablePlaces(self, playerPawnStartingPositions, currentEnPassantPlaceId, enPassantOpponentLeft, enPassantOpponentRight, isEnPassant, currentEnPassantOpponentPlaceId, currentPiece, compPawnHasMoved, x, y):
+    def movablePlaces(self, playerPawnStartingPositions, currentEnPassantPlaceId, enPassantOpponentLeft, enPassantOpponentRight, isEnPassant, currentEnPassantOpponentPlaceId, currentPiece, compPawnsHasMoved, x, y):
 
+        self.currentPiece = currentPiece
+        self.compPawnsHasMoved = compPawnsHasMoved
         newArray = self.enPassantMovement(
             playerPawnStartingPositions,
             currentEnPassantPlaceId,
@@ -20,7 +24,7 @@ class Pawn(ChessPiece):
             enPassantOpponentLeft,
             isEnPassant,
             currentEnPassantOpponentPlaceId,
-            self.shrinkPawnArray(self.getPawnMovablePlaces(currentPiece, compPawnHasMoved, x, y), "playing"),
+            self.shrinkPawnArray(self.getPawnMovablePlaces(x, y), "playing"),
             x,
             y
         )
@@ -44,7 +48,7 @@ class Pawn(ChessPiece):
         return None
 
     # gets all the places that a pawn can move
-    def getPawnMovablePlaces(self, selected, compPawnHasMoved, x, y):
+    def getPawnMovablePlaces(self, x, y):
         matrix = self.live_chessboard_matrix
         placeIds = ["" for a in range(4)]
         if x >= 0 and x <= 7 and y >= 0 and y <= 7:
@@ -81,11 +85,12 @@ class Pawn(ChessPiece):
 
             if fwd2Element != None:
                 if fwd2Element.piece_id != None and fwd2Element.piece_id == "":
-                    pieceId = selected.piece_id;
-                    if self.isType(pieceId, x):
-                        # console.log("get movable places "+x+" "+pieceId+" "+placeIds[3]);
-                        if compPawnsHasMoved[x] == True:
-                            placeIds[3] = fwd2Element.parent_id
+                    selected = self.currentPiece
+                    if selected != None:
+                        pieceId = selected.piece_id
+                        if self.isType(pieceId, str(x+1)):
+                            if self.compPawnsHasMoved[x] == False:
+                                placeIds[3] = fwd2Element.parent_id
                         
                         
                     

@@ -3,15 +3,14 @@ $(document).ready(function(){
 	runChessPieceTests();
 	runHorseTests();
 	runBishopTests();
-	runPawnTests();
+	// runPawnTests();
 	runRookTests();
 	runQueenTests();
 	runKingTests();
 	runCheckerGetterTests();
-	runCastlingTests();
-	runChessMechanicsTests();
+	// runCastlingTests();
+	// runChessMechanicsTests();
 
-	console.log("hello run tests");
 
 });
 
@@ -422,12 +421,12 @@ class TestPawn{
 		var chessMech2 = new ChessMechanics()
 		chessMech2.select("player_pawn8");
 		var movableBefore = chessMech2.current_selected_movable_ids;
-		console.log("test pawn movable before "+movableBefore);
-
+	
 		chessMech2.moveTo("3H");
 		chessMech2.select("player_pawn8");
 		var movableAfter = chessMech2.current_selected_movable_ids;
-		console.log("test pawn movable after "+movableAfter);
+		
+		console.assert(movableBefore!=movableAfter, "pawn first move mechanic not working");
 	}
 }
 
