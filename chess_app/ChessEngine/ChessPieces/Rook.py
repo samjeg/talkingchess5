@@ -27,7 +27,7 @@ class Rook(ChessPiece):
 				if i < x:
 					rightSelect = Select()
 					nextElement = rightSelect.selectFromParentId(matrix, self.id_gen(y, i))
-					if nextElement.parent_id != None:
+					if nextElement.parent_id != None and not self.isType(nextElement.piece_id, "comp_"):
 						right.append(nextElement.parent_id)
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
@@ -40,7 +40,7 @@ class Rook(ChessPiece):
 				if j > x:
 					leftSelect = Select()
 					nextElement = leftSelect.selectFromParentId(matrix, self.id_gen(y, j))
-					if nextElement.parent_id != None:
+					if nextElement.parent_id != None and not self.isType(nextElement.piece_id, "comp_"):
 						left.append(nextElement.parent_id)
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
@@ -51,7 +51,7 @@ class Rook(ChessPiece):
 				if k > y:
 					upSelect = Select()
 					nextElement = upSelect.selectFromParentId(matrix, self.id_gen(k, x))
-					if nextElement.parent_id != None:
+					if nextElement.parent_id != None and not self.isType(nextElement.piece_id, "comp_"):
 						up.append(nextElement.parent_id)
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
@@ -63,7 +63,7 @@ class Rook(ChessPiece):
 				if n < y:
 					downSelect = Select()
 					nextElement = downSelect.selectFromParentId(matrix, self.id_gen(n, x))
-					if nextElement.parent_id != None:
+					if nextElement.parent_id != None and not self.isType(nextElement.piece_id, "comp_"):
 						down.append(nextElement.parent_id)
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
@@ -75,7 +75,6 @@ class Rook(ChessPiece):
 		right = self.moveArrayToBack(right)
 		up = self.moveArrayToBack(up)
 		down = self.moveArrayToBack(down)
-
 		horizontal = left + right
 		vertical = up + down
 		placeIds = horizontal + vertical

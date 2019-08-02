@@ -20,10 +20,10 @@ class ChessMechanics(object):
 		self.movedPieces = []
 		self.kingMovedRight = False
 		self.kingMovedLeft = False
-		self.playerPawnStartingPositions = ["" for a in range(8)]
-		self.compPawnStartingPositions = ["" for a in range(8)]
-		self.playerPawnsHasMoved = ["" for a in range(8)]
-		self.compPawnsHasMoved = ["" for a in range(8)]
+		self.playerPawnStartingPositions = ["2A", "2B", "2C", "2D", "2E", "2F", "2G", "2H"]
+		self.compPawnStartingPositions = ["7A", "7B", "7C", "7D", "7E", "7F", "7G", "7H"]
+		self.playerPawnsHasMoved = [False for a in range(8)]
+		self.compPawnsHasMoved = [False for a in range(8)]
 		self.enPassantOpponentLeft = ""
 		self.enPassantOpponentRight = ""
 		self.currentEnPassantOpponentPlaceId = ""
@@ -116,18 +116,18 @@ class ChessMechanics(object):
 		movablePlaces = []
 		if self.chessPiece.isType(pieceId, "pawn"):
 			movablePlaces = self.pawn.movablePlaces(
-				self.compPawnStartingPositions, 
+				self.playerPawnStartingPositions, 
 				self.currentEnPassantPlaceId,
 				self.enPassantOpponentLeft, 
 				self.enPassantOpponentRight, 
 				self.isEnPassant, 
 				self.currentEnPassantOpponentPlaceId,
+				self.compPawnsHasMoved,
 				x, 
 				y
 			)
 			self.currentEnPassantPlaceId = self.pawn.getEnPassantPlace()
 			self.currentEnPassantOpponentPlaceId = self.pawn.getEnPassantOpponentPlace()
-			print("Movable: %s"%movablePlaces)
 		
 		elif self.chessPiece.isType(pieceId, "rook"):
 			movablePlaces = self.rookExtraMoves(self.rook.movablePlaces(x, y))
@@ -170,7 +170,7 @@ class ChessMechanics(object):
 						if self.chessPiece.isType(selectedId, "player_rook"):
 							self.kingMovedRight = False
 							self.kingMovedLeft = False
-					
+
 						if self.currentEnPassantPlaceId != "" or self.currentEnPassantPlaceId != None:
 							if placeId == self.currentEnPassantPlaceId:
 								self.removeEnPassantOpponent(placeId)	
@@ -180,12 +180,12 @@ class ChessMechanics(object):
 	def removeEnPassantOpponent(self, placeId):
 		matrix = self.chessPiece.live_chessboard_matrix
 		currentCoordinates = self.chessPiece.findPlaceCoordinates(placeId)
-		enPassantOpponentPlaceId = self.chessPiece.id_gen(currentCoordinates[0] + 1, currentCoordinates[1])
+		enPassantOpponentPlaceId = self.chessPiece.id_gen(currentCoordinates[0] - 1, currentCoordinates[1])
 		enPassantOpponentSelect = Select()
-		enPassantOpponentPlace = enPassantOpponentSelect.selectFromParentId(matrix, enPassantOpponentPlaceId)
+		enPassantOpponentElement = enPassantOpponentSelect.selectFromParentId(matrix, enPassantOpponentPlaceId)
 
-		if enPassantOpponentPlace != None:
-			enPassantOpponent = enPassantOpponentPlace.piece_id
+		if enPassantOpponentElement != None:
+			enPassantOpponent = enPassantOpponentElement.piece_id
 			if enPassantOpponent != None and enPassantOpponent != "":
 				self.removeEnPassantOpponentHelper(enPassantOpponent)
 			
@@ -193,7 +193,7 @@ class ChessMechanics(object):
 		self.currentEnPassantPlaceId = ""
 	
 
-	def removeEnPassantOpponentHelper(pieceId):
+	def removeEnPassantOpponentHelper(self, pieceId):
 		matrix = self.chessPiece.live_chessboard_matrix
 		current_select = Select()
 		current_element = current_select.selectFromPieceId(matrix, pieceId)
@@ -204,12 +204,36 @@ class ChessMechanics(object):
 					if parent_id == self.currentEnPassantOpponentPlaceId:
 						current_element.removePiece(matrix, parent_id)
 
-	# sets pawn has moved for the enPassant move
 	def setCompPawnsHasMoved(self, pieceId):
 		if self.chessPiece.isType(pieceId, "comp_pawn"):
 			for i in range(len(self.compPawnsHasMoved)):
 				if self.chessPiece.isType(pieceId, str(i+1)):
 					self.compPawnsHasMoved[i] = True
+
+	# sets pawn has moved for the enPassant move
+	def setPlayerPawnsHasMoved(self, pieceId):
+		if self.chessPiece.isType(pieceId, "player_pawn"):
+			for i in range(len(self.playerPawnsHasMoved)):
+				if self.chessPiece.isType(pieceId, String(i+1)):
+					self.compPawnsHasMoved[i] = True
+
+	def setAllcompPawnsHaveMoved(self):
+		pawnComps = self.chessPiece.getAllPawnLocations()
+		for i in range(len(pawnComps)):
+			pieceId = pawnComps[i]
+			setCompPawnsHasMoved(pieceId)
+		
+	def getPawnHasMoved(self, select, array):
+		pieceId = select.piece_id
+		if self.chessPiece.isType(pieceId, "comp_pawn"):
+			for i in range(len(self.compPawnsHasMoved)):
+				if self.chessPiece.isType(pieceId, str(i+1)):
+					if self.compPawnsHasMoved[i]:
+						del array[-1]
+					
+		return array
+				
+		
 				
 	# removes the piece the position given replaceses it with the selected piece for taking pieces
 	def remove(self, pieceId):

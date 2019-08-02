@@ -30,28 +30,36 @@ class Horse(ChessPiece):
 			leftThenBottomElement = select8.selectFromParentId(matrix ,self.id_gen(y-1, x+2))
 			
 			if topThenRightElement.parent_id != None and topThenRightElement.parent_id != "":
-				placeIds.append(topThenRightElement.parent_id)	
+				if not self.isType(topThenRightElement.piece_id, "comp_"):
+					placeIds.append(topThenRightElement.parent_id)	
 			
 			if topThenLeftElement.parent_id != None and topThenLeftElement.parent_id != "": 
-				placeIds.append(topThenLeftElement.parent_id)		
+				if not self.isType(topThenLeftElement.piece_id, "comp_"):
+					placeIds.append(topThenLeftElement.parent_id)		
 			
 			if bottomThenRightElement.parent_id != None and bottomThenRightElement.parent_id != "":
-				placeIds.append(bottomThenRightElement.parent_id)
+				if not self.isType(bottomThenRightElement.piece_id, "comp_"):
+					placeIds.append(bottomThenRightElement.parent_id)
 			
 			if bottomThenLeftElement.parent_id != None and bottomThenLeftElement.parent_id != "":
-				placeIds.append(bottomThenLeftElement.parent_id)
+				if not self.isType(bottomThenLeftElement.piece_id, "comp_"):
+					placeIds.append(bottomThenLeftElement.parent_id)
 			
 			if rightThenTopElement.parent_id != None and rightThenTopElement.parent_id != "":
-				placeIds.append(rightThenTopElement.parent_id)
+				if not self.isType(rightThenTopElement.piece_id, "comp_"):
+					placeIds.append(rightThenTopElement.parent_id)
 			
 			if rightThenBottomElement.parent_id != None and rightThenBottomElement.parent_id != "":
-				placeIds.append(rightThenBottomElement.parent_id)
+				if not self.isType(rightThenBottomElement.piece_id, "comp_"):
+					placeIds.append(rightThenBottomElement.parent_id)
 			
 			if leftThenTopElement.parent_id != None and leftThenTopElement.parent_id != "":
-				placeIds.append(leftThenTopElement.parent_id)
+				if not self.isType(leftThenTopElement.piece_id, "comp_"):
+					placeIds.append(leftThenTopElement.parent_id)
 			
 			if leftThenBottomElement.parent_id != None and leftThenBottomElement.parent_id != "":
-				placeIds.append(leftThenBottomElement.parent_id)
+				if not self.isType(leftThenBottomElement.piece_id, "comp_"):
+					placeIds.append(leftThenBottomElement.parent_id)
 			
 		
 		return placeIds

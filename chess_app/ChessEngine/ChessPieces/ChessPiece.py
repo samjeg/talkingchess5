@@ -3,6 +3,19 @@ class ChessPiece(object):
 	def __init__(self):
 		self.live_chessboard_matrix = None
 
+
+	#
+	def getAllPawnLocations(self):
+		array = []
+		matrix = self.live_chessboard_matrix
+		for i in range(8):
+			for j in range(8):
+				next_val = matrix[i][j]
+				if self.isType(next_val, "comp_pawn"):
+					array.append(next_val)
+
+		return array
+
 	# Move the items in the array to the end  of array of 
 	# size 8 so continious movements like rook can be searched in 8's
 	def moveArrayToBack(self, array):

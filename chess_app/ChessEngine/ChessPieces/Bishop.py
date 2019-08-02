@@ -29,7 +29,7 @@ class Bishop(ChessPiece):
 						rightDownSelect = Select()
 						nextElement = rightDownSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
-						if nextElement.parent_id != None:
+						if nextElement.parent_id != None and not self.isType(nextElement.piece_id, "comp_"):
 							rightDown.append(nextElement.parent_id)
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break
@@ -44,7 +44,7 @@ class Bishop(ChessPiece):
 						leftDownSelect = Select()
 						nextElement = leftDownSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
-						if nextElement.parent_id != None:
+						if nextElement.parent_id != None and not self.isType(nextElement.piece_id, "comp_"):
 							leftDown.append(nextElement.parent_id)
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break
@@ -58,7 +58,7 @@ class Bishop(ChessPiece):
 						rightUpSelect = Select()
 						nextElement = rightUpSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
-						if nextElement.parent_id!= None:
+						if nextElement.parent_id!= None and not self.isType(nextElement.piece_id, "comp_"):
 							rightUp.append(nextElement.parent_id)
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break						
@@ -72,7 +72,7 @@ class Bishop(ChessPiece):
 						leftUpSelect = Select()
 						nextElement = leftUpSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
-						if nextElement.parent_id!= None:
+						if nextElement.parent_id!= None and not self.isType(nextElement.piece_id, "comp_"):
 							leftUp.append(nextElement.parent_id)
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break

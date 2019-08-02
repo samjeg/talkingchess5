@@ -52,7 +52,6 @@ class ChessPiece {
 
 	isType(pieceId, target_piece){
 		var new_target_piece = target_piece;
-
 		for(var j=0; j<pieceId.length; j++){
 			if(pieceId.charAt(j)==new_target_piece.charAt(0)){
 				new_target_piece = new_target_piece.substr(1);

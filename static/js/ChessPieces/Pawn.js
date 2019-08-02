@@ -15,6 +15,8 @@ class Pawn extends ChessPiece{
 		enPassantOpponentRight, 
 		isEnPassant, 
 		currentEnPassantOpponentPlaceId, 
+		currentPiece,
+		playerPawnsHasMoved,
 		x, 
 		y
 	){
@@ -28,7 +30,7 @@ class Pawn extends ChessPiece{
 			enPassantOpponentRight, 
 			isEnPassant, 
 			currentEnPassantOpponentPlaceId,
-			this.shrinkPawnArray(this.getPawnMovablePlaces(x, y), "playing"),
+			this.shrinkPawnArray(this.getPawnMovablePlaces(currentPiece, playerPawnsHasMoved, x, y), "playing"),
 			x,
 			y
 		);
@@ -50,7 +52,7 @@ class Pawn extends ChessPiece{
     	return undefined;
     }
 
-	getPawnMovablePlaces(x, y){
+	getPawnMovablePlaces(selected, playerPawnsHasMoved, x, y){
 		var matrix = this.live_chessboard_matrix;
 		var placeIds = [];
 		if(x>=0&&x<=7&&y>=0&&y<=7){
@@ -58,15 +60,7 @@ class Pawn extends ChessPiece{
 			var rightFwd1Element = document.getElementById(this.id_gen(y-1, x+1));
 			var fwd1Element = document.getElementById(this.id_gen(y-1, x));
 			var fwd2Element = document.getElementById(this.id_gen(y-2, x));
-			// console.log("Id gen: "+
-			// 			this.id_gen(y-1, x-1)+
-			// 			" "+
-			// 			this.id_gen(y-1, x+1)+
-			// 			" "+
-			// 			this.id_gen(y-1, x)+
-			// 			" "+
-			// 			this.id_gen(y-2, x)
-			// );
+	
 			if(leftFwd1Element!=null){
 				if(leftFwd1Element.childElementCount!=0){
 					var leftFwd1Id = leftFwd1Element.firstElementChild.id;
@@ -90,7 +84,13 @@ class Pawn extends ChessPiece{
 			}
 			if(fwd2Element!=null){
 				if(fwd2Element.childElementCount==0){
-					placeIds[3] = fwd2Element.id;
+					var pieceId = selected.id;
+					if(this.isType(pieceId, String(x+1))){
+						console.log("get movable places "+x+" "+pieceId+" "+placeIds[3]+" "+this.isType(pieceId, String(x+1)));
+						if(playerPawnsHasMoved[x] == false){
+							placeIds[3] = fwd2Element.id;
+						}
+					} 
 				}
 			}
 		}

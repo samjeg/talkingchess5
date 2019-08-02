@@ -290,9 +290,10 @@ class QueenTestCase(TestCase):
         self.queen.live_chessboard_matrix = new_chessboard_matrix
         expectedResult = [
             '3D', '3E', '3F', '3G', '3H', '3B', '3A', '2C', '4C', '5C', 
-            '6C', '7C', '4D', '5E', '6F', '7G', '2B', '4B', '5A', '2D'
+            '6C', '4D', '5E', '6F', '2B', '4B', '5A', '2D'
         ]
         movable = self.queen.movablePlaces(2, 5)
+    
         
         for i in range(len(movable)):
             if movable[i] != expectedResult[i]:
@@ -320,7 +321,7 @@ class BishopTestCase(TestCase):
                 "player_king", "player_bishop2", "player_horse2", "player_rook2"]
         ]
         self.bishop.live_chessboard_matrix = new_chessboard_matrix
-        expectedResult = ['4D', '5E', '6F', '7G', '2B', '4B', '5A', '2D']
+        expectedResult = ['4D', '5E', '6F', '2B', '4B', '5A', '2D']
         movable = self.bishop.movablePlaces(2, 5)
 
         for i in range(len(movable)):
@@ -328,7 +329,7 @@ class BishopTestCase(TestCase):
                 self.assertEqual(movable[i], expectedResult[i])
 
 
-class RookTestcase(TestCase):
+class RookTestCase(TestCase):
 
     def setUp(self):
         self.rook = Rook()
@@ -349,9 +350,9 @@ class RookTestcase(TestCase):
                 "player_king", "player_bishop2", "player_horse2", "player_rook2"]
         ]
         self.rook.live_chessboard_matrix = new_chessboard_matrix
-        expectedResult = ['3D', '3E', '3F', '3G', '3H', '3B', '3A', '2C', '4C', '5C', '6C', '7C']
+        expectedResult = ['3D', '3E', '3F', '3G', '3H', '3B', '3A', '2C', '4C', '5C', '6C']
         movable = self.rook.movablePlaces(2, 5)
-
+        
         for i in range(len(movable)):
             if movable[i] != expectedResult[i]:
                 self.assertEqual(movable[i], expectedResult[i])
@@ -378,9 +379,9 @@ class HorseTestCase(TestCase):
                 "player_king", "player_bishop2", "player_horse2", "player_rook2"]
         ]
         self.horse.live_chessboard_matrix = new_chessboard_matrix
-        expectedResult = ['3G', '7G', '4F', '6F']
+        expectedResult = ['3G', '4F', '6F']
         movable = self.horse.movablePlaces(7, 3)
-        
+
         for i in range(len(movable)):
             if movable[i] != expectedResult[i]:
                 self.assertEqual(movable[i], expectedResult[i])

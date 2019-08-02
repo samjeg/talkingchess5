@@ -30,28 +30,36 @@ class King(ChessPiece):
 			rightElement = rightSelect.selectFromParentId(matrix, self.id_gen(y, x-1))
 
 			if fwdElement.parent_id != None and fwdElement.parent_id != "":
-				placeIds.append(fwdElement.parent_id)
+				if not self.isType(fwdElement.piece_id, "comp_"):
+					placeIds.append(fwdElement.parent_id)
 			
 			if bkwdElement.parent_id != None and  bkwdElement.parent_id != "":
-				placeIds.append(bkwdElement.parent_id)
+				if not self.isType(bkwdElement.piece_id, "comp_"):
+					placeIds.append(bkwdElement.parent_id)
 			
 			if rightElement.parent_id != None and rightElement.parent_id != "":
-				placeIds.append(rightElement.parent_id);
+				if not self.isType(rightElement.piece_id, "comp_"):
+					placeIds.append(rightElement.parent_id);
 			
 			if leftElement.parent_id != None and leftElement.parent_id != "":
-				placeIds.append(leftElement.parent_id);
+				if not self.isType(leftElement.piece_id, "comp_"):
+					placeIds.append(leftElement.parent_id);
 			
 			if leftBkwdElement.parent_id != None and leftBkwdElement.parent_id != "":
-				placeIds.append(leftBkwdElement.parent_id);
+				if not self.isType(leftBkwdElement.piece_id, "comp_"):
+					placeIds.append(leftBkwdElement.parent_id);
 			
 			if leftFwdElement.parent_id != None and leftFwdElement.parent_id != "":
-				placeIds.append(leftFwdElement.parent_id)
+				if not self.isType(leftFwdElement.piece_id, "comp_"):
+					placeIds.append(leftFwdElement.parent_id)
 			
 			if rightBkwdElement.parent_id != None and rightBkwdElement.parent_id != "":
-				placeIds.append(rightBkwdElement.parent_id)
+				if not self.isType(rightBkwdElement.piece_id, "comp_"):
+					placeIds.append(rightBkwdElement.parent_id)
 			
 			if rightFwdElement.parent_id != None and rightFwdElement.parent_id != "":
-				placeIds.append(rightFwdElement.parent_id)
+				if not self.isType(rightFwdElement.piece_id, "comp_"):
+					placeIds.append(rightFwdElement.parent_id)
 		
 		return placeIds
 

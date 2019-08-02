@@ -11,16 +11,16 @@ class Pawn(ChessPiece):
         self.placeIsSetEnPassant = False
         self.placeEnPassant = None
 
-    def movablePlaces(self, compPawnStartingPositions, currentEnPassantPlaceId, enPassantOpponentLeft, enPassantOpponentRight, isEnPassant, currentEnPassantOpponentPlaceId, x, y):
+    def movablePlaces(self, playerPawnStartingPositions, currentEnPassantPlaceId, enPassantOpponentLeft, enPassantOpponentRight, isEnPassant, currentEnPassantOpponentPlaceId, currentPiece, compPawnHasMoved, x, y):
 
         newArray = self.enPassantMovement(
-            compPawnStartingPositions,
+            playerPawnStartingPositions,
             currentEnPassantPlaceId,
             enPassantOpponentRight,
             enPassantOpponentLeft,
             isEnPassant,
             currentEnPassantOpponentPlaceId,
-            self.shrinkPawnArray(self.getPawnMovablePlaces(x, y), "playing"),
+            self.shrinkPawnArray(self.getPawnMovablePlaces(currentPiece, compPawnHasMoved, x, y), "playing"),
             x,
             y
         )
@@ -44,7 +44,7 @@ class Pawn(ChessPiece):
         return None
 
     # gets all the places that a pawn can move
-    def getPawnMovablePlaces(self, x, y):
+    def getPawnMovablePlaces(self, selected, compPawnHasMoved, x, y):
         matrix = self.live_chessboard_matrix
         placeIds = ["" for a in range(4)]
         if x >= 0 and x <= 7 and y >= 0 and y <= 7:
@@ -81,7 +81,14 @@ class Pawn(ChessPiece):
 
             if fwd2Element != None:
                 if fwd2Element.piece_id != None and fwd2Element.piece_id == "":
-                    placeIds[3] = fwd2Element.parent_id
+                    pieceId = selected.piece_id;
+                    if self.isType(pieceId, x):
+                        # console.log("get movable places "+x+" "+pieceId+" "+placeIds[3]);
+                        if compPawnsHasMoved[x] == True:
+                            placeIds[3] = fwd2Element.parent_id
+                        
+                        
+                    
         # print("Pawn %s"%placeIds)
         return placeIds
 
@@ -129,7 +136,7 @@ class Pawn(ChessPiece):
         return new_array
 
     # adds the empassant postion if available to the pawns possible moves    
-    def enPassantMovement(self, compPawnStartingPositions, currentEnPassantPlaceId, enPassantOpponentLeft, enPassantOpponentRight, isEnPassant, currentEnPassantOpponentPlaceId, pawnArray, x, y):
+    def enPassantMovement(self, playerPawnStartingPositions, currentEnPassantPlaceId, enPassantOpponentLeft, enPassantOpponentRight, isEnPassant, currentEnPassantOpponentPlaceId, pawnArray, x, y):
         matrix = self.live_chessboard_matrix
         newArray = []
         pawnHasLeft = False
@@ -146,7 +153,7 @@ class Pawn(ChessPiece):
         if leftOfPawnElement != None:
             if leftOfPawnElement.piece_id != None and leftOfPawnElement.piece_id != "":
                 enPassantSpace = self.pawnReadyEnPassant(
-                    compPawnStartingPositions,
+                    playerPawnStartingPositions,
                     currentEnPassantPlaceId,
                     leftOfPawnElement.piece_id,
                     leftOfPawn
@@ -163,7 +170,7 @@ class Pawn(ChessPiece):
         if rightOfPawnElement != None:
             if rightOfPawnElement.piece_id != None and rightOfPawnElement.piece_id != "":
                 enPassantSpace = self.pawnReadyEnPassant(
-                    compPawnStartingPositions,
+                    playerPawnStartingPositions,
                     currentEnPassantPlaceId,
                     rightOfPawnElement.piece_id,
                     rightOfPawn
@@ -180,26 +187,37 @@ class Pawn(ChessPiece):
             return pawnArray
 
     # checks if the pawn is ready for enpassant
-    def pawnReadyEnPassant(self, compPawnStartingPositions, currentEnPassantPlaceId, pieceId, placeId):
+    def pawnReadyEnPassant(self, playerPawnStartingPositions, currentEnPassantPlaceId, pieceId, placeId):
         newPlaceId = ""
+        matrix = self.live_chessboard_matrix
 
         if self.isType(pieceId, "player_pawn"):
-            for i in range(len(compPawnStartingPositions)):
+            for i in range(len(playerPawnStartingPositions)):
                 if self.isType(pieceId, str(i+1)):
+
                     posBefore = self.findPlaceCoordinates(
-                        compPawnStartingPositions[i])
-                    y = posBefore[0] + 1
+                        playerPawnStartingPositions[i])
+                    
+                    y = posBefore[0]
                     x = posBefore[1]
-                    posNow = self.findPlaceCoordinates(placeId)
-                    nY = posNow[0] - 1
-                    nX = posNow[1]
-                    placeIdWithPosBefore = self.id_gen(y, x)
-                    placeIdWithPosNow = self.id_gen(nY, nX)
+                    pawnSelect = Select()
+                    pawn = pawnSelect.selectFromPieceId(matrix, pieceId)
 
-                    if placeIdWithPosBefore == placeIdWithPosNow:
-                        newPlaceId = placeIdWithPosNow
-                        currentEnPassantPlaceId = placeIdWithPosNow
-                        self.placeIsSetEnPassant = True
-                        self.placeEnPassant = placeIdWithPosNow
+                    posNow = self.findPlaceCoordinates(pawn.parent_id)
+                    enY = posNow[0]
+                    enX = posNow[1]
+                    nY = enY + 1
+                    nX = enX
+                    newPos = self.id_gen(nY, nX)
+               
+                    if x == enX and y == (enY + 2):
+                        if not self.isType(pieceId, "comp_"):
+                            newPlaceId = newPos
+                            currentEnPassantPlaceId = newPos
+                            self.placeIsSetEnPassant = True
+                            self.placeEnPassant = newPos
 
-        return newPlaceId
+                
+
+            return newPlaceId
+

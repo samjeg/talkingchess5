@@ -11,6 +11,8 @@ $(document).ready(function(){
 	runCastlingTests();
 	runChessMechanicsTests();
 
+	console.log("hello run tests");
+
 });
 
 function runChessMechanicsTests(){
@@ -416,6 +418,16 @@ class TestPawn{
 				console.assert(movableWithPawn[j]==expectedMovableWithPawn[j], "pawn Movable with opponent pawn not returning correct places");
 			}
 		}
+
+		var chessMech2 = new ChessMechanics()
+		chessMech2.select("player_pawn8");
+		var movableBefore = chessMech2.current_selected_movable_ids;
+		console.log("test pawn movable before "+movableBefore);
+
+		chessMech2.moveTo("3H");
+		chessMech2.select("player_pawn8");
+		var movableAfter = chessMech2.current_selected_movable_ids;
+		console.log("test pawn movable after "+movableAfter);
 	}
 }
 
