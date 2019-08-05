@@ -18,9 +18,8 @@ class RobotMovement(object):
 		self.current_chess_piece_ids = []
 
 
-	# Gets the current chess piece id's do that later on can check if a piece has been captured
-	def getCurrentChessPieces(self):
-		matrix = self.chess_mech.chessPiece.live_chessboard_matrix
+	# Gets the current chess piece id's so that later on can check if a piece has been captured
+	def getChessPieces(self, matrix):
 		array = []
 
 		for i in range(8):
@@ -28,21 +27,43 @@ class RobotMovement(object):
 				if self.chess_piece.isType(matrix[i][j], "comp_") or self.chess_piece.isType(matrix[i][j], "player_"):
 					array.append(matrix[i][j])
 
-		self.current_chess_piece_ids = array
-
 		return array
 
 
-	# def checkCaptured(self, matrix):
-	# 	chess_piece_ids = [ 
-	# 		"comp_pawn1", "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8", 
-	# 		"comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2",
-	# 		"player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8",
-	# 		"player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2",
-	# 	]
+	# Returns true if it can't find a piece from the old chessboard state in the new chessboard state	
+	def pieceIsMissing(self, new_matrix):
+		
+		new_chess_pieces = self.getChessPieces(new_matrix)
+		old_chess_pieces = self.current_chess_piece_ids
 
-	# 	for i in range(8):
-	# 		for j in range(8):
-	# 			for k in range(len(chess_piece_ids)):
+		for i in range(len(old_chess_pieces)):
+			for j in range(len(new_chess_pieces)):
+				if old_chess_pieces[i] == new_chess_pieces[j]:
+					break
+
+			if j == len(new_chess_pieces) - 1 and i != len(old_chess_pieces) -1:
+				return True
+		
+		return False	
+
+
+	# Returns the missing piece that was gone from the old chessboard	
+	def getMissingPiece(self, new_matrix):
+		
+		new_chess_pieces = self.getChessPieces(new_matrix)
+		old_chess_pieces = self.current_chess_piece_ids
+
+		for i in range(len(old_chess_pieces)):
+			for j in range(len(new_chess_pieces)):
+				if old_chess_pieces[i] == new_chess_pieces[j]:
+					break
+
+			if j == len(new_chess_pieces) - 1 and i != len(old_chess_pieces) -1:
+				return old_chess_pieces[i]
+
+		return ""		
+
+
+
 
 
