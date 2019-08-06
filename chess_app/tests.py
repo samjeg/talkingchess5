@@ -92,6 +92,32 @@ class RobotMovementTestCase(TestCase):
 
         self.assertEqual(missing_piece, "comp_pawn1")
 
+    def testGetPoints(self):
+
+        sec_chessboard_matrix = [
+            ["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+            ["", "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+            ["player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+        ]
+
+        self.robot_movement.current_chess_piece_ids =  [ 
+          "comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2",
+          "comp_pawn1", "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8", 
+          "player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8",
+          "player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2",
+        ]
+
+        missing_piece = self.robot_movement.getMissingPiece(sec_chessboard_matrix)
+
+        points = self.robot_movement.getPoints(missing_piece)
+
+        self.assertEqual(points, -10)
+
 
 class ChessMechanicsTestCase(TestCase):
     
@@ -274,6 +300,22 @@ class CheckerGetterTestCase(TestCase):
         self.checker_getter.live_chessboard_matrix = first_chessboard_matrix 
     
         self.assertTrue(self.checker_getter.kingHasCheck())
+
+    def testGetPlacesUnderCheck(self):
+        first_chessboard_matrix = [
+            ["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+            [ "comp_pawn1", "comp_pawn2", "comp_pawn3", "", "", "comp_pawn7", "comp_pawn6", "comp_pawn8" ],
+            [ "", "", "", "", "", "", "", ""],
+            [ "", "", "", "", "", "", "", ""],
+            [ "player_bishop1", "", "", "", "player_queen", "", "", ""],
+            [ "comp_pawn5", "comp_pawn4", "", "", "", "", "", ""],
+            [ "player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+            ["player_rook1", "player_horse1", "", "", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+        ]
+
+        self.checker_getter.live_chessboard_matrix = first_chessboard_matrix    
+
+        print("test get places under check %s"%self.checker_getter.getPlacesUnderCheck()) 
     
 
 class KingTestCase(TestCase):
