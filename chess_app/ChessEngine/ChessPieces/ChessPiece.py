@@ -4,7 +4,7 @@ class ChessPiece(object):
 		self.live_chessboard_matrix = None
 
 
-	#
+	
 	def getAllPawnLocations(self):
 		array = []
 		matrix = self.live_chessboard_matrix
@@ -14,6 +14,51 @@ class ChessPiece(object):
 				if self.isType(next_val, "comp_pawn"):
 					array.append(next_val)
 
+		return array
+
+	def getAllHorseLocationsAndIds(self):
+		array = []
+		matrix = self.live_chessboard_matrix
+		for i in range(8):
+			for j in range(8):
+				next_val = matrix[i][j]
+				if self.isType(next_val, "comp_horse"):
+					new_tuple = (next_val, j, i)
+					array.append(new_tuple)
+
+		return array
+
+	def getAllBishopLocationsAndIds(self):
+		array = []
+		matrix = self.live_chessboard_matrix
+		for i in range(8):
+			for j in range(8):
+				next_val = matrix[i][j]
+				if self.isType(next_val, "comp_bishop"):
+					new_tuple = (next_val, j, i)
+					array.append(new_tuple)
+		return array
+
+	def getAllRookLocationsAndIds(self):
+		array = []
+		matrix = self.live_chessboard_matrix
+		for i in range(8):
+			for j in range(8):
+				next_val = matrix[i][j]
+				if self.isType(next_val, "comp_rook"):
+					new_tuple = (next_val, j, i)
+					array.append(new_tuple)
+		return array
+
+	def getAllQueenLocationsAndIds(self):
+		array = []
+		matrix = self.live_chessboard_matrix
+		for i in range(8):
+			for j in range(8):
+				next_val = matrix[i][j]
+				if self.isType(next_val, "comp_queen"):
+					new_tuple = (next_val, j, i)
+					array.append(new_tuple)
 		return array
 
 	# Move the items in the array to the end  of array of 

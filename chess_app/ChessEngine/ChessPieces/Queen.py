@@ -36,7 +36,7 @@ class Queen(ChessPiece):
 						rightDownSelect = Select()
 						nextElement = rightDownSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
-						if nextElement.parent_id != None and not self.isType(nextElement.piece_id, "comp_"):
+						if nextElement.parent_id != None or not self.isType(nextElement.piece_id, "comp_"):
 							rightDown[i] = nextElement.parent_id
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break
@@ -51,7 +51,7 @@ class Queen(ChessPiece):
 						leftDownSelect = Select()
 						nextElement = leftDownSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
-						if nextElement.parent_id != None and not self.isType(nextElement.piece_id, "comp_"):
+						if nextElement.parent_id != None or not self.isType(nextElement.piece_id, "comp_"):
 							leftDown[j] = nextElement.parent_id
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break
@@ -65,7 +65,7 @@ class Queen(ChessPiece):
 						rightUpSelect = Select()
 						nextElement = rightUpSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
-						if nextElement.parent_id!= None and not self.isType(nextElement.piece_id, "comp_"):
+						if nextElement.parent_id!= None or not self.isType(nextElement.piece_id, "comp_"):
 							rightUp[k] = nextElement.parent_id
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break						
@@ -79,7 +79,7 @@ class Queen(ChessPiece):
 						leftUpSelect = Select()
 						nextElement = leftUpSelect.selectFromParentId(matrix, self.id_gen(b_y, b_x))
 						
-						if nextElement.parent_id!= None and not self.isType(nextElement.piece_id, "comp_"):
+						if nextElement.parent_id!= None or not self.isType(nextElement.piece_id, "comp_"):
 							leftUp[n] = nextElement.parent_id
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break

@@ -11,6 +11,8 @@ from ChessPieces.Horse import Horse
 class ChessMechanics(object):
 	
 	def __init__(self):
+		self.kingRescuePosition = ""
+		self.kingRescueChessPiece = ""
 		self.current_selected_piece = None
 		self.current_selected_coordinates = ["" for a in range(2)]
 		self.current_selected_movable_ids = []
@@ -249,8 +251,31 @@ class ChessMechanics(object):
 						current_element.appendPiece(matrix, piece_id, parent_id)
 
 			
+
+
+	def rookCanSaveKing(self, movablePlaces):
+		rooks = self.chessPiece.getAllRookLocationsAndIds()
+
+		rookPlaces = []
 		
-	
+		for n in range(len(rooks)):
+			currentRookPlaces = self.rookExtraMoves(self.rook.movablePlaces(rooks[n][1], rooks[n][2]))
+		
+			for i in range(len(movablePlaces)):
+				for j in range(len(currentRookPlaces)):
+					if movablePlaces[i] == currentRookPlaces[j]:
+						self.kingRescueChessPiece = rooks[n][0]
+						# pieceId = self.chessPiece.id_gen(rooks[n][2], rooks[n][1])
+						self.kingRescuePosition = movablePlaces[i]
+
+						return True
+
+
+		return False
+
+
+
+
 
 	
 	
