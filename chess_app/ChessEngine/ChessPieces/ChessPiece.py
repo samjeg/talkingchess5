@@ -16,6 +16,19 @@ class ChessPiece(object):
 
 		return array
 
+	def getAllPawnLocationsAndIds(self):
+		array = []
+		matrix = self.live_chessboard_matrix
+		for i in range(8):
+			for j in range(8):
+				next_val = matrix[i][j]
+				if self.isType(next_val, "comp_pawn"):
+					new_tuple = (next_val, j, i)
+					array.append(new_tuple)
+
+		return array
+
+
 	def getAllHorseLocationsAndIds(self):
 		array = []
 		matrix = self.live_chessboard_matrix

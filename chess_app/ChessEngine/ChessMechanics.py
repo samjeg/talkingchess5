@@ -329,6 +329,35 @@ class ChessMechanics(object):
 
 		return False
 
+	def pawnCanSaveKing(self, movablePlaces):
+		pawns = self.chessPiece.getAllPawnLocationsAndIds()
+
+		pawnPlaces = []
+		
+		for n in range(len(pawns)):
+			currentPawnPlaces = self.pawn.movablePlaces(
+				self.playerPawnStartingPositions, 
+				self.currentEnPassantPlaceId,
+				self.enPassantOpponentLeft, 
+				self.enPassantOpponentRight, 
+				self.isEnPassant, 
+				self.currentEnPassantOpponentPlaceId,
+				self.current_selected_piece,
+				self.compPawnsHasMoved,
+				pawns[n][1], 
+				pawns[n][2]
+			)
+	
+			for i in range(len(movablePlaces)):
+				for j in range(len(currentPawnPlaces)):
+					if movablePlaces[i] == currentPawnPlaces[j]:
+						self.kingRescueChessPiece = pawns[n][0]
+						self.kingRescuePosition = movablePlaces[i]
+
+						return True
+
+
+		return False
 
 
 
