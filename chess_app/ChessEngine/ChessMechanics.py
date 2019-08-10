@@ -265,13 +265,70 @@ class ChessMechanics(object):
 				for j in range(len(currentRookPlaces)):
 					if movablePlaces[i] == currentRookPlaces[j]:
 						self.kingRescueChessPiece = rooks[n][0]
-						# pieceId = self.chessPiece.id_gen(rooks[n][2], rooks[n][1])
 						self.kingRescuePosition = movablePlaces[i]
 
 						return True
 
 
 		return False
+
+	def bishopCanSaveKing(self, movablePlaces):
+		bishops = self.chessPiece.getAllBishopLocationsAndIds()
+
+		bishopPlaces = []
+		
+		for n in range(len(bishops)):
+			currentBishopPlaces = self.bishop.movablePlaces(bishops[n][1], bishops[n][2])
+		
+			for i in range(len(movablePlaces)):
+				for j in range(len(currentBishopPlaces)):
+					if movablePlaces[i] == currentBishopPlaces[j]:
+						self.kingRescueChessPiece = bishops[n][0]
+						self.kingRescuePosition = movablePlaces[i]
+
+						return True
+
+
+		return False
+
+	def horseCanSaveKing(self, movablePlaces):
+		horses = self.chessPiece.getAllHorseLocationsAndIds()
+
+		horsePlaces = []
+		
+		for n in range(len(horses)):
+			currentHorsePlaces = self.horse.movablePlaces(horses[n][1], horses[n][2])
+		
+			for i in range(len(movablePlaces)):
+				for j in range(len(currentHorsePlaces)):
+					if movablePlaces[i] == currentHorsePlaces[j]:
+						self.kingRescueChessPiece = horses[n][0]
+						self.kingRescuePosition = movablePlaces[i]
+
+						return True
+
+
+		return False
+
+	def queenCanSaveKing(self, movablePlaces):
+		queens = self.chessPiece.getAllQueenLocationsAndIds()
+
+		queenPlaces = []
+		
+		for n in range(len(queens)):
+			currentQueenPlaces = self.queen.movablePlaces(queens[n][1], queens[n][2])
+		
+			for i in range(len(movablePlaces)):
+				for j in range(len(currentQueenPlaces)):
+					if movablePlaces[i] == currentQueenPlaces[j]:
+						self.kingRescueChessPiece = queens[n][0]
+						self.kingRescuePosition = movablePlaces[i]
+
+						return True
+
+
+		return False
+
 
 
 
