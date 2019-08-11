@@ -392,7 +392,69 @@ class ChessMechanicsTestCase(TestCase):
         self.assertEqual(king_rescue_pos, "5B")
 
 
+    def testPawnRightEnPassantCanSaveKing(self):
 
+        chessboard_matrix = [
+            ["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "", "comp_bishop2", "comp_horse2", "comp_rook2"],
+            [ "comp_pawn1", "", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+            [ "", "", "", "", "", "", "", ""],
+            [ "comp_king", "", "", "", "", "", "", ""],
+            [ "", "player_pawn2", "comp_pawn2", "", "", "", "", ""],
+            [ "player_pawn1", "", "", "", "", "", "", ""],
+            [ "", "", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+            ["player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+        ]
+        
+        self.chess_mech.chessPiece.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.pawn.live_chessboard_matrix = chessboard_matrix
+        self.checker_getter.live_chessboard_matrix = chessboard_matrix                                                                        
+        self.checker_getter.pawn.live_chessboard_matrix = chessboard_matrix
+        self.checker_getter.king.live_chessboard_matrix = chessboard_matrix
+        self.checker_getter.queen.live_chessboard_matrix = chessboard_matrix
+        self.checker_getter.rook.live_chessboard_matrix = chessboard_matrix
+        self.checker_getter.bishop.live_chessboard_matrix = chessboard_matrix
+        self.checker_getter.horse.live_chessboard_matrix = chessboard_matrix
+
+        places_under_check = self.checker_getter.getPlacesUnderCheck()
+        pawn_can_save_king = self.chess_mech.pawnCanSaveKing(places_under_check)
+        king_rescue_piece = self.chess_mech.kingRescueChessPiece
+        king_rescue_pos = self.chess_mech.kingRescuePosition
+       
+        self.assertTrue(pawn_can_save_king)
+        self.assertEqual(king_rescue_piece, "comp_pawn2")
+        self.assertEqual(king_rescue_pos, "3B")
+
+    def testPawnLeftEnPassantCanSaveKing(self):
+
+        chessboard_matrix = [
+            ["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "", "comp_bishop2", "comp_horse2", "comp_rook2"],
+            [ "", "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+            [ "", "", "", "", "", "", "", ""],
+            [ "", "", "comp_king", "", "", "", "", ""],
+            [ "comp_pawn1", "player_pawn2", "", "", "", "", "", ""],
+            [ "player_pawn1", "", "", "", "", "", "", ""],
+            [ "", "", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+            ["player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+        ]
+        
+        self.chess_mech.chessPiece.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.pawn.live_chessboard_matrix = chessboard_matrix
+        self.checker_getter.live_chessboard_matrix = chessboard_matrix                                                                        
+        self.checker_getter.pawn.live_chessboard_matrix = chessboard_matrix
+        self.checker_getter.king.live_chessboard_matrix = chessboard_matrix
+        self.checker_getter.queen.live_chessboard_matrix = chessboard_matrix
+        self.checker_getter.rook.live_chessboard_matrix = chessboard_matrix
+        self.checker_getter.bishop.live_chessboard_matrix = chessboard_matrix
+        self.checker_getter.horse.live_chessboard_matrix = chessboard_matrix
+
+        places_under_check = self.checker_getter.getPlacesUnderCheck()
+        pawn_can_save_king = self.chess_mech.pawnCanSaveKing(places_under_check)
+        king_rescue_piece = self.chess_mech.kingRescueChessPiece
+        king_rescue_pos = self.chess_mech.kingRescuePosition
+        
+        self.assertTrue(pawn_can_save_king)
+        self.assertEqual(king_rescue_piece, "comp_pawn1")
+        self.assertEqual(king_rescue_pos, "3B")
 
     
 

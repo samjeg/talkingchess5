@@ -335,7 +335,9 @@ class ChessMechanics(object):
 		pawnPlaces = []
 		
 		for n in range(len(pawns)):
-			currentPawnPlaces = self.pawn.movablePlaces(
+			current_pawn = Pawn()
+			current_pawn.live_chessboard_matrix = self.chessPiece.live_chessboard_matrix
+			currentPawnPlaces = current_pawn.movablePlaces(
 				self.playerPawnStartingPositions, 
 				self.currentEnPassantPlaceId,
 				self.enPassantOpponentLeft, 
@@ -347,7 +349,8 @@ class ChessMechanics(object):
 				pawns[n][1], 
 				pawns[n][2]
 			)
-	
+
+			
 			for i in range(len(movablePlaces)):
 				for j in range(len(currentPawnPlaces)):
 					if movablePlaces[i] == currentPawnPlaces[j]:
@@ -355,6 +358,22 @@ class ChessMechanics(object):
 						self.kingRescuePosition = movablePlaces[i]
 
 						return True
+			if current_pawn.rightIsEnPassant or current_pawn.leftIsEnPassant:
+				leftOfPawn = self.chessPiece.id_gen(pawns[n][2], pawns[n][1] + 1)
+				rightOfPawn = self.chessPiece.id_gen(pawns[n][2], pawns[n][1] - 1)
+				for k in range(len(movablePlaces)):
+					if movablePlaces[k] == leftOfPawn:
+						self.kingRescueChessPiece = pawns[n][0]
+						self.kingRescuePosition = self.chessPiece.id_gen(pawns[n][2] + 1, pawns[n][1] + 1)
+
+						return True
+					
+					elif movablePlaces[k] == rightOfPawn:
+						self.kingRescueChessPiece = pawns[n][0]
+						self.kingRescuePosition = self.chessPiece.id_gen(pawns[n][2] + 1, pawns[n][1] - 1)
+
+						return True
+			    # print("pawn can save king %s %s %s"%(self.pawn.isEnPassant, n, self.chessPiece.id_gen(pawns[n][2], pawns[n][1])))
 
 
 		return False

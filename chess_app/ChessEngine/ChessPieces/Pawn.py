@@ -10,6 +10,8 @@ class Pawn(ChessPiece):
         self.opponentPlaceEnPassant = None
         self.placeIsSetEnPassant = False
         self.placeEnPassant = None
+        self.rightIsEnPassant = False
+        self.leftIsEnPassant = False
         self.currentPiece = None
         self.compPawnsHasMoved = [False for x in range(8)]
 
@@ -28,6 +30,7 @@ class Pawn(ChessPiece):
             x,
             y
         )
+
 
         return newArray
 
@@ -146,8 +149,8 @@ class Pawn(ChessPiece):
         newArray = []
         pawnHasLeft = False
         pawnHasRight = False
-        leftOfPawn = self.id_gen(y, x-1)
-        rightOfPawn = self.id_gen(y, x+1)
+        leftOfPawn = self.id_gen(y, x+1)
+        rightOfPawn = self.id_gen(y, x-1)
         leftOfPawnSelect = Select()
         leftOfPawnElement = leftOfPawnSelect.selectFromParentId(
             matrix, leftOfPawn)
@@ -163,14 +166,23 @@ class Pawn(ChessPiece):
                     leftOfPawnElement.piece_id,
                     leftOfPawn
                 )
+                # print("enPassantMovement left %s %s %s"%(leftOfPawn, leftOfPawnElement.piece_id, enPassantSpace))
 
-                if enPassantSpace != "":
+                if enPassantSpace != "" and enPassantSpace != None:
+                    # print("enPassantMovement left after %s %s %s"%(leftOfPawn, leftOfPawnElement.piece_id, enPassantSpace))
                     pawnArray.append(enPassantSpace)
                     enPassantOpponentLeft = leftOfPawnElement.piece_id
                     currentEnPassantOpponentPlaceId = leftOfPawn
                     isEnPassant = True
+                    self.leftIsEnPassant = True
                     self.opponentPlaceIsSetEnPassant = True
                     self.opponentPlaceEnPassant = leftOfPawn
+                else:
+                    self.leftIsEnPassant = False
+            else:
+                    self.leftIsEnPassant = False
+        else:
+                    self.leftIsEnPassant = False
 
         if rightOfPawnElement != None:
             if rightOfPawnElement.piece_id != None and rightOfPawnElement.piece_id != "":
@@ -179,17 +191,27 @@ class Pawn(ChessPiece):
                     currentEnPassantPlaceId,
                     rightOfPawnElement.piece_id,
                     rightOfPawn
-                )
+                    )
+                # print("enPassantMovement right %s %s %s"%(rightOfPawn, rightOfPawnElement.piece_id, enPassantSpace==""))
 
-                if enPassantSpace != "":
+
+                if enPassantSpace != "" and enPassantSpace != None:
                     pawnArray.append(enPassantSpace)
                     enPassantOpponentRight = rightOfPawnElement.piece_id
                     currentEnPassantOpponentPlaceId = rightOfPawn
                     isEnPassant = True
+                    self.rightIsEnPassant = True
                     self.opponentPlaceIsSetEnPassant = True
                     self.opponentPlaceEnPassant = rightOfPawn
+                else:
+                    self.rightIsEnPassant = False
+            else:
+                    self.rightIsEnPassant = False
+        else:
+                    self.rightIsEnPassant = False    
 
-            return pawnArray
+
+        return pawnArray
 
     # checks if the pawn is ready for enpassant
     def pawnReadyEnPassant(self, playerPawnStartingPositions, currentEnPassantPlaceId, pieceId, placeId):
@@ -197,6 +219,7 @@ class Pawn(ChessPiece):
         matrix = self.live_chessboard_matrix
 
         if self.isType(pieceId, "player_pawn"):
+            # print("pawnReadyEnPassant %s"%pieceId)
             for i in range(len(playerPawnStartingPositions)):
                 if self.isType(pieceId, str(i+1)):
 
