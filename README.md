@@ -12,7 +12,6 @@
 <br>
 <h3>Things that need to be added to complete this application:</h3>
 <ul>
-	<li>Chess game page will also have an artificial opponent that will talk to the player</li>
-	<li>In the back end it has an AI with that uses a Minimax Algorithm, with Alpha Beta Pruning to pick the best moves</li>
-	<li>The artificial opponents comments are based on the quality of the moves played</li>
+	<li>An artificial opponent that will talk to the player during the game</li>
+	<li>A back end that has an AI with that uses a Minimax Algorithm, with Alpha Beta Pruning to pick the best moves</li>
 </ul>
