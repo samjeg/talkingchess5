@@ -260,10 +260,12 @@ class ChessMechanics(object):
 		
 		for n in range(len(rooks)):
 			currentRookPlaces = self.rookExtraMoves(self.rook.movablePlaces(rooks[n][1], rooks[n][2]))
-		
+			# print("rook can save king %s %s"%(self.rookExtraMoves(self.rook.movablePlaces(rooks[n][1], rooks[n][2])), self.rook.movablePlaces(rooks[n][1], rooks[n][2])))
+			# print("rook can save king %s %s"%(rooks[n][1], rooks[n][2]))
 			for i in range(len(movablePlaces)):
 				for j in range(len(currentRookPlaces)):
 					if movablePlaces[i] == currentRookPlaces[j]:
+						# print("rook can save king %s"%movablePlaces[i])
 						self.kingRescueChessPiece = rooks[n][0]
 						self.kingRescuePosition = movablePlaces[i]
 
@@ -274,7 +276,6 @@ class ChessMechanics(object):
 
 	def bishopCanSaveKing(self, movablePlaces):
 		bishops = self.chessPiece.getAllBishopLocationsAndIds()
-
 		bishopPlaces = []
 		
 		for n in range(len(bishops)):
@@ -283,11 +284,11 @@ class ChessMechanics(object):
 			for i in range(len(movablePlaces)):
 				for j in range(len(currentBishopPlaces)):
 					if movablePlaces[i] == currentBishopPlaces[j]:
+						# print("bishop can save king %s"%movablePlaces[i])
 						self.kingRescueChessPiece = bishops[n][0]
 						self.kingRescuePosition = movablePlaces[i]
 
 						return True
-
 
 		return False
 
@@ -306,7 +307,6 @@ class ChessMechanics(object):
 						self.kingRescuePosition = movablePlaces[i]
 
 						return True
-
 
 		return False
 
@@ -349,11 +349,12 @@ class ChessMechanics(object):
 				pawns[n][1], 
 				pawns[n][2]
 			)
-
+			# print("pawn can save king %s %s"%(pawns[n][0], currentPawnPlaces))
 			
 			for i in range(len(movablePlaces)):
 				for j in range(len(currentPawnPlaces)):
 					if movablePlaces[i] == currentPawnPlaces[j]:
+						# print("pawn can save king movable %s %s"%(pawns[n][0], movablePlaces[i]))
 						self.kingRescueChessPiece = pawns[n][0]
 						self.kingRescuePosition = movablePlaces[i]
 
@@ -379,6 +380,54 @@ class ChessMechanics(object):
 		return False
 
 
+	def isCheckMate(self, x, y):
+		if self.checkerGetter.kingHasCheck():
+			movablePlaces = self.checkerGetter.carefullKing(self.kingExtraMoves(self.king.getKingMovablePlaces(x, y)))
+			rookMovablePlaces = movablePlaces + self.rookExtraMoves(self.rook.movablePlaces(x, y))
+			bishopMovablePlaces = movablePlaces + self.bishop.movablePlaces(x, y)
+			queenMovablePlaces = movablePlaces + self.queen.movablePlaces(x, y)
+			horseMovablePlaces = movablePlaces + self.horse.movablePlaces(x, y)
+			pawn = Pawn()
+			pawn.live_chessboard_matrix = self.chessPiece.live_chessboard_matrix
+			pawnMovablePlaces = movablePlaces + pawn.movablePlaces(
+				self.playerPawnStartingPositions, 
+				self.currentEnPassantPlaceId,
+				self.enPassantOpponentLeft, 
+				self.enPassantOpponentRight, 
+				self.isEnPassant, 
+				self.currentEnPassantOpponentPlaceId,
+				self.current_selected_piece,
+				self.compPawnsHasMoved,
+				x, 
+				y
+			)
+
+			if len(rookMovablePlaces) > 0:
+				if self.rookCanSaveKing(rookMovablePlaces):
+					# print("ischeckMate rook %s"%rookMovablePlaces)
+					return False
+
+			if len(bishopMovablePlaces) > 0:
+				if self.bishopCanSaveKing(bishopMovablePlaces):
+					# print("ischeckMate bishop %s"%bishopMovablePlaces)
+					return False
+
+			if len(horseMovablePlaces) > 0:
+				if self.horseCanSaveKing(horseMovablePlaces):
+					# print("ischeckMate horse %s"%horseMovablePlaces)
+					return False
+
+			if len(queenMovablePlaces) > 0:
+				if self.queenCanSaveKing(queenMovablePlaces):
+					# print("ischeckMate queen %s"%queenMovablePlaces)
+					return False
+
+			if len(pawnMovablePlaces) > 0:
+				if self.pawnCanSaveKing(pawnMovablePlaces):
+					# print("ischeckMate pawn %s"%pawnMovablePlaces)
+					return False
+			
+		return True
 
 
 

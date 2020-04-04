@@ -10,9 +10,9 @@ $(document).ready(function(){
 
 	var new_chessboard_matrix = [
 		["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
-		[ "comp_pawn1", "", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+		[ "comp_pawn1", "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
 		[ "", "", "", "", "", "", "", ""],
-		[ "", "comp_pawn2", "", "", "", "", "", ""],
+		[ "", "", "", "", "", "", "", ""],
 		[ "", "", "", "", "", "", "", ""],
 		[ "", "", "", "", "", "", "", ""],
 		[ "player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
@@ -48,8 +48,7 @@ $(document).ready(function(){
 
 function changeMultiplePieceLocations(live_matrix, new_chessboard_matrix){
 	var diffPieces = chessMech.chessPiece.shrinkContinuosArray(
- 		chessMech.chessPiece.findMultipleDifferentPieces(live_matrix, new_chessboard_matrix)
- 	);
+ 		chessMech.chessPiece.findMultipleDifferentPieces(live_matrix, new_chessboard_matrix) 	);
 
 	for(var i=0; i<diffPieces.length; i++){
  		var diffPiece = diffPieces[i];

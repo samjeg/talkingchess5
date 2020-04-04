@@ -61,6 +61,7 @@ class ChessPiece(object):
 				if self.isType(next_val, "comp_rook"):
 					new_tuple = (next_val, j, i)
 					array.append(new_tuple)
+		# print("getAllRookLocationsAndIds %s"%array)
 		return array
 
 	def getAllQueenLocationsAndIds(self):
@@ -185,6 +186,7 @@ class ChessPiece(object):
 	def findPieceCoordinates(self, select):
 		if select != None:
 			parent_id = select.parent_id
+			print("Parent Id %s"%parent_id)
 			fstAttr = self.first_coordinate_gen(int(parent_id[0]))
 			secAttr =  self.second_coordinate_gen(parent_id[1])
 			coordinates = [fstAttr, secAttr]

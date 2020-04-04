@@ -30,6 +30,7 @@ class CheckerGetter(object):
 		self.king.live_chessboard_matrix = matrix
 		selectKing = Select()
 		king_piece = selectKing.selectFromPieceId(matrix, "comp_king")
+		# print("From piece %s"%king_piece.piece_id)
 		king_coordinates = self.chess_piece.findPieceCoordinates(king_piece)
 		x = king_coordinates[1]
 		y = king_coordinates[0]
@@ -93,7 +94,7 @@ class CheckerGetter(object):
 		if len(queen1) != 0:
 			for j in range(len(queen1)):
 				attackingPlaces = attackingPlaces + self.getAttackingRookInbetweenPlaces(queen1[j], x, y)
-				print("get places under check %s"%self.getAttackingRookInbetweenPlaces(queen1[j], x, y))
+				# print("get places under check %s"%self.getAttackingRookInbetweenPlaces(queen1[j], x, y))
 
 		if len(attackingBishopPlaces) != 0:
 			for k in range(len(attackingBishopPlaces)):

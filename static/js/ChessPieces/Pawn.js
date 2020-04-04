@@ -8,6 +8,7 @@ class Pawn extends ChessPiece{
 		this.placeEnPassant = null;
 		this.currentPiece = null;
 		this.playerPawnsHasMoved = [false, false, false, false, false, false, false, false, false, false];
+		this.checkingAttackers = false;
 	}
 
 	movablePlaces(
@@ -56,16 +57,16 @@ class Pawn extends ChessPiece{
     	return undefined;
     }
 
-	getPawnMovablePlaces(x, y){
+	getPawnMovablePlaces(x, y) {
 		var matrix = this.live_chessboard_matrix;
 		var placeIds = [];
-		if(x>=0&&x<=7&&y>=0&&y<=7){
+		if(x>=0&&x<=7&&y>=0&&y<=7) {
 			var leftFwd1Element = document.getElementById(this.id_gen(y-1, x-1));
 			var rightFwd1Element = document.getElementById(this.id_gen(y-1, x+1));
 			var fwd1Element = document.getElementById(this.id_gen(y-1, x));
 			var fwd2Element = document.getElementById(this.id_gen(y-2, x));
 	
-			if(leftFwd1Element!=null){
+			if(leftFwd1Element!=null) {
 				if(leftFwd1Element.childElementCount!=0){
 					var leftFwd1Id = leftFwd1Element.firstElementChild.id;
 					if(this.isType(leftFwd1Id, "comp_")){
@@ -73,7 +74,7 @@ class Pawn extends ChessPiece{
 					}
 				}
 			}
-			if(rightFwd1Element!=null){
+			if(rightFwd1Element!=null) {
 				if(rightFwd1Element.childElementCount!=0){
 					var rightFwd1Id = rightFwd1Element.firstElementChild.id;
 					if(this.isType(rightFwd1Id, "comp_")){
@@ -81,22 +82,24 @@ class Pawn extends ChessPiece{
 					}
 				}
 			}
-			if(fwd1Element!=null){
-				if(fwd1Element.childElementCount==0){
-					placeIds[2] = fwd1Element.id;
+			if(!this.checkingAttackers) {
+				if(fwd1Element!=null) {
+					if(fwd1Element.childElementCount==0){
+						placeIds[2] = fwd1Element.id;
+					}
 				}
-			}
-			if(fwd2Element!=null){
-				if(fwd2Element.childElementCount==0){
-					var selected = this.currentPiece;
-					var pieceId = selected.id;
-					if(this.isType(pieceId, String(x+1))){
-						if(this.playerPawnsHasMoved.length != 0){
-							if(this.playerPawnsHasMoved[x] == false){
-								placeIds[3] = fwd2Element.id;
+				if(fwd2Element!=null) {
+					if(fwd2Element.childElementCount==0){
+						var selected = this.currentPiece;
+						var pieceId = selected.id;
+						if(this.isType(pieceId, String(x+1))){
+							if(this.playerPawnsHasMoved.length != 0){
+								if(this.playerPawnsHasMoved[x] == false){
+									placeIds[3] = fwd2Element.id;
+								}
 							}
 						}
-					} 
+					}	 
 				}
 			}
 		}
@@ -104,8 +107,10 @@ class Pawn extends ChessPiece{
 	}
 
 	attackingPlaces(x, y){
+		this.checkingAttackers = true; 
 		var attackingPawnPlaces = this.shrinkPawnArray(this.getPawnMovablePlaces(x, y), "checking");
 		var new_array = [];
+		
 		var first = document.getElementById(attackingPawnPlaces[0]);
 		if(first!=null){
 			if(first.firstElementChild!=null){
@@ -115,6 +120,7 @@ class Pawn extends ChessPiece{
 				}		
 			}
 		}
+		
 		var second = document.getElementById(attackingPawnPlaces[1]);
 		if(second!=null){
 			if(second.firstElementChild!=null){
@@ -124,6 +130,8 @@ class Pawn extends ChessPiece{
 				}		
 			}
 		}
+
+		this.checkingAttackers = false;
 		return new_array;
 	}
 

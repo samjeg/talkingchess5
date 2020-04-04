@@ -68,7 +68,7 @@ class RobotMovementTestCase(TestCase):
 
         self.assertTrue(is_missing)
 
-    def testPieceIsMissing(self):
+    def testMissingPiece(self):
 
         sec_chessboard_matrix = [
             ["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
@@ -127,6 +127,65 @@ class ChessMechanicsTestCase(TestCase):
         self.king = King()
         self.pawn = Pawn()
         self.chess_mech = ChessMechanics()
+
+    def testIsNotCheckMate(self):
+        chessboard_matrix =[
+            ["", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+            ["comp_pawn1", "comp_pawn2", "comp_pawn3", "", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+            ["comp_pawn4", "", "", "", "", "", "", "comp_rook1"],
+            ["", "player_bishop1", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+            ["player_rook1", "player_horse1", "", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+        ]
+
+        self.chess_mech.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.chessPiece.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.checkerGetter.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.king.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.rook.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.queen.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.pawn.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.bishop.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.horse.live_chessboard_matrix = chessboard_matrix
+        # places_under_check = self.checker_getter.getPlacesUnderCheck()
+
+        checkmate = self.chess_mech.isCheckMate(4, 0)
+        
+        self.assertFalse(checkmate)
+
+
+    def testIsCheckMate(self):
+        chessboard_matrix = [
+            ["comp_king", "", "", "player_pawn10", "", "comp_bishop2", "comp_pawn2", "comp_rook2"],
+            ["", "", "", "", "player_rook2", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+            ["", "", "", "", "", "", "", ""],
+            ["", "player_rook1", "", "player_bishop2", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+            ["player_rook1", "player_horse1", "", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+        ]
+
+        self.king.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.checkerGetter.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.king.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.rook.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.chessPiece.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.pawn.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.queen.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.rook.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.bishop.live_chessboard_matrix = chessboard_matrix
+        self.chess_mech.horse.live_chessboard_matrix = chessboard_matrix
+
+        # places_under_check = self.checker_getter.getPlacesUnderCheck()
+        checkmate = self.chess_mech.isCheckMate(0, 0)
+        print("test is checkmate %s"%checkmate)
+        self.assertTrue(checkmate)
+
+
     
 
     def testCarefullKing(self):
@@ -750,6 +809,7 @@ class RookTestCase(TestCase):
         self.rook.live_chessboard_matrix = new_chessboard_matrix
         expectedResult = ['3D', '3E', '3F', '3G', '3H', '3B', '3A', '2C', '4C', '5C', '6C']
         movable = self.rook.movablePlaces(2, 5)
+        # print("movable %s %s %s"%(movable, len(movable), len(expectedResult)))
         
         for i in range(len(movable)):
             if movable[i] != expectedResult[i]:

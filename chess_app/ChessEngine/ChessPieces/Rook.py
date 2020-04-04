@@ -28,11 +28,13 @@ class Rook(ChessPiece):
 					rightSelect = Select()
 					nextElement = rightSelect.selectFromParentId(matrix, self.id_gen(y, i))
 					# print("getRookMovablePlaces: %s"%self.isType(nextElement.piece_id, "comp_"))
-					if nextElement.parent_id != None or not self.isType(nextElement.piece_id, "comp_"):
+					if nextElement.parent_id != None and not self.isType(nextElement.piece_id, "comp_"):
 						right.append(nextElement.parent_id)
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
 						rightCounter = rightCounter + 1
+					if self.isType(nextElement.piece_id, "comp_"):
+						break
 					
 	
 
@@ -42,10 +44,12 @@ class Rook(ChessPiece):
 					leftSelect = Select()
 					# print(" gets rook movable places %s %s"%(y, j))
 					nextElement = leftSelect.selectFromParentId(matrix, self.id_gen(y, j))
-					if nextElement.parent_id != None or not self.isType(nextElement.piece_id, "comp_"):
+					if nextElement.parent_id != None and not self.isType(nextElement.piece_id, "comp_"):
 						left.append(nextElement.parent_id)
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
+					if self.isType(nextElement.piece_id, "comp_"):
+						break
 					
 
 			#Going Down
@@ -53,11 +57,12 @@ class Rook(ChessPiece):
 				if k > y:
 					upSelect = Select()
 					nextElement = upSelect.selectFromParentId(matrix, self.id_gen(k, x))
-					if nextElement.parent_id != None or not self.isType(nextElement.piece_id, "comp_"):
+					if nextElement.parent_id != None and not self.isType(nextElement.piece_id, "comp_"):
 						up.append(nextElement.parent_id)
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
-					
+					if self.isType(nextElement.piece_id, "comp_"):
+						break
 					
 				
 			#Going Up
@@ -65,14 +70,17 @@ class Rook(ChessPiece):
 				if n < y:
 					downSelect = Select()
 					nextElement = downSelect.selectFromParentId(matrix, self.id_gen(n, x))
-					if nextElement.parent_id != None or not self.isType(nextElement.piece_id, "comp_"):
+					# print("rook test movable places %s %s"%(nextElement.piece_id, self.isType(nextElement.piece_id, "comp_")))
+					if nextElement.parent_id != None and not self.isType(nextElement.piece_id, "comp_"):
 						down.append(nextElement.parent_id)
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
 							break
 						downCounter = downCounter + 1
+					if self.isType(nextElement.piece_id, "comp_"):
+						break
 				
 					
-				
+			
 		left = self.moveArrayToBack(left)
 		right = self.moveArrayToBack(right)
 		up = self.moveArrayToBack(up)

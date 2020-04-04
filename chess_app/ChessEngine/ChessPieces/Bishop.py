@@ -33,6 +33,8 @@ class Bishop(ChessPiece):
 							rightDown.append(nextElement.parent_id)
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break
+						if self.isType(nextElement.piece_id, "comp_"):
+							break
 									
 					
 			for j in range(8):
@@ -48,6 +50,8 @@ class Bishop(ChessPiece):
 							leftDown.append(nextElement.parent_id)
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break
+						if self.isType(nextElement.piece_id, "comp_"):
+							break
 							
 			for k in range(8):
 				b_x = x - k
@@ -61,7 +65,9 @@ class Bishop(ChessPiece):
 						if nextElement.parent_id!= None and not self.isType(nextElement.piece_id, "comp_"):
 							rightUp.append(nextElement.parent_id)
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
-								break						
+								break
+						if self.isType(nextElement.piece_id, "comp_"):
+							break						
 					
 			for n in range(8):
 				b_x = x + n
@@ -76,6 +82,8 @@ class Bishop(ChessPiece):
 							leftUp.append(nextElement.parent_id)
 							if nextElement.piece_id != "" and nextElement.piece_id != None:
 								break
+						if self.isType(nextElement.piece_id, "comp_"):
+							break
 					
 		leftUp = self.moveArrayToBack(leftUp)
 		rightUp = self.moveArrayToBack(rightUp)

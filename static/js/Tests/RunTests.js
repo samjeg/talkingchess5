@@ -338,23 +338,24 @@ class TestCheckerGetter {
  
 		changeMultiplePieceLocations(second_chessboard_matrix, first_chessboard_matrix);
  		var checkerGetter = new CheckerGetter();
+ 		// console.log("Error in Tests -> RunTests -> line 341: causing chess pieces not to return to original position");
  		console.assert(checkerGetter.kingHasCheck(), "KingHasCheck method not working");
  		changeMultiplePieceLocations(first_chessboard_matrix, second_chessboard_matrix);
 	}
 
-	changeMultiplePieceLocations(live_matrix, new_chessboard_matrix){
-		var diffPieces = chessMech.chessPiece.shrinkContinuosArray(
- 			chessMech.chessPiece.findMultipleDifferentPieces(live_matrix, new_chessboard_matrix)
- 		);
+	// changeMultiplePieceLocations(live_matrix, new_chessboard_matrix){
+	// 	var diffPieces = chessMech.chessPiece.shrinkContinuosArray(
+ // 			chessMech.chessPiece.findMultipleDifferentPieces(live_matrix, new_chessboard_matrix)
+ // 		);
 
-		for(var i=0; i<diffPieces.length; i++){
- 			var diffPiece = diffPieces[i];
- 			var diffPieceCoor = chessMech.chessPiece.findBoardCoordinates(new_chessboard_matrix, diffPiece);
-			var diffPiecePlaceId = chessMech.chessPiece.id_gen(diffPieceCoor[0], diffPieceCoor[1]);
-			var diffElement = document.getElementById(diffPiece);
-			var diffPlaceElement = document.getElementById(diffPiecePlaceId).appendChild(diffElement);
- 		}
-	}
+	// 	for(var i=0; i<diffPieces.length; i++){
+ // 			var diffPiece = diffPieces[i];
+ // 			var diffPieceCoor = chessMech.chessPiece.findBoardCoordinates(new_chessboard_matrix, diffPiece);
+	// 		var diffPiecePlaceId = chessMech.chessPiece.id_gen(diffPieceCoor[0], diffPieceCoor[1]);
+	// 		var diffElement = document.getElementById(diffPiece);
+	// 		var diffPlaceElement = document.getElementById(diffPiecePlaceId).appendChild(diffElement);
+ // 		}
+	// }
 
 }
 
