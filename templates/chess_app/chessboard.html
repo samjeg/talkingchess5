@@ -1,7 +1,9 @@
 {% extends "chess_app/base_footer.html" %}
 {% load static %}
 {% block title %}Chess Board{% endblock %}
-{% block templatecss %}<link href="{% static 'css/chessboard.css' %}" rel="stylesheet" />{% endblock %}
+{% block templatecss %}
+    <link href="{% static 'css/chessboard.css' %}" rel="stylesheet" />
+{% endblock %}
 {% block profile_nav %}
   {% if profile_detail %}
     <li class="nav-item">
@@ -27,12 +29,20 @@
   <div id="switch-button" class="btn btn-primary purple" onclick="window.chessMech.switchColours();">
     Switch Colours
   </div>
+  <div id="chess_state" value="{{ state }}"></div>
+  <form enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+    <div class="register-container">    
+      {{ chess_form.as_p }}  
+      <button id="chess_submit_btn" name="chess_submit" type="submit" class="btn btn-primary btn-btn">Submit</button>
+    </div>
+  </form>
   <div class="chessboard">
     <table id='table'>
         <tr id='topRow'>
         <td class="light-brown">
-          <div id='8A' class='empty chesspiece-container' onclick='window.chessMech.moveTo("8A");'>
-            <div id="comp_rook1" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_rook1");'>♜</div>
+          <div id='8A' class='empty chesspiece-container' onclick='window.chessMech.moveTo("8A"); robot(this.id);'>
+            <div id="comp_rook1" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_rook1"); robot(this.id);'>♜</div>
           </div>
         </td>
         <td class='brown'>
@@ -337,20 +347,10 @@
     </table>
   </div>
   <div class="clearfix"></div>
-  <!--<div id="ai-comment-container">
+  <div id="ai-comment-container">
     <div class="ai-opponent-comment" id="ai-comment"></div>
     <img class="ai-opponent-image" src="{% static 'images/robot_pic.jpg' %}"/>
   </div>
-    <div id="state" class="btn btn-danger">Yo {{ state }}</div>
-    <button id="orange_btn" type="submit" class="btn purple" onclick="robot(this.id)">Purple</button>
-    <button id="green_btn" type="submit" class="btn btn-success" onclick="robot(this.id)">Green</button>
-     <form enctype="multipart/form-data" method="POST">
-      {% csrf_token %}
-      <div class="register-container">
-        {{ chess_form.as_p }}
-        <button id="chess_submit_btn" name="chess_submit" type="submit" class="btn btn-primary btn-btn">Submit</button>
-      </div>-->
-    </form>
     <br>
     <script type="text/javascript" src="{% static 'js/dev_jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/RobotMovement.js' %}"></script>

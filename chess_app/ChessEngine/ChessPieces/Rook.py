@@ -27,7 +27,6 @@ class Rook(ChessPiece):
 				if i < x:
 					rightSelect = Select()
 					nextElement = rightSelect.selectFromParentId(matrix, self.id_gen(y, i))
-					# print("getRookMovablePlaces: %s"%self.isType(nextElement.piece_id, "comp_"))
 					if nextElement.parent_id != None and not self.isType(nextElement.piece_id, "comp_"):
 						right.append(nextElement.parent_id)
 						if nextElement.piece_id != "" and nextElement.piece_id != None:
@@ -42,7 +41,6 @@ class Rook(ChessPiece):
 			for j in range(8):
 				if j > x:
 					leftSelect = Select()
-					# print(" gets rook movable places %s %s"%(y, j))
 					nextElement = leftSelect.selectFromParentId(matrix, self.id_gen(y, j))
 					if nextElement.parent_id != None and not self.isType(nextElement.piece_id, "comp_"):
 						left.append(nextElement.parent_id)
@@ -70,7 +68,6 @@ class Rook(ChessPiece):
 				if n < y:
 					downSelect = Select()
 					nextElement = downSelect.selectFromParentId(matrix, self.id_gen(n, x))
-					# print("rook test movable places %s %s"%(nextElement.piece_id, self.isType(nextElement.piece_id, "comp_")))
 					if nextElement.parent_id != None and not self.isType(nextElement.piece_id, "comp_"):
 						down.append(nextElement.parent_id)
 						if nextElement.piece_id != "" and nextElement.piece_id != None:

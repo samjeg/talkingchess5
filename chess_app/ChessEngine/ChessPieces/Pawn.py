@@ -65,7 +65,6 @@ class Pawn(ChessPiece):
             fwd1Element = fwd1Select.selectFromParentId(
                 matrix, self.id_gen(y+1, x))
             fwd2Select = Select()
-            # print("get pawn movable places %s"%self.id_gen(y+2, x))
             fwd2Element = fwd2Select.selectFromParentId(
                 matrix, self.id_gen(y+2, x))
         
@@ -97,7 +96,6 @@ class Pawn(ChessPiece):
                         
                         
                     
-        # print("Pawn %s"%placeIds)
         return placeIds
 
     #checks if a piece is bieng attacked by the pawn
@@ -106,7 +104,6 @@ class Pawn(ChessPiece):
         attackingPawnPlaces = self.shrinkPawnArray(
             self.getPawnMovablePlaces(x, y), "checking")
         new_array = []
-        # print("Pawn %s"%attackingPawnPlaces)
         return attackingPawnPlaces
 
     # no gaps in array so can be used for selection
@@ -166,10 +163,8 @@ class Pawn(ChessPiece):
                     leftOfPawnElement.piece_id,
                     leftOfPawn
                 )
-                # print("enPassantMovement left %s %s %s"%(leftOfPawn, leftOfPawnElement.piece_id, enPassantSpace))
 
                 if enPassantSpace != "" and enPassantSpace != None:
-                    # print("enPassantMovement left after %s %s %s"%(leftOfPawn, leftOfPawnElement.piece_id, enPassantSpace))
                     pawnArray.append(enPassantSpace)
                     enPassantOpponentLeft = leftOfPawnElement.piece_id
                     currentEnPassantOpponentPlaceId = leftOfPawn
@@ -192,7 +187,6 @@ class Pawn(ChessPiece):
                     rightOfPawnElement.piece_id,
                     rightOfPawn
                     )
-                # print("enPassantMovement right %s %s %s"%(rightOfPawn, rightOfPawnElement.piece_id, enPassantSpace==""))
 
 
                 if enPassantSpace != "" and enPassantSpace != None:
@@ -219,7 +213,6 @@ class Pawn(ChessPiece):
         matrix = self.live_chessboard_matrix
 
         if self.isType(pieceId, "player_pawn"):
-            # print("pawnReadyEnPassant %s"%pieceId)
             for i in range(len(playerPawnStartingPositions)):
                 if self.isType(pieceId, str(i+1)):
 

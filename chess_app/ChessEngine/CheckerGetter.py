@@ -30,7 +30,6 @@ class CheckerGetter(object):
 		self.king.live_chessboard_matrix = matrix
 		selectKing = Select()
 		king_piece = selectKing.selectFromPieceId(matrix, "comp_king")
-		# print("From piece %s"%king_piece.piece_id)
 		king_coordinates = self.chess_piece.findPieceCoordinates(king_piece)
 		x = king_coordinates[1]
 		y = king_coordinates[0]
@@ -52,7 +51,6 @@ class CheckerGetter(object):
 		x = placeCoordinates[1]
 		y = placeCoordinates[0]
 		attackingPawnPlaces = self.pawn.attackingPlaces(x, y)
-		# print("Checker getter from place %s"%attackingPawnPlaces)
 		attackingHorsePlaces = self.horse.attackingPlaces(x, y)
 		attackingRookPlaces = self.rook.attackingPlaces(True, x, y)
 		attackingBishopPlaces = self.bishop.attackingPlaces(True, x, y)
@@ -60,7 +58,6 @@ class CheckerGetter(object):
 		queen2 = self.bishop.attackingPlaces(False, x, y)
 		attackingQueenPlaces = queen1 + queen2
 		attackingPlaces = attackingPawnPlaces + attackingHorsePlaces + attackingRookPlaces + attackingBishopPlaces + attackingQueenPlaces
-		# print("Checker getter from place full array %s"%attackingPlaces)
 		return attackingPlaces
 
 
@@ -94,7 +91,6 @@ class CheckerGetter(object):
 		if len(queen1) != 0:
 			for j in range(len(queen1)):
 				attackingPlaces = attackingPlaces + self.getAttackingRookInbetweenPlaces(queen1[j], x, y)
-				# print("get places under check %s"%self.getAttackingRookInbetweenPlaces(queen1[j], x, y))
 
 		if len(attackingBishopPlaces) != 0:
 			for k in range(len(attackingBishopPlaces)):
@@ -124,7 +120,6 @@ class CheckerGetter(object):
 					down_next_y = down_next_y - 1
 					if down_next_y != y:
 						down_next_place = self.chess_piece.id_gen(down_next_y, x)
-						# print("get attacking rook inbetween %s %s"%(self.chess_piece.id_gen(down_next_y, x), self.chess_piece.id_gen(y, x)))
 						new_array.append(down_next_place)
 					else:
 						break
@@ -225,7 +220,6 @@ class CheckerGetter(object):
 
 	def placeHasCheck(self, placeId):
 		attackingPlaces = self.fromPlace(placeId)
-		# print("Checker getter placeHasCheck %s"%attackingPlaces)
 		if len(attackingPlaces) > 0:
 			return True
 		

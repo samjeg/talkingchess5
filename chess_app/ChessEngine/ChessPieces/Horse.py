@@ -11,7 +11,6 @@ class Horse(ChessPiece):
 		matrix = self.live_chessboard_matrix
 		placeIds = []
 		if x >= 0 and x <= 7 and y >= 0 and y <= 7:
-			# print("ID Horse %s %s %s %s %s"%(x, y, self.id_gen(y, x), self.id_gen(y-2, x-1), self.id_gen(y-2, x+1)))
 			select1 = Select()
 			topThenRightElement = select1.selectFromParentId(matrix ,self.id_gen(y+2, x-1))
 			select2 = Select()

@@ -12,10 +12,11 @@
   <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
   <!-- Custom styles for this template -->
   <link href="{% static 'css/modern-business.css' %}" rel="stylesheet" />
+  <link rel="shortcut icon" href="#" />
   {% block templatecss %}{% endblock %}              
 </head>
 
-<body>
+<body>    
   <!-- Navigation -->
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -30,18 +31,12 @@
             <a name="home_nav" class="nav-link" href="{% url 'index' %}">HomePage</a>
           </li>
           {% if user.is_authenticated %}
-           <li class="nav-item">
-            <a name="logout_nav" class="nav-link" href="{% url 'chess_app:logout' %}">Logout</a>
-            </li>
+            {% block logout_nav %}{% endblock %}
             {% block profile_nav %}{% endblock %}
             {% block chessboard_nav %}{% endblock %}
           {% else %}
-          <li class="nav-item">
-            <a name="login_nav" class="nav-link" href="{% url 'chess_app:login' %}">Login</a>
-          </li>
-          <li class="nav-item">
-            <a name="register_nav" class="nav-link" href="{% url 'chess_app:register' %}">Register</a>
-          </li>
+            {% block login_nav %}{% endblock %}
+            {% block register_nav %}{% endblock %}
           {% endif %}
         </ul>
       </div>

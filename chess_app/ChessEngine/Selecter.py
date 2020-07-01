@@ -9,7 +9,6 @@ class Select(object):
 
 	# create select from the parent id object with piece and parent id replaces getElementById in javascript frontend
 	def selectFromParentId(self, matrix, par_id):
-		# print("select %s"%par_id)
 		coordinates = self.chess_piece.findPlaceCoordinates(par_id)
 		if coordinates[0] >= 0 and coordinates[0] <= 7 and coordinates[1] >= 0 and coordinates[1] <= 7:
 			self.parent_id = par_id

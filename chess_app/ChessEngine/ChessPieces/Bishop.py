@@ -89,7 +89,6 @@ class Bishop(ChessPiece):
 		rightUp = self.moveArrayToBack(rightUp)
 		leftDown = self.moveArrayToBack(leftDown)
 		rightDown = self.moveArrayToBack(rightDown)
-		# print("leftUp %s rightUp %s leftDown %s rightDown %s"%(leftUp, rightUp, leftDown, rightDown)) 
 		leftToRight = leftDown + rightUp
 		rightToLeft = rightDown + leftUp
 		placeIds = leftToRight + rightToLeft
@@ -100,7 +99,6 @@ class Bishop(ChessPiece):
 	# sees if a bishop or queen is attacking the position of the coordinates given	
 	def attackingPlaces(self, isBishop, x, y):
 		attackingBishopPlaces = self.getBishopMovablePlaces(x, y)
-		# print("bishop places: %s"%attackingBishopPlaces)
 		RightDownAttacking = attackingBishopPlaces[23]
 		LeftUpAttacking = attackingBishopPlaces[31]
 		LeftDownAttacking = attackingBishopPlaces[7]

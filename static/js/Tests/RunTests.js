@@ -7,7 +7,7 @@ $(document).ready(function(){
 	runRookTests();
 	runQueenTests();
 	runKingTests();
-	runCheckerGetterTests();
+	// runCheckerGetterTests();
 	// runCastlingTests();
 	// runChessMechanicsTests();
 
@@ -106,7 +106,7 @@ class TestChessMechanics{
 		this.chessMech.compPawnStartingPositions = ["7A", "7B", "7C", "7D", "7E", "7F", "7G", "7H"];
 	
 		
-		chessMech.chessPiece.live_chessboard_matrix = first_chessboard_matrix;
+		this.chessMech.chessPiece.live_chessboard_matrix = first_chessboard_matrix;
 		changeMultiplePieceLocations(original_chessboard_matrix, first_chessboard_matrix);
 		var enPassantOpponent = document.getElementById("5B");
 		if(enPassantOpponent!=null){
@@ -128,14 +128,14 @@ class TestChessMechanics{
 	}
 
 	changeMultiplePieceLocations(live_matrix, new_chessboard_matrix){
-		var diffPieces = chessMech.chessPiece.shrinkContinuosArray(
- 			chessMech.chessPiece.findMultipleDifferentPieces(live_matrix, new_chessboard_matrix)
+		var diffPieces = this.chessMech.chessPiece.shrinkContinuosArray(
+ 			this.chessMech.chessPiece.findMultipleDifferentPieces(live_matrix, new_chessboard_matrix)
  		);
 
 		for(var i=0; i<diffPieces.length; i++){
  			var diffPiece = diffPieces[i];
- 			var diffPieceCoor = chessMech.chessPiece.findBoardCoordinates(new_chessboard_matrix, diffPiece);
-			var diffPiecePlaceId = chessMech.chessPiece.id_gen(diffPieceCoor[0], diffPieceCoor[1]);
+ 			var diffPieceCoor = this.chessMech.chessPiece.findBoardCoordinates(new_chessboard_matrix, diffPiece);
+			var diffPiecePlaceId = this.chessMech.chessPiece.id_gen(diffPieceCoor[0], diffPieceCoor[1]);
 			var diffElement = document.getElementById(diffPiece);
 			var diffPlaceElement = document.getElementById(diffPiecePlaceId).appendChild(diffElement);
  		}
@@ -147,8 +147,6 @@ class TestChessMechanics{
 		console.assert(pieceElementBefore.style.backgroundColor=="rgb(64, 64, 64)", "Player pawn colour not set");
 		this.chessMech.switchColours();
 		console.assert(pieceElementBefore.style.backgroundColor=="rgb(192, 192, 192)", "Player pawn not changing colour");
-		// console.log("Pawn element after after: "+pieceElementBefore.style.backgroundColor);
-		// var pieceElementAfter= document.getElementById("player_pawn1");
 	}
 }
 
@@ -191,7 +189,7 @@ class TestCastling {
 
 		changeMultiplePieceLocations(original_chessboard_matrix, first_chessboard_matrix);
 		// console.log("toleftCanCkeck"+chessMech.canCastleLeft());
-		console.assert(chessMech.canCastleLeft(), "castling left check not working");
+		console.assert(this.chessMech.canCastleLeft(), "castling left check not working");
 		changeMultiplePieceLocations(first_chessboard_matrix, original_chessboard_matrix);
 
 	}
@@ -221,7 +219,7 @@ class TestCastling {
 
 		changeMultiplePieceLocations(original_chessboard_matrix, second_chessboard_matrix);
 		// console.log("toleftCanCheck "+chessMech.canCastleLeft());
-		console.assert(!chessMech.canCastleLeft(), "castling left check not working");
+		console.assert(!this.chessMech.canCastleLeft(), "castling left check not working");
 		changeMultiplePieceLocations(second_chessboard_matrix, original_chessboard_matrix);
 
 	}
@@ -251,7 +249,7 @@ class TestCastling {
 
 		changeMultiplePieceLocations(original_chessboard_matrix, first_chessboard_matrix);
 		// console.log("toleftCanCheck "+chessMech.canCastleRight());
-		console.assert(chessMech.canCastleRight(), "not castling right check not working");
+		console.assert(this.chessMech.canCastleRight(), "not castling right check not working");
 		changeMultiplePieceLocations(first_chessboard_matrix, original_chessboard_matrix);
 
 	}
@@ -281,20 +279,20 @@ class TestCastling {
 
 		changeMultiplePieceLocations(original_chessboard_matrix, first_chessboard_matrix);
 		// console.log("toRightCanCheck "+chessMech.canCastleRight());
-		console.assert(!chessMech.canCastleRight(), "not castling right check not working");
+		console.assert(!this.chessMech.canCastleRight(), "not castling right check not working");
 		changeMultiplePieceLocations(first_chessboard_matrix, original_chessboard_matrix);
 
 	}
 
 	changeMultiplePieceLocations(live_matrix, new_chessboard_matrix){
-		var diffPieces = chessMech.chessPiece.shrinkContinuosArray(
- 			chessMech.chessPiece.findMultipleDifferentPieces(live_matrix, new_chessboard_matrix)
+		var diffPieces = this.chessMech.chessPiece.shrinkContinuosArray(
+ 			this.chessMech.chessPiece.findMultipleDifferentPieces(live_matrix, new_chessboard_matrix)
  		);
 
 		for(var i=0; i<diffPieces.length; i++){
  			var diffPiece = diffPieces[i];
- 			var diffPieceCoor = chessMech.chessPiece.findBoardCoordinates(new_chessboard_matrix, diffPiece);
-			var diffPiecePlaceId = chessMech.chessPiece.id_gen(diffPieceCoor[0], diffPieceCoor[1]);
+ 			var diffPieceCoor = this.chessMech.chessPiece.findBoardCoordinates(new_chessboard_matrix, diffPiece);
+			var diffPiecePlaceId = this.chessMech.chessPiece.id_gen(diffPieceCoor[0], diffPieceCoor[1]);
 			var diffElement = document.getElementById(diffPiece);
 			var diffPlaceElement = document.getElementById(diffPiecePlaceId).appendChild(diffElement);
  		}
@@ -311,18 +309,19 @@ function runCheckerGetterTests(){
 class TestCheckerGetter {
 	constructor(){
 		this.checkerGetter = new CheckerGetter();
+		this.chessMech = new ChessMechanics();
 	}
 
 	testKingCanCheck(){
 		var first_chessboard_matrix = [
-			["comp_rook1", "comp_horse1", "comp_bishop1", "", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
-			[ "comp_pawn1", "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+			[ "comp_rook1", "comp_horse1", "comp_bishop1", "", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+			[ "comp_pawn1", "comp_pawn2", "comp_pawn3", "", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
 			[ "", "", "", "", "", "", "", ""],
-			[ "", "", "", "", "", "", "", ""],
-			[ "", "comp_queen", "", "player_pawn4", "", "", "", ""],
+			[ "comp_pawn4", "", "", "", "", "", "comp_queen", ""],
+			[ "player_queen", "", "", "player_pawn4", "", "", "", ""],
 			[ "", "", "", "", "", "", "", ""],
 			[ "player_pawn1", "player_pawn2", "player_pawn3", "", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
-			["player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+			["player_rook1", "player_horse1", "player_bishop1", "", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
 		];
 
 		var second_chessboard_matrix = [
@@ -336,26 +335,27 @@ class TestCheckerGetter {
 			["player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
 		];
  
-		changeMultiplePieceLocations(second_chessboard_matrix, first_chessboard_matrix);
- 		var checkerGetter = new CheckerGetter();
+		this.changeMultiplePieceLocations(second_chessboard_matrix, first_chessboard_matrix);
+ 		// var checkerGetter = new CheckerGetter();
  		// console.log("Error in Tests -> RunTests -> line 341: causing chess pieces not to return to original position");
- 		console.assert(checkerGetter.kingHasCheck(), "KingHasCheck method not working");
- 		changeMultiplePieceLocations(first_chessboard_matrix, second_chessboard_matrix);
+ 		console.assert(this.checkerGetter.kingHasCheck(), "KingHasCheck method not working");
+ 		this.changeMultiplePieceLocations(first_chessboard_matrix, second_chessboard_matrix);
 	}
 
-	// changeMultiplePieceLocations(live_matrix, new_chessboard_matrix){
-	// 	var diffPieces = chessMech.chessPiece.shrinkContinuosArray(
- // 			chessMech.chessPiece.findMultipleDifferentPieces(live_matrix, new_chessboard_matrix)
- // 		);
+	changeMultiplePieceLocations(live_matrix, new_chessboard_matrix){
+		var diffPieces = this.chessMech.chessPiece.shrinkContinuosArray(
+ 			this.chessMech.chessPiece.findMultipleDifferentPieces(live_matrix, new_chessboard_matrix)
+ 		);
+ 		console.log("Run tests: diff pieces "+diffPieces);
 
-	// 	for(var i=0; i<diffPieces.length; i++){
- // 			var diffPiece = diffPieces[i];
- // 			var diffPieceCoor = chessMech.chessPiece.findBoardCoordinates(new_chessboard_matrix, diffPiece);
-	// 		var diffPiecePlaceId = chessMech.chessPiece.id_gen(diffPieceCoor[0], diffPieceCoor[1]);
-	// 		var diffElement = document.getElementById(diffPiece);
-	// 		var diffPlaceElement = document.getElementById(diffPiecePlaceId).appendChild(diffElement);
- // 		}
-	// }
+		for(var i=0; i<diffPieces.length; i++){
+ 			var diffPiece = diffPieces[i];
+ 			var diffPieceCoor = this.chessMech.chessPiece.findBoardCoordinates(new_chessboard_matrix, diffPiece);
+			var diffPiecePlaceId = this.chessMech.chessPiece.id_gen(diffPieceCoor[0], diffPieceCoor[1]);
+			var diffElement = document.getElementById(diffPiece);
+			var diffPlaceElement = document.getElementById(diffPiecePlaceId).appendChild(diffElement);
+ 		}
+	}
 
 }
 

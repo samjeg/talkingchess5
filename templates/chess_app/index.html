@@ -2,6 +2,25 @@
 {% load static %}
 {% block title %}Home Page{% endblock %}
 {% block templatecss %}<link href="{% static 'css/style.css' %}" rel="stylesheet" />{% endblock %}
+{% if user.is_authenticated %}
+  {% block logout_nav %}
+    <li class="nav-item">
+      <a name="logout_nav" class="nav-link" href="{% url 'chess_app:logout' %}">Logout</a>
+    </li>
+  {% endblock %}          
+{% else %}
+  {% block login_nav %}
+    <li class="nav-item">
+      <a name="login_nav" id="login_nav_id" class="nav-link" href="{% url 'chess_app:login' %}">Login</a>
+    </li>
+  {% endblock %}
+  {% block register_nav %}
+    <li class="nav-item">
+      <a name="register_nav" class="nav-link" href="{% url 'chess_app:register' %}">Register</a>
+    </li>
+  {% endblock %}
+{%  endif %}
+          
 {% block profile_nav %}
   {% if profile_detail %}
     <li class="nav-item">
@@ -30,7 +49,6 @@
     <br>
     <h1 name="index_text" class="my-4">Enjoy playing chess with this can of bolts.</h1>
     <br>
-    {% if profile_detail %}
       {% if chess_detail %}
       <div>
         <a 
@@ -48,7 +66,6 @@
         <input name="new_chessboard_btn" type="Submit" class="btn btn-primary btn-btn" value="New Game" />
       </form>
       {%  endif %}
-    {% endif %}
     <br>
     {% else %}
      <div class="jumbotron">

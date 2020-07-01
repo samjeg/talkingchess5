@@ -46,6 +46,7 @@ class ChessMechanics(object):
 	# allows the comp to select a piece to play
 	def select(self, pieceId):
 		matrix = self.chessPiece.live_chessboard_matrix
+		self.checkerGetter.live_chessboard_matrix = matrix
 		self.prevSelectedHighlightIds = self.current_selected_movable_ids
 		currentSelect = Select()
 		self.current_selected_piece = currentSelect.selectFromPieceId(matrix, pieceId)
@@ -105,7 +106,7 @@ class ChessMechanics(object):
 	
 	# gives castling moves if the king has initiated a castling move
 	def rookExtraMoves(self, rookArray):
-		if self.kingMovedRight:
+		if self.kingMovedRight:	
 			rookArray.append("1F")
 		
 		if self.kingMovedLeft:
@@ -116,7 +117,7 @@ class ChessMechanics(object):
 	# gets all posible moves depending on the piece and the circumstance that a chesspiece can make
 	def getMovable(self, pieceId, x, y):
 		movablePlaces = []
-		if self.chessPiece.isType(pieceId, "pawn"):
+		if self.chessPiece.isType(pieceId, "pawn"): 
 			movablePlaces = self.pawn.movablePlaces(
 				self.playerPawnStartingPositions, 
 				self.currentEnPassantPlaceId,
@@ -260,12 +261,9 @@ class ChessMechanics(object):
 		
 		for n in range(len(rooks)):
 			currentRookPlaces = self.rookExtraMoves(self.rook.movablePlaces(rooks[n][1], rooks[n][2]))
-			# print("rook can save king %s %s"%(self.rookExtraMoves(self.rook.movablePlaces(rooks[n][1], rooks[n][2])), self.rook.movablePlaces(rooks[n][1], rooks[n][2])))
-			# print("rook can save king %s %s"%(rooks[n][1], rooks[n][2]))
 			for i in range(len(movablePlaces)):
 				for j in range(len(currentRookPlaces)):
 					if movablePlaces[i] == currentRookPlaces[j]:
-						# print("rook can save king %s"%movablePlaces[i])
 						self.kingRescueChessPiece = rooks[n][0]
 						self.kingRescuePosition = movablePlaces[i]
 
@@ -284,7 +282,6 @@ class ChessMechanics(object):
 			for i in range(len(movablePlaces)):
 				for j in range(len(currentBishopPlaces)):
 					if movablePlaces[i] == currentBishopPlaces[j]:
-						# print("bishop can save king %s"%movablePlaces[i])
 						self.kingRescueChessPiece = bishops[n][0]
 						self.kingRescuePosition = movablePlaces[i]
 
@@ -349,12 +346,10 @@ class ChessMechanics(object):
 				pawns[n][1], 
 				pawns[n][2]
 			)
-			# print("pawn can save king %s %s"%(pawns[n][0], currentPawnPlaces))
 			
 			for i in range(len(movablePlaces)):
 				for j in range(len(currentPawnPlaces)):
 					if movablePlaces[i] == currentPawnPlaces[j]:
-						# print("pawn can save king movable %s %s"%(pawns[n][0], movablePlaces[i]))
 						self.kingRescueChessPiece = pawns[n][0]
 						self.kingRescuePosition = movablePlaces[i]
 
@@ -374,8 +369,7 @@ class ChessMechanics(object):
 						self.kingRescuePosition = self.chessPiece.id_gen(pawns[n][2] + 1, pawns[n][1] - 1)
 
 						return True
-			    # print("pawn can save king %s %s %s"%(self.pawn.isEnPassant, n, self.chessPiece.id_gen(pawns[n][2], pawns[n][1])))
-
+			    
 
 		return False
 
@@ -404,27 +398,22 @@ class ChessMechanics(object):
 
 			if len(rookMovablePlaces) > 0:
 				if self.rookCanSaveKing(rookMovablePlaces):
-					# print("ischeckMate rook %s"%rookMovablePlaces)
 					return False
 
 			if len(bishopMovablePlaces) > 0:
 				if self.bishopCanSaveKing(bishopMovablePlaces):
-					# print("ischeckMate bishop %s"%bishopMovablePlaces)
 					return False
 
 			if len(horseMovablePlaces) > 0:
 				if self.horseCanSaveKing(horseMovablePlaces):
-					# print("ischeckMate horse %s"%horseMovablePlaces)
 					return False
 
 			if len(queenMovablePlaces) > 0:
 				if self.queenCanSaveKing(queenMovablePlaces):
-					# print("ischeckMate queen %s"%queenMovablePlaces)
 					return False
 
 			if len(pawnMovablePlaces) > 0:
 				if self.pawnCanSaveKing(pawnMovablePlaces):
-					# print("ischeckMate pawn %s"%pawnMovablePlaces)
 					return False
 			
 		return True

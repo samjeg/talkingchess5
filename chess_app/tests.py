@@ -3,6 +3,13 @@ from __future__ import unicode_literals
 
 
 from django.test import TestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+
 from .ChessEngine.ChessPieces.ChessPiece import ChessPiece
 from .ChessEngine.ChessPieces.Horse import Horse
 from .ChessEngine.ChessPieces.Rook import Rook
@@ -43,6 +50,42 @@ class RobotMovementTestCase(TestCase):
 
         for i in range(len(chess_piece_ids)):
             self.assertEqual(chess_piece_ids[i], chess_pieces[i])
+
+
+    def testUpdateCurrentChessPieces(self):
+        chessboard_matrix = [
+            ["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+            ["comp_pawn1", "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+            ["player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+        ]
+
+        sec_chessboard_matrix = [
+            ["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+            ["", "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+            ["player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+        ]
+
+        new_chess_piece_ids =  [ 
+            "comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2",
+            "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8", 
+            "player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8",
+            "player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2",
+        ]
+
+        chess_pieces = self.robot_movement.getChessPieces(chessboard_matrix)
+        self.robot_movement.updateChessPieces(sec_chessboard_matrix)
+
+        self.assertEquals(self.robot_movement.current_chess_piece_ids, new_chess_piece_ids)
 
     def testPieceIsMissing(self):
 
@@ -117,6 +160,73 @@ class RobotMovementTestCase(TestCase):
         points = self.robot_movement.getPoints(missing_piece)
 
         self.assertEqual(points, -10)
+
+    def testPlayRandomMove(self):
+        chessboard_matrix = [
+            ["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+            ["comp_pawn1", "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+            ["player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+        ]
+        
+        self.robot_movement.playRandomMove(chessboard_matrix)
+        
+class RobotMovementSeleniumTests(StaticLiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        super(StaticLiveServerTestCase, cls).setUpClass()
+        cls.selenium = webdriver.Chrome()
+        cls.selenium.implicitly_wait(60)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super(StaticLiveServerTestCase, cls).tearDownClass()
+
+    def test_go_to_chessboard(self):
+        # Register as a new user
+        self.selenium.get('%s%s' % (self.live_server_url, '/chess_app/register/'))
+        reg_username_input = self.selenium.find_element_by_name("username")
+        reg_username_input.send_keys('Jilly')
+        reg_password_input = self.selenium.find_element_by_name("password1")
+        reg_password_input.send_keys('testpassword')
+        reg_password_input_2 = self.selenium.find_element_by_name("password2")
+        reg_password_input_2.send_keys('testpassword')
+        self.selenium.find_element_by_name("reg_submit_btn").click()
+        time.sleep(5)
+
+        # Login as the new user
+        wait = WebDriverWait(self.selenium, 5)
+        login_link = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="navbarResponsive"]/ul/li[2]/a')))
+        if login_link:
+            login_link.click()
+            time.sleep(5)
+            login_username_input = self.selenium.find_element_by_xpath('//*[@id="id_username"]')
+            login_username_input.send_keys('Jilly')
+            login_password_input = self.selenium.find_element_by_name("password")
+            login_password_input.send_keys('testpassword')
+            self.selenium.find_element_by_name("login_btn").click()
+            time.sleep(5)
+        
+
+            # Create a profile/image for the new user
+            self.selenium.find_element_by_name("create_profile_nav").click()
+            profile_image_upload = self.selenium.find_element_by_xpath('//*[@id="id_picture"]')
+            profile_image_upload.send_keys("C:\\Users\\samje\\Documents\\WebProjects2\\djangoenv\\talkingchess5\\static\\images\\profile_pic.jpg")
+            time.sleep(5)
+            self.selenium.find_element_by_name("profile_submit").click()
+            time.sleep(5)
+
+            # # Go to home page and start a new game
+            self.selenium.find_element_by_name("home_nav").click()
+            time.sleep(5)
+            self.selenium.find_element_by_name("new_chessboard_btn").click()
+            time.sleep(5)
+
 
 
 
