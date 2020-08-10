@@ -32,14 +32,31 @@ class ChessboardForm(forms.ModelForm):
 		["player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
 	]
 
-	user_input_state = forms.CharField(initial=matrix)
+	user_input_state = forms.CharField(initial=matrix, label="")
+	current_player_type = forms.CharField(label="", required=False)
 
 	class Meta:
-		fields = ("user_input_state",)
+		fields = ("user_input_state", "current_player_type")
 		model = Chessboard
 
 	def __init__(self, *args, **kwargs):
 		super(ChessboardForm, self).__init__(*args, **kwargs)
 		self.fields['user_input_state'].widget.attrs['id'] = 'input_state'
+		self.fields['current_player_type'].widget.attrs['id'] = 'current_player_type'
+		# self.fields['user_input_state'].widget.attrs['name'] = 'hello'
+		# self.fields['user_input_state'].widget.attrs['label'] = ''
+
+class UserProfileInfoForm(forms.ModelForm):
+	user = forms.IntegerField(required=False)
+	picture = forms.ImageField(required=False)
+	chessboard = forms.ModelChoiceField(queryset=UserProfileInfo.objects.all(), required=False)
+
+	class Meta:
+		fields = ('user', 'picture', 'chessboard')
+		model = UserProfileInfo
+
+	def __init__(self, *args, **kwargs):
+		super(UserProfileInfoForm, self).__init__(*args, **kwargs)
+
 				
 

@@ -16,11 +16,29 @@ from django.views.generic import (
                                     ListView,
                                 )
 from django.views.generic.edit import FormMixin
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from . import models
 from . import forms
 from .ChessEngine.RobotMovement import RobotMovement
+from .ChessEngine.ChessPieces.ChessPiece import ChessPiece 
 import ast
+import json
+
+old_state = [
+    ["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
+    ["comp_pawn1", "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
+    ["", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", ""],
+    ["player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
+    ["player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+]
+
+for i in range(8):
+    for j in range(8):
+        old_state[i][j] = old_state[i][j].encode("utf-8")
 
 class ChessBaseView(object):
     def __init__(self):
@@ -50,16 +68,13 @@ class IndexView(FormMixin, TemplateView):
         user = self.request.user
         form = self.get_form()
         if user.is_authenticated:
-            for profile in profiles:
-                # print("view index view user id %s profile user id %s"%(user.id, profile.user.id))
+            for profile in profiles:          
                 if user.id == profile.user.id:
-                    # print("view index view chessboard state: %s"%(self.cleaned_data['user_input_state']))
-                    cb = profile.chessboard
-                    # print("view index view chessboard: %s"%(cb))
+                    
                     context['profile_detail'] = profile
                     context['chess_form'] = form                   
                     for chessboard in chessboards:
-                        if profile.chessboard == chessboard.id:
+                        if profile.chessboard == chessboard:
                             context["chess_detail"] = chessboard
         return context
 
@@ -68,18 +83,23 @@ class IndexView(FormMixin, TemplateView):
             return HttpResponseForbidden()
         form = self.get_form()
         if form.is_valid():
-            return self.form_valid(form)
+            return self.form_valid(form, request.user.id)
         else:
             return self.form_invalid(form)
 
-    def form_valid(self, form):
+    def form_valid(self, form, user_id):
         global chess_detail_id
-
+        profiles = models.UserProfileInfo.objects.all()
         chessboard = models.Chessboard(
             user_input_state = form.cleaned_data['user_input_state']
         )
 
-        chessboard.save()
+        for profile in profiles:          
+            if user_id == profile.user.id:    
+                profile.chessboard = chessboard
+                 
+                chessboard.save()
+                profile.save()
 
         chess_detail_id = chessboard.id
         
@@ -101,6 +121,7 @@ class UserProfileDetailView(FormMixin, DetailView):
         chessboards = models.Chessboard.objects.all()
         profiles = models.UserProfileInfo.objects.all()
         context['profile_detail'] = self.get_object()
+        
         if user.is_authenticated:
             for profile in profiles:
                 if user.id == profile.user.id:
@@ -130,7 +151,6 @@ class UserProfileDetailView(FormMixin, DetailView):
 
         chessdetail_id = chessboard.id
         
-        print("saved form")
 
         return redirect('chess_app:chess_detail', pk=chessdetail_id)
 
@@ -185,6 +205,39 @@ class ChessboardDetailView(FormMixin, DetailView):
     template_name = 'chess_app/chessboard.html'
     form_class = forms.ChessboardForm
 
+    def robotCanMove(self, type_of_player, matrix, new_matrix):
+        original_positions = []
+        new_positions = []
+        counter = 0
+        s = set()
+        chess_piece = ChessPiece()
+          
+        # get all the player pieces in original state
+        for i in range(len(matrix)):
+            for j in range(len(matrix[i])):
+                if chess_piece.isType(matrix[i][j], type_of_player):
+                    original_positions.append(chess_piece.id_gen(i, j))
+                
+            
+        # get all the player pieces in the new state
+        for i in range(len(new_matrix)):
+            for j in range(len(new_matrix[i])):
+                if chess_piece.isType(new_matrix[i][j], type_of_player):
+                    new_positions.append(chess_piece.id_gen(i, j))
+        
+    
+        # count the positions that are the same 
+        for i in range(len(original_positions)):
+            for j in range(len(new_positions)):
+                if j not in s: 
+                    if original_positions[i] == new_positions[j]:
+                        s.add(j)
+                        counter += 1
+
+        print("view chessboard detail orig pos %s new pos %s"%(len(original_positions), len(new_positions)))
+
+        return len(original_positions) - 1 == counter
+
     
     def get_success_url(self):
         return reverse_lazy('chess_app:chess_detail', kwargs={'pk':self.object.pk})
@@ -192,34 +245,32 @@ class ChessboardDetailView(FormMixin, DetailView):
     # user passes state which is changed by the ai the 
     # return state is passed to the front-end as context
     def get_context_data(self, **kwargs):
+        global old_state 
         
         context = super(ChessboardDetailView, self).get_context_data(**kwargs)
+
         user = self.request.user
         profiles = models.UserProfileInfo.objects.all()
 
         self.object = self.get_object() 
-        print("views chessdetails object id: %s"%self.object.id)
-        chessboard = models.Chessboard.objects.get(pk=self.object.id)
+        
         form = self.get_form()
+        chessboard = models.Chessboard.objects.get(pk=self.object.id)
         chess_form = forms.ChessboardForm(instance=chessboard)
         robot = RobotMovement()
         if user.is_authenticated:
-            if chessboard == None:
-                print("views chessboard detail chessboard is null")
-                # if chessboard.user_input_state == None:
-                    # print("views chessboard detail chessboard user input state is null")
-
-            print("before view chessoard detail context: %s"%chessboard.user_input_state)
             chess_data = chessboard.user_input_state
             chess_data = ast.literal_eval(chess_data)
-            context['state'] = robot.playRandomMove(chess_data) 
-            # print("after view chessoard detail context: %s"%context['state'])
+
+            if self.robotCanMove("player", old_state, chess_data):
+                context['state'] = self.robot.playRandomMove(chess_data)
+                old_state = self.robot.playRndomMove(chess_data)
 
             for profile in profiles:    
                 if user.id == profile.user.id:
                     context['profile_detail'] = profile
                     context['chess_form'] = form
-        print("context: %s"%(context))
+        
         return context
 
 
@@ -231,22 +282,29 @@ class ChessboardDetailView(FormMixin, DetailView):
         chess_item = models.Chessboard.objects.get(pk=self.object.id)
         chess_form = forms.ChessboardForm(request.POST, instance=chess_item)
         chess_form_has_data = chess_form.data.get('user_input_state')
+        profile = models.UserProfileInfo.objects.get(user=request.user)
+        profile_form = forms.UserProfileInfoForm(request.POST, instance=profile)
         if chess_form_has_data:
-            if chess_form.is_valid():
-                print("view chessboard view chess form is valid")
-                return self.chess_form_valid(chess_form, chess_item)
+            if chess_form.is_valid() and profile_form.is_valid():
+                return self.chess_form_valid(chess_form, chess_item, profile_form, profile)
             else:
-                print("view chessboard view chess form is not valid")
                 return self.form_invalid(chess_form)
 
 
-    def chess_form_valid(self, chess_form, chess_item):
-        
+    def chess_form_valid(self, chess_form, chess_item, profile_form, profile):
         if chess_item:
+            # context = self.get_context_data(**kwargs)
             self.chess_state = chess_form.cleaned_data['user_input_state']
             chess_item = chess_form.save(commit=False)
             chess_item.user_input_state = chess_form.cleaned_data['user_input_state']
             chess_item.save()
+            chess_instance = models.Chessboard.objects.get(pk=chess_item.pk)
+            
+            if profile:
+                profile = profile_form.save(commit=False)
+                profile.chessboard = chess_instance
+                profile.save()  
+            
         
         return super(ChessboardDetailView, self).form_valid(chess_form)
 

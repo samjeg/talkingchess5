@@ -1,0 +1,23 @@
+            # chess_data = chessboard.user_input_state
+
+            # chess_data = ast.literal_eval(chess_data)
+            
+            # new_chess_data = []
+            # count = 0;
+            # for i in range(8):
+            #     next_state = []
+            #     for j in range(8):
+            #         if count < len(chess_data):
+            #             next_state.append(chess_data[count])
+            #             count += 1
+            #         else:
+            #             break
+            #     new_chess_data.append(next_state)
+
+            # chess_data = new_chess_data
+            # print("view chessdetail: can move %s old state %s chess data %s"%(self.robotCanMove("player", old_state, chess_data), old_state, chess_data))
+
+            # if self.robotCanMove("player", old_state, chess_data):
+            #     print("robot can move")
+            #     context['state'] = robot.playRandomMove(chess_data)
+            #     old_state = chess_data

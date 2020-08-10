@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 
 class Chessboard(models.Model):
 	user_input_state = models.CharField(max_length=1000)
+	current_player_type = models.CharField(null=True, blank=True, default="player", max_length=10)
 
 	def __str__(self):
 		return "Chessboard: %s"%self.pk

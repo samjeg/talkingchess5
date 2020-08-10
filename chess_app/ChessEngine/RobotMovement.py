@@ -120,32 +120,45 @@ class RobotMovement(object):
         ]
         selected_pieces = []
         movablePlaces = []
-    
+        # print("robot movement play random 1")
+        self.chess_mech.chessPiece.live_chessboard_matrix = matrix
+        # print("robot movement play random 2")
+        print("robot move playrand before %s %s"%(matrix, selected_pieces))
         self.next_piece = self.getMovablePiece(matrix, selected_pieces)  
-        print("RobotMovement playRandomMove getMovablePiece piece %s %s"%(self.next_piece, self.getMovablePiece(matrix, selected_pieces)))
+        # print("robot movement play random 3")
+        
         place = random.choice(self.movable_places)
+        # print("robot movement play random 4")
         self.chess_mech.moveTo(place)
-
+        # print("robot move playrand move to %s"%self.chess_mech.chessPiece.live_chessboard_matrix)
+        # print("robot movement play random 5")
         new_coordinates = []
 
         new_matrix = self.chess_mech.chessPiece.live_chessboard_matrix
+        # print("robot movement play random 6")
+        # print("robot move playrand after %s"%self.chess_mech.chessPiece.live_chessboard_matrix)
         
         for k in range(8):
+            # print("robot movement play random 7")
             for l in range(8):
+                # print("robot movement play random 8")
                 if new_matrix[k][l] == self.next_piece:
+                    # print("robot movement play random 9")
                     new_matrix[k][l] = ''
 
 
-           
+        # print("robot movement play random 10")
         for n in range(8):
+            # print("robot movement play random 11")
             for m in range(8):
+                # print("robot movement play random 12")
                 next_val = new_matrix[n][m]
+                # print("robot movement play random 13")
                 if isinstance(next_val, Select):
+                    # print("robot movement play random 14")
                     new_place = self.chess_piece.id_gen(n, m)
                     new_matrix[n][m] = self.next_piece
-        print("RobotMovement playRandomMove last piece %s"%self.next_piece)
-        # print("piece: %s place: %s confirm place: %s matrix: %s"%(piece, place, new_place, new_matrix))
-
+       
         return new_matrix
 
 
@@ -153,44 +166,59 @@ class RobotMovement(object):
     def pickUnSelected(self, selected_pieces, piece):
         length = len(selected_pieces)
         i = 0
-        while length != 0 and i < length:
-            for i in range(len(selected_pieces)):
-                if selected_pieces[i] == piece:
-                    self.comp_pieces.remove(piece) # Remove pieces from the comp_pieces array
-                    piece = random.choice(self.comp_pieces)
-                    break;
+        # print("robot movement pick unselected 1")
 
+        for i in range(len(selected_pieces)):
+            # print("robot movement pick unselected 2")
+            if selected_pieces[i] == piece:
+                # print("robot movement pick unselected 3")
+                self.comp_pieces.remove(piece)
+                # print("robot movement pick unselected 4")
+                piece = random.choice(self.comp_pieces)
+                # print("robot movement pick unselected 5")
+                break;
+        # print("robot movement pick unselected 6")
         selected_pieces.append(piece)
+        # print("robot movement pick unselected 7")
         return piece
                     
         
     def getMovablePiece(self, matrix, selected_pieces):
-        self.chess_mech.chessPiece.live_chessboard_matrix = matrix
+        # print("robot movement movable piece 1")
         piece = ""
         while len(self.movable_places) == 0:
+            # print("robot movement movable piece 2")
             piece = random.choice(self.comp_pieces)
+            # print("robot movement movable piece 3")
             piece = self.pickUnSelected(selected_pieces, piece)
     
             firstCoor = 0
-            secCoor = 0            
+            secCoor = 0   
+            # print("robot movement movable piece 4")         
             for i in range(len(matrix)):
+                # print("robot movement movable piece 5")
                 for j in range(len(matrix[i])):
+                    # print("robot movement movable piece 6")
                     if matrix[i][j] == piece:
+                        # print("robot movement movable piece 7")
                         firstCoor = i
                         secCoor = j
                         coordinates = [i, j]
             
-            
-            self.chess_mech.select(piece)       
+            # print("robot movement movable piece 8")
+            self.chess_mech.select(piece)   
+            # print("robot movement movable piece 9")    
             self.movable_places = self.chess_mech.getMovable(piece, secCoor, firstCoor)
+            # print("robot movement movable piece 10")
 
             if len(self.comp_pieces) == 0:
+                # print("robot movement movable piece 11")
                 break
+
+            # print("robot movement movable piece 12")
         
         return piece
         
-        
-
 
 
 

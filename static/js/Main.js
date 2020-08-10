@@ -2,45 +2,28 @@ var chessMech = null;
 $(document).ready(function(){
 
 	var chess_piece_ids = [ 
-	"comp_pawn1", "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8", 
-	"comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2",
-	"player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8",
-	"player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2",
+		"comp_pawn1", "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8", 
+		"comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2",
+		"player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8",
+		"player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2",
 	];
 
 	var new_chessboard_matrix = [
-		["comp_rook1", "comp_horse1", "comp_bishop1", "comp_queen", "comp_king", "comp_bishop2", "comp_horse2", "comp_rook2"],
-		[ "comp_pawn1", "comp_pawn2", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
-		[ "", "", "", "", "", "", "", ""],
-		[ "", "", "", "", "", "", "", ""],
-		[ "", "", "", "", "", "", "", ""],
-		[ "", "", "", "", "", "", "", ""],
-		[ "player_pawn1", "player_pawn2", "player_pawn3", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
-		["player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]
+		['comp_rook1', 'comp_horse1', 'comp_bishop1', 'comp_queen', 'comp_king', 'comp_bishop2', 'comp_horse2', 'comp_rook2'],
+		[ 'comp_pawn1', 'comp_pawn2', 'comp_pawn3', 'comp_pawn4', 'comp_pawn5', 'comp_pawn6', 'comp_pawn7', 'comp_pawn8' ],
+		[ '', '', '', '', '', '', '', ''],
+		[ '', '', '', '', '', '', '', ''],
+		[ '', '', '', '', '', '', '', ''],
+		[ '', '', '', '', '', '', '', ''],
+		[ 'player_pawn1', 'player_pawn2', 'player_pawn3', 'player_pawn4', 'player_pawn5', 'player_pawn6', 'player_pawn7', 'player_pawn8' ],
+		['player_rook1', 'player_horse1', 'player_bishop1', 'player_queen', 'player_king', 'player_bishop2', 'player_horse2', 'player_rook2']
 	];
-
-	/*	["comp_rook1", "comp_horse1", "", "comp_queen", "comp_king", "comp_bishop2", "", "comp_rook2"],
-		[ "comp_pawn1", "", "comp_pawn3", "comp_pawn4", "comp_pawn5", "comp_pawn6", "comp_pawn7", "comp_pawn8" ],
-		[ "comp_bishop1", "", "", "", "", "", "", ""],
-		[ "", "comp_pawn2", "", "comp_horse2", "", "", "", ""],
-		[ "", "", "player_pawn3", "", "", "", "", ""],
-		[ "", "", "", "", "", "", "", ""],
-		[ "player_pawn1", "player_pawn2", "", "player_pawn4", "player_pawn5", "player_pawn6", "player_pawn7", "player_pawn8" ],
-		["player_rook1", "player_horse1", "player_bishop1", "player_queen", "player_king", "player_bishop2", "player_horse2", "player_rook2"]*/
 
 	chessMech = new ChessMechanics();	
 
-	
 	var chess_place_ids = chessMech.chessPiece.get_chess_place_ids(chess_piece_ids);
 	chessMech.chessPiece.live_chessboard_matrix = chessMech.chessPiece.live_chessboard_matrix_gen(chess_place_ids, chess_piece_ids);
 	var matrixIsSame = chessMech.chessPiece.matrixSame(chessMech.chessPiece.live_chessboard_matrix, new_chessboard_matrix);
-	
-
-	// changePieceLocation(chessMech.chessPiece.live_chessboard_matrix, new_chessboard_matrix);
- 	
-
- 	// changeMultiplePieceLocations(chessMech.chessPiece.live_chessboard_matrix, new_chessboard_matrix);
-	
 	
 	var players = document.getElementsByClassName("player");
 	var comp_players = document.getElementsByClassName("comp-player");
@@ -70,7 +53,6 @@ function changePieceLocation(live_matrix, new_chessboard_matrix){
 class ChessMechanics{
 	
 	constructor(){
-
 		this.current_colour = "White"
 		this.current_selected_piece = undefined;
 		this.current_selected_coordinates = [];
@@ -102,24 +84,29 @@ class ChessMechanics{
 		this.king = new King();
 		this.pawn = new Pawn();
 		this.horse = new Horse();
+		this.playerCanMove = true;
+		this.robotCanMove = false;
 	}
 
-	select(pieceId){
-		this.prevSelectedHighlightIds = this.current_selected_movable_ids;
-		this.current_selected_piece = document.getElementById(pieceId);
-		this.current_selected_coordinates = this.chessPiece.findPieceCoordinates(this.current_selected_piece);
-		this.currentEnPassantOpponentPlaceId = "";
-		
-		this.current_selected_movable_ids = this.getMovable(
-			this.current_selected_piece.id,
-			this.current_selected_coordinates[1],
-			this.current_selected_coordinates[0]
-		);
+	select(pieceId) {
+		// console.log("main select player can move: "+this.playerCanMove)
+		if(this.playerCanMove && this.chessPiece.isType(pieceId, "player_") || this.robotCanMove && this.chessPiece.isType(pieceId, "comp_")) {
+			this.prevSelectedHighlightIds = this.current_selected_movable_ids;
+			this.current_selected_piece = document.getElementById(pieceId);
+			this.current_selected_coordinates = this.chessPiece.findPieceCoordinates(this.current_selected_piece);
+			this.currentEnPassantOpponentPlaceId = "";
+			
+			this.current_selected_movable_ids = this.getMovable(
+				this.current_selected_piece.id,
+				this.current_selected_coordinates[1],
+				this.current_selected_coordinates[0]
+			);
 
-		var current_king_place_id = document.getElementById("player_king").parentElement.id;
-		this.selectedHightlightMovableIds = this.current_selected_movable_ids;
-		this.highlightMovable(this.selectedHightlightMovableIds);
-		this.selectedHightlightMovableIds = [];
+			var current_king_place_id = document.getElementById("player_king").parentElement.id;
+			this.selectedHightlightMovableIds = this.current_selected_movable_ids;
+			this.highlightMovable(this.selectedHightlightMovableIds);
+			this.selectedHightlightMovableIds = [];
+		}
 	}
 
 	moveTo(placeId){
@@ -130,9 +117,10 @@ class ChessMechanics{
 					if(placeId==this.current_selected_movable_ids[i]){
 						var current_place = document.getElementById(placeId);
 						current_place.appendChild(this.current_selected_piece);
+						this.removeHighlights();
 						selectedId = this.current_selected_piece.id;
 						this.movedPieces.push(selectedId);
-						this.removeHighlights();
+
 						if(selectedId=="player_king"&&placeId=="1G"){
 							this.kingMovedRight = true;
 						}
@@ -176,7 +164,7 @@ class ChessMechanics{
 		var current_element = document.getElementById(pieceId);
 		var parent_id = current_element.parentElement.id;
 		var parent_element = document.getElementById(parent_id);
-		// console.log("Opponent Helper: "+parent_id+" "+pieceId+" "+this.currentEnPassantPlaceId);
+		
 		if(current_element!=null){
 			if(parent_element!=null){
 				if(this.currentEnPassantOpponentPlaceId!=""||this.currentEnPassantOpponentPlaceId!=null){
@@ -267,7 +255,6 @@ class ChessMechanics{
 	kingExtraMoves(kingArray){
 		if(this.canCastleRight()){
 			kingArray.push("1G")
-			// console.log("can castle right");
 		}
 		if(this.canCastleLeft()){
 			kingArray.push("1C");

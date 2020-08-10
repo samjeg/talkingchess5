@@ -57,28 +57,23 @@ table tr td .chesspiece-container .chesspiece {
 	border-radius: 50%;
 
 }
-/*
-body {
-   /*Margin bottom by footer height */
-  /*margin-bottom: 60px;*/
-/*}*/
-
-/*.app_footer {
-  position: absolute;
-   bottom: 0;
-  width: 100%;
-  height: 60px;
-  background-color: #000;
-}*/
 
 .player {
 	background-color: #C0C0C0;
+	color: #000;
 }
 
 .comp-player {
 	background-color: #404040;
 }
 
+.black-font {
+	color: #000;
+}
+
+.white-font {
+	color: #fff;
+}
 
 .black {
 	background-color: #000;
@@ -101,22 +96,31 @@ body {
 	background-color: purple;
 }
 
-#switch-button {
+#switch-button{
+	margin-top: 5vh;
 	height: 10vh;
 	width: 10vw;
-	margin-top: 20vh;
 	float: left;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	padding: 0;
+}
 
-	/*position: absolute;*/
+#switch-button #switch-button-text {
+	margin-top: 0;
+	font: 4vmin Arial, sans-serif;
+	display: flex;
+	justify-content: center;
+	/*position: relative;*/
+	/*color: red;*/
 }
 
 #ai-comment-container{
 	height: 12vw;
 	width: 80vw;
-	/*background-color: brown;*/
 	margin-top: 10vh;
-	margin-left: 2vw;	
-	/*float: left;*/
+	margin-left: 2vw;
 }
 
 .ai-opponent-image {
@@ -137,10 +141,13 @@ body {
 	margin-top: 1vw;
 }
 
-#state {
+#input_state {
 	display: none;
 }
 
+#current_player_type {
+	display: none;
+}
 
 @media only screen and (max-width: 600px) {
 	.imageframe {

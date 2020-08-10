@@ -86,14 +86,14 @@ class ChessPiece {
 	live_chessboard_matrix_gen(place_ids, piece_ids){
 		var place_coordinates = [];
 		var live_matrix = [
-		[ "", "", "", "", "", "", "", ""],
-		[ "", "", "", "", "", "", "", ""],
-		[ "", "", "", "", "", "", "", ""],
-		[ "", "", "", "", "", "", "", ""],
-		[ "", "", "", "", "", "", "", ""],
-		[ "", "", "", "", "", "", "", ""],
-		[ "", "", "", "", "", "", "", ""],
-		[ "", "", "", "", "", "", "", ""]
+			[ '', '', '', '', '', '', '', ''],
+			[ '', '', '', '', '', '', '', ''],
+			[ '', '', '', '', '', '', '', ''],
+			[ '', '', '', '', '', '', '', ''],
+			[ '', '', '', '', '', '', '', ''],
+			[ '', '', '', '', '', '', '', ''],
+			[ '', '', '', '', '', '', '', ''],
+			[ '', '', '', '', '', '', '', '']
 		];
 		for(var i=0; i<place_ids.length; i++){
 			var fstAttr = this.first_coordinate_gen(parseInt(place_ids[i].charAt(0)));
@@ -128,6 +128,7 @@ class ChessPiece {
 		for(var i=0; i<live_matrix.length; i++){
 			for(var j=0; j<live_matrix[i].length; j++){
 				if(live_matrix[i][j]!=new_matrix[i][j]){
+					
 					if(live_matrix[i][j]!=null){
 						return live_matrix[i][j];
 					} else if(new_matrix[i][j]!=null){

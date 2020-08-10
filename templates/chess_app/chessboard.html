@@ -25,322 +25,325 @@
   {% endif %}
 {% endblock %}
 
-{% block content %}
-  <div id="switch-button" class="btn btn-primary purple" onclick="window.chessMech.switchColours();">
-    Switch Colours
-  </div>
-  <div id="chess_state" value="{{ state }}"></div>
-  <form enctype="multipart/form-data" method="POST">
+{% block content %}""
+  <form id="chessform" enctype="multipart/form-data" method="POST">
     {% csrf_token %}
     <div class="register-container">    
       {{ chess_form.as_p }}  
       <button id="chess_submit_btn" name="chess_submit" type="submit" class="btn btn-primary btn-btn">Submit</button>
     </div>
   </form>
+
+  
+  <div id="switch-button" class="btn purple" onclick="ChessMechanics_.switchColours();">
+    <p id="switch-button-text">Switch Colours</p>
+  </div>
+
+  <div id="chess_state" value="{{ state }}"></div>
   <div class="chessboard">
     <table id='table'>
         <tr id='topRow'>
         <td class="light-brown">
-          <div id='8A' class='empty chesspiece-container' onclick='window.chessMech.moveTo("8A"); robot(this.id);'>
-            <div id="comp_rook1" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_rook1"); robot(this.id);'>♜</div>
+          <div id='8A' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("8A"); robot(this.id);'>
+            <div id="comp_rook1" class="chesspiece comp-player white-font" onclick='ChessMechanics_.remove("comp_rook1"); robot(this.id);'>♜</div>
           </div>
         </td>
         <td class='brown'>
-          <div id='8B' class='empty chesspiece-container' onclick='window.chessMech.moveTo("8B");'>
-            <div id="comp_horse1" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_horse1");'>♞</div>
+          <div id='8B' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("8B") robot(this.id);;'>
+            <div id="comp_horse1" class="chesspiece comp-player white-font" onclick='ChessMechanics_.remove("comp_horse1") robot(this.id);;'>♞</div>
           </div>
         </td>
         <td class="light-brown">
-          <div id='8C' class='empty chesspiece-container' onclick='window.chessMech.moveTo("8C");'>
-            <div id="comp_bishop1" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_bishop1");'>♝</div>
+          <div id='8C' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("8C"); robot(this.id);'>
+            <div id="comp_bishop1" class="chesspiece comp-player white-font" onclick='ChessMechanics_.remove("comp_bishop1"); robot(this.id);'>♝</div>
           </div>
         </td>
         <td class='brown'>
-          <div id='8D' class='empty chesspiece-container' onclick='window.chessMech.moveTo("8D");'>
-            <div id="comp_queen" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_queen");'>♛</div>
+          <div id='8D' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("8D"); robot(this.id);'>
+            <div id="comp_queen" class="chesspiece comp-player white-font" onclick='ChessMechanics_.remove("comp_queen"); robot(this.id);'>♛</div>
           </div>
         </td>
         <td class="light-brown">
-          <div id='8E' class='empty chesspiece-container' onclick='window.chessMech.moveTo("8E");'>
-            <div id="comp_king" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_king");'>♚</div>
+          <div id='8E' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("8E"); robot(this.id);'>
+            <div id="comp_king" class="chesspiece comp-player white-font" onclick='ChessMechanics_.remove("comp_king"); robot(this.id);'>♚</div>
           </div>
         </td>
         <td class='brown'>
-          <div id='8F' class='empty chesspiece-container' onclick='window.chessMech.moveTo("8F");'>
-            <div id="comp_bishop2" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_bishop2");'>♝</div>  
+          <div id='8F' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("8F"); robot(this.id);'>
+            <div id="comp_bishop2" class="chesspiece comp-player white-font" onclick='ChessMechanics_.remove("comp_bishop2"); robot(this.id);'>♝</div>  
           </div>
         </td>
         <td class="light-brown">
-          <div id='8G' class='empty chesspiece-container' onclick='window.chessMech.moveTo("8G");'>
-            <div id="comp_horse2" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_horse2");'>♞</div>
+          <div id='8G' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("8G"); robot(this.id);'>
+            <div id="comp_horse2" class="chesspiece comp-player white-font" onclick='ChessMechanics_.remove("comp_horse2"); robot(this.id);'>♞</div>
           </div>
         </td>
         <td class='brown'>
-          <div id='8H' class='empty chesspiece-container' onclick='window.chessMech.moveTo("8H");'>
-            <div id="comp_rook2" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_rook2");'>♜</div>
+          <div id='8H' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("8H"); robot(this.id);'>
+            <div id="comp_rook2" class="chesspiece comp-player white-font" onclick='ChessMechanics_.remove("comp_rook2"); robot(this.id);'>♜</div>
           </div>
         </td>
             </tr>
       <tr id='secondRow'>
         <td class='brown'>
-          <div id='7A' class='empty chesspiece-container' onclick='window.chessMech.moveTo("7A");'>
-            <div id="comp_pawn1" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_pawn1");'>♙</div>
+          <div id='7A' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("7A"); robot(this.id);'>
+            <div id="comp_pawn1" class="chesspiece comp-player white-font" onclick='ChessMechanics_.remove("comp_pawn1"); robot(this.id);'>♙</div>
           </div>
         </td>
         <td class="light-brown">
-          <div id='7B' class='empty chesspiece-container' onclick='window.chessMech.moveTo("7B");'>
-            <div id="comp_pawn2" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_pawn2");'>♙</div>
+          <div id='7B' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("7B"); robot(this.id);'>
+            <div id="comp_pawn2" class="chesspiece comp-player white-font" onclick='ChessMechanics_.remove("comp_pawn2"); robot(this.id);'>♙</div>
           </div>
         </td>
         <td class='brown'>
-          <div id='7C' class='empty chesspiece-container' onclick='window.chessMech.moveTo("7C");'>
-            <div id="comp_pawn3" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_pawn3");'>♙</div>
+          <div id='7C' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("7C"); robot(this.id);'>
+            <div id="comp_pawn3" class="chesspiece comp-player white-font" onclick='ChessMechanics_.remove("comp_pawn3"); robot(this.id);'>♙</div>
           </div>
         </td>
         <td class="light-brown">
-          <div id='7D' class='empty chesspiece-container' onclick='window.chessMech.moveTo("7D");'>
-            <div id="comp_pawn4" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_pawn4");'>♙</div>
+          <div id='7D' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("7D"); robot(this.id);'>
+            <div id="comp_pawn4" class="chesspiece comp-player white-font" onclick='ChessMechanics_.remove("comp_pawn4"); robot(this.id);'>♙</div>
           </div>
         </td>
         <td class='brown'>
-          <div id='7E' class='empty chesspiece-container' onclick='window.chessMech.moveTo("7E");'>
-            <div id="comp_pawn5" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_pawn5");'>♙</div>
+          <div id='7E' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("7E"); robot(this.id);'>
+            <div id="comp_pawn5" class="chesspiece comp-player white-font" onclick='ChessMechanics_.remove("comp_pawn5"); robot(this.id);'>♙</div>
           </div>
         </td>
         <td class="light-brown">
-          <div id='7F' class='empty chesspiece-container' onclick='window.chessMech.moveTo("7F");'>
-            <div id="comp_pawn6" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_pawn6");'>♙</div>
+          <div id='7F' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("7F");'>
+            <div id="comp_pawn6" class="chesspiece comp-player white-font" onclick='ChessMechanics_.remove("comp_pawn6");'>♙</div>
           </div>
         </td>
         <td class='brown'>
-          <div id='7G' class='empty chesspiece-container' onclick='window.chessMech.moveTo("7G");'>
-            <div id="comp_pawn7" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_pawn7");'>♙</div>
+          <div id='7G' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("7G"); robot(this.id);'>
+            <div id="comp_pawn7" class="chesspiece comp-player white-font" onclick='ChessMechanics_.remove("comp_pawn7"); robot(this.id);'>♙</div>
           </div>
         </td>
         <td class="light-brown">
-          <div id='7H' class='empty chesspiece-container' onclick='window.chessMech.moveTo("7H");'>
-            <div id="comp_pawn8" class="chesspiece comp-player" onclick='window.chessMech.remove("comp_pawn8");'>♙</div>
+          <div id='7H' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("7H"); robot(this.id);'>
+            <div id="comp_pawn8" class="chesspiece comp-player white-font" onclick='ChessMechanics_.remove("comp_pawn8"); robot(this.id);'>♙</div>
           </div>
         </td>
       </tr>
       <tr>
         <td class="light-brown">
-          <div id='6A' class='empty chesspiece-container' onclick='window.chessMech.moveTo("6A");'></div>
+          <div id='6A' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("6A"); robot(this.id);'></div>
         </td>
         <td class='brown'>
-          <div id='6B' class='empty chesspiece-container' onclick='window.chessMech.moveTo("6B");'></div>
+          <div id='6B' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("6B"); robot(this.id);'></div>
         </td>
         <td class="light-brown">
-          <div id='6C' class='empty chesspiece-container' onclick='window.chessMech.moveTo("6C");'></div>
+          <div id='6C' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("6C"); robot(this.id);'></div>
         </td>
         <td class='brown'>
-          <div id='6D' class='empty chesspiece-container' onclick='window.chessMech.moveTo("6D");'></div>
+          <div id='6D' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("6D"); robot(this.id);'></div>
         </td>
         <td class="light-brown">
-          <div id='6E' class='empty chesspiece-container' onclick='window.chessMech.moveTo("6E");'>
+          <div id='6E' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("6E"); robot(this.id);'>
             
           </div>
         </td>
         <td class='brown'>
-          <div id='6F' class='empty chesspiece-container' onclick='window.chessMech.moveTo("6F");'></div>
+          <div id='6F' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("6F"); robot(this.id);'></div>
         </td>
         <td class="light-brown">
-          <div id='6G' class='empty chesspiece-container' onclick='window.chessMech.moveTo("6G");'></div>
+          <div id='6G' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("6G"); robot(this.id);'></div>
         </td>
         <td class='brown'>
-          <div id='6H' class='empty chesspiece-container' onclick='window.chessMech.moveTo("6H");'></div>
+          <div id='6H' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("6H"); robot(this.id);'></div>
         </td>
       </tr>
       <tr>
         <td class='brown'>
-          <div id='5A' class='empty chesspiece-container' onclick='window.chessMech.moveTo("5A");'></div>
+          <div id='5A' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("5A"); robot(this.id);'></div>
         </td>
         <td class="light-brown">
-          <div id='5B' class='empty chesspiece-container' onclick='window.chessMech.moveTo("5B");'></div>
+          <div id='5B' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("5B"); robot(this.id);'></div>
         </td>
         <td class='brown'>
-          <div id='5C' class='empty chesspiece-container' onclick='window.chessMech.moveTo("5C");'></div>
+          <div id='5C' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("5C"); robot(this.id);'></div>
         </td>
         <td class="light-brown">
-          <div id='5D' class='empty chesspiece-container' onclick='window.chessMech.moveTo("5D");'>
+          <div id='5D' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("5D"); robot(this.id);'>
             
           </div>
         </td>
         <td class='brown'>
-          <div id='5E' class='empty chesspiece-container' onclick='window.chessMech.moveTo("5E");'>
+          <div id='5E' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("5E"); robot(this.id);'>
             
           </div>
         </td>
         <td class="light-brown">
-          <div id='5F' class='empty chesspiece-container' onclick='window.chessMech.moveTo("5F");'>
+          <div id='5F' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("5F"); robot(this.id);'>
             
           </div>
         </td>
         <td class='brown'>
-          <div id='5G' class='empty chesspiece-container' onclick='window.chessMech.moveTo("5G");'></div>
+          <div id='5G' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("5G"); robot(this.id);'></div>
         </td>
         <td class="light-brown">
-          <div id='5H' class='empty chesspiece-container' onclick='window.chessMech.moveTo("5H");'></div>
+          <div id='5H' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("5H"); robot(this.id);'></div>
         </td>
       </tr>
       <tr>
         <td class="light-brown">
-          <div id='4A' class='empty chesspiece-container' onclick='window.chessMech.moveTo("4A");'>
+          <div id='4A' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("4A"); robot(this.id);'>
             
           </div>
         </td>
         <td class='brown'>
-          <div id='4B' class='empty chesspiece-container' onclick='window.chessMech.moveTo("4B");'>
+          <div id='4B' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("4B"); robot(this.id);'>
             
           </div>
         </td>
         <td class="light-brown">
-          <div id='4C' class='empty chesspiece-container' onclick='window.chessMech.moveTo("4C");'>
+          <div id='4C' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("4C"); robot(this.id);'>
             
           </div>
         </td>
         <td class='brown'>
-          <div id='4D' class='empty chesspiece-container' onclick='window.chessMech.moveTo("4D");'>
-            
-          </div>
-        </td>
-        <td class="light-brown">
-          <div id='4E' class='empty chesspiece-container' onclick='window.chessMech.moveTo("4E");'></div>
-        </td>
-        <td class='brown'>
-          <div id='4F' class='empty chesspiece-container' onclick='window.chessMech.moveTo("4F");'>
+          <div id='4D' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("4D"); robot(this.id);'>
             
           </div>
         </td>
         <td class="light-brown">
-          <div id='4G' class='empty chesspiece-container' onclick='window.chessMech.moveTo("4G");'></div>
+          <div id='4E' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("4E"); robot(this.id);'></div>
         </td>
         <td class='brown'>
-          <div id='4H' class='empty chesspiece-container' onclick='window.chessMech.moveTo("4H");'>
+          <div id='4F' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("4F"); robot(this.id);'>
+            
+          </div>
+        </td>
+        <td class="light-brown">
+          <div id='4G' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("4G"); robot(this.id);'></div>
+        </td>
+        <td class='brown'>
+          <div id='4H' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("4H"); robot(this.id);'>
             
           </div>
         </td>
       </tr>
       <tr>
         <td class='brown'>
-          <div id='3A' class='empty chesspiece-container' onclick='window.chessMech.moveTo("3A");'>
+          <div id='3A' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("3A"); robot(this.id);'>
             
           </div>
         </td>
         <td class="light-brown">
-          <div id='3B' class='empty chesspiece-container' onclick='window.chessMech.moveTo("3B");'>
+          <div id='3B' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("3B"); robot(this.id);'>
             
           </div>
         </td>
         <td class='brown'>
-          <div id='3C' class='empty chesspiece-container' onclick='window.chessMech.moveTo("3C");'></div>
+          <div id='3C' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("3C"); robot(this.id);'></div>
         </td>
         <td class="light-brown">
-          <div id='3D' class='empty chesspiece-container' onclick='window.chessMech.moveTo("3D");'>
+          <div id='3D' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("3D"); robot(this.id);'>
             
           </div>
         </td>
         <td class='brown'>
-          <div id='3E' class='empty chesspiece-container' onclick='window.chessMech.moveTo("3E");'></div>
+          <div id='3E' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("3E"); robot(this.id);'></div>
         </td>
         <td class="light-brown">
-          <div id='3F' class='empty chesspiece-container' onclick='window.chessMech.moveTo("3F");'>
+          <div id='3F' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("3F"); robot(this.id);'>
             
           </div>
         </td>
         <td class='brown'>
-          <div id='3G' class='empty chesspiece-container' onclick='window.chessMech.moveTo("3G");'>
+          <div id='3G' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("3G"); robot(this.id);'>
             
           </div>
         </td>
         <td class="light-brown">
-          <div id='3H' class='empty chesspiece-container' onclick='window.chessMech.moveTo("3H");'>
+          <div id='3H' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("3H"); robot(this.id);'>
             
           </div>
         </td>
       </tr>
       <tr id='secondLastRow'>
         <td class="light-brown">
-          <div id='2A' class='empty chesspiece-container' onclick='window.chessMech.moveTo("2A");'>
-            <div id="player_pawn1" class="chesspiece player" onclick='window.chessMech.select("player_pawn1");'>♙</div>
+          <div id='2A' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("2A"); robot(this.id);'>
+            <div id="player_pawn1" class="chesspiece player" onclick='ChessMechanics_.select("player_pawn1"); robot(this.id);'>♙</div>
           </div>
         </td>
         <td class='brown'>
-          <div id='2B' class='empty chesspiece-container' onclick='window.chessMech.moveTo("2B");'>
-            <div id="player_pawn2" class="chesspiece player" onclick='window.chessMech.select("player_pawn2");'>♙</div>
+          <div id='2B' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("2B"); robot(this.id);'>
+            <div id="player_pawn2" class="chesspiece player" onclick='ChessMechanics_.select("player_pawn2"); robot(this.id);'>♙</div>
           </div>
         </td>
         <td class="light-brown">
-          <div id='2C' class='empty chesspiece-container' onclick='window.chessMech.moveTo("2C");'>
-            <div id="player_pawn3" class="chesspiece player" onclick='window.chessMech.select("player_pawn3");'>♙</div>
+          <div id='2C' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("2C"); robot(this.id);'>
+            <div id="player_pawn3" class="chesspiece player" onclick='ChessMechanics_.select("player_pawn3"); robot(this.id);'>♙</div>
           </div>
         </td>
         <td class='brown'>
-          <div id='2D' class='empty chesspiece-container' onclick='window.chessMech.moveTo("2D");'>
-            <div id="player_pawn4" class="chesspiece player" onclick='window.chessMech.select("player_pawn4");'>♙</div>
+          <div id='2D' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("2D"); robot(this.id);'>
+            <div id="player_pawn4" class="chesspiece player" onclick='ChessMechanics_.select("player_pawn4"); robot(this.id);'>♙</div>
           </div>
         </td>
         <td class="light-brown">
-          <div id='2E' class='empty chesspiece-container' onclick='window.chessMech.moveTo("2E");'>
-            <div id="player_pawn5" class="chesspiece player" onclick='window.chessMech.select("player_pawn5");'>♙</div>
+          <div id='2E' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("2E"); robot(this.id);'>
+            <div id="player_pawn5" class="chesspiece player" onclick='ChessMechanics_.select("player_pawn5"); robot(this.id);'>♙</div>
           </div>
         </td>
         <td class='brown'>
-          <div id='2F' class='empty chesspiece-container' onclick='window.chessMech.moveTo("2F");'>
-            <div id="player_pawn6" class="chesspiece player" onclick='window.chessMech.select("player_pawn6");'>♙</div>
+          <div id='2F' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("2F"); robot(this.id);'>
+            <div id="player_pawn6" class="chesspiece player" onclick='ChessMechanics_.select("player_pawn6"); robot(this.id);'>♙</div>
           </div>
         </td>
         <td class="light-brown">
-          <div id='2G' class='empty chesspiece-container' onclick='window.chessMech.moveTo("2G");'>
-            <div id="player_pawn7" class="chesspiece player" onclick='window.chessMech.select("player_pawn7");'>♙</div>
+          <div id='2G' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("2G"); robot(this.id);'>
+            <div id="player_pawn7" class="chesspiece player" onclick='ChessMechanics_.select("player_pawn7"); robot(this.id);'>♙</div>
           </div>
         </td>
         <td class='brown'>
-          <div id='2H' class='empty chesspiece-container' onclick='window.chessMech.moveTo("2H");'>
-            <div id="player_pawn8" class="chesspiece player" onclick='window.chessMech.select("player_pawn8");'>♙</div>
+          <div id='2H' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("2H"); robot(this.id);'>
+            <div id="player_pawn8" class="chesspiece player" onclick='ChessMechanics_.select("player_pawn8"); robot(this.id);'>♙</div>
           </div>
         </td>
       </tr>
       <!--Last Row-->
       <tr id='lastRow'>
         <td class='brown'>
-          <div id='1A' class='empty chesspiece-container' onclick='window.chessMech.moveTo("1A");'>
-            <div id="player_rook1" class="chesspiece player" onclick='window.chessMech.select("player_rook1");'>♜</div>
+          <div id='1A' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("1A"); robot(this.id);'>
+            <div id="player_rook1" class="chesspiece player" onclick='ChessMechanics_.select("player_rook1"); robot(this.id);'>♜</div>
           </div>
         </td>
         <td class="light-brown">
-          <div id='1B' class='empty chesspiece-container' onclick='window.chessMech.moveTo("1B");'>
-            <div id="player_horse1" class="chesspiece player" onclick='window.chessMech.select("player_horse1");'>♞</div>
+          <div id='1B' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("1B"); robot(this.id);'>
+            <div id="player_horse1" class="chesspiece player" onclick='ChessMechanics_.select("player_horse1"); robot(this.id);'>♞</div>
           </div>
         </td>
         <td class='brown'>
-          <div id='1C' class='empty chesspiece-container' onclick='window.chessMech.moveTo("1C");'>
-            <div id="player_bishop1" class="chesspiece player" onclick='window.chessMech.select("player_bishop1");'>♝</div>
+          <div id='1C' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("1C"); robot(this.id);'>
+            <div id="player_bishop1" class="chesspiece player" onclick='ChessMechanics_.select("player_bishop1"); robot(this.id);'>♝</div>
           </div>
         </td>
         <td class="light-brown">
-          <div id='1D' class='empty chesspiece-container' onclick='window.chessMech.moveTo("1D");'>
-            <div id="player_queen" class="chesspiece player" onclick='window.chessMech.select("player_queen");'>♛</div>
+          <div id='1D' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("1D"); robot(this.id);'>
+            <div id="player_queen" class="chesspiece player" onclick='ChessMechanics_.select("player_queen"); robot(this.id);'>♛</div>
           </div>
         </td>
         <td class='brown'>
-          <div id='1E' class='empty chesspiece-container' onclick='window.chessMech.moveTo("1E");'>
-            <div id="player_king" class="chesspiece player" onclick='window.chessMech.select("player_king");'>♚</div>
+          <div id='1E' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("1E"); robot(this.id);'>
+            <div id="player_king" class="chesspiece player" onclick='ChessMechanics_.select("player_king"); robot(this.id);'>♚</div>
           </div>
         </td>
         <td class="light-brown">
-          <div id='1F' class='empty chesspiece-container' onclick='window.chessMech.moveTo("1F");'>
-            <div id="player_bishop2" class="chesspiece player" onclick='window.chessMech.select("player_bishop2");'>♝</div>
+          <div id='1F' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("1F"); robot(this.id);'>
+            <div id="player_bishop2" class="chesspiece player" onclick='ChessMechanics_.select("player_bishop2"); robot(this.id);'>♝</div>
           </div>
         </td>
         <td class='brown'>
-          <div id='1G' class='empty chesspiece-container' onclick='window.chessMech.moveTo("1G");'>
-            <div id="player_horse2" class="chesspiece player" onclick='window.chessMech.select("player_horse2");'>♞</div>
+          <div id='1G' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("1G"); robot(this.id);'>
+            <div id="player_horse2" class="chesspiece player" onclick='ChessMechanics_.select("player_horse2"); robot(this.id);'>♞</div>
           </div>
         </td>
         <td class="light-brown">
-          <div id='1H' class='empty chesspiece-container' onclick='window.chessMech.moveTo("1H");'>
-            <div id="player_rook2" class="chesspiece player" onclick='window.chessMech.select("player_rook2");'>♜</div>
+          <div id='1H' class='empty chesspiece-container' onclick='ChessMechanics_.moveTo("1H"); robot(this.id);'>
+            <div id="player_rook2" class="chesspiece player" onclick='ChessMechanics_.select("player_rook2"); robot(this.id);'>♜</div>
           </div>
         </td>
       </tr>
@@ -353,7 +356,7 @@
   </div>
     <br>
     <script type="text/javascript" src="{% static 'js/dev_jquery.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/RobotMovement.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/robotMovement.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/ChessPieces/ChessPiece.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/ChessPieces/Rook.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/ChessPieces/Bishop.js' %}"></script>
@@ -363,5 +366,5 @@
     <script type="text/javascript" src="{% static 'js/ChessPieces/Pawn.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/CheckerGetter.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/Main.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/Tests/RunTests.js' %}"></script>
+    <!-- <script type="text/javascript" src="{% static 'js/Tests/RunTests.js' %}"></script> -->
 {% endblock %}
